@@ -1,8 +1,8 @@
-# Demystifying the Compression of Mixture-of-Experts Through a Unified Framework
+# Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques
 
 **[Shwai He](https://shwai-he.github.io/)\*, [Daize Dong](https://daizedong.github.io/)\*, [Liang Ding](https://liamding.cc/), [Ang Li](https://www.ang-li.com/)**
 
-> **This is the official implementation of the paper [Demystifying the Compression of Mixture-of-Experts Through a Unified Framework](https://arxiv.org/abs/2406.02500).** We provide a comprehensive framework for compressing Mixture-of-Experts models. 
+> **This is the official implementation of the paper [Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques](https://arxiv.org/abs/2406.02500).** We provide a comprehensive framework for compressing Mixture-of-Experts models. 
 
 
 
@@ -164,11 +164,15 @@ To add a dataset, please refer to the [README.md](data%2FREADME.md) in `./data`.
 ## Citation
 
 ```latex
-@article{he2024demystifying,
-  title={Demystifying the Compression of Mixture-of-Experts Through a Unified Framework},
-  author={He, Shwai and Dong, Daize and Ding, Liang and Li, Ang},
-  journal={arXiv preprint arXiv:2406.02500},
-  year={2024}
+@article{
+  he2025towards,
+  title={Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques},
+  author={Shwai He and Daize Dong and Liang Ding and Ang Li},
+  journal={Transactions on Machine Learning Research},
+  issn={2835-8856},
+  year={2025},
+  url={https://openreview.net/forum?id=HTpMOl6xSI},
+  note={}
 }
 ```
 
