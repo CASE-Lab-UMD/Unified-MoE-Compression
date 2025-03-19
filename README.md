@@ -2,7 +2,9 @@
 
 **[Shwai He](https://shwai-he.github.io/)\*, [Daize Dong](https://daizedong.github.io/)\*, [Liang Ding](https://liamding.cc/), [Ang Li](https://www.ang-li.com/)**
 
-> **This is the official implementation of the paper [Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques](https://arxiv.org/abs/2406.02500).** We provide a comprehensive framework for compressing Mixture-of-Experts models. 
+Published on *Transactions on Machine Learning Research (TMLR)*.
+
+[![arXiv](https://img.shields.io/badge/arXiv-2406.02500-b31b1b.svg?style=plastic)](https://arxiv.org/abs/2406.02500)
 
 
 
@@ -19,9 +21,9 @@ and introduce aggressive Expert Trimming techniques, such as Layer Drop and Bloc
 
 ## Installation
 
-#### Environment
+#### Environments
 
-Create conda environment and install the pipeline for pruning and Expert Trimming (based on the [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory)).
+Create a conda environment and install the pipeline for pruning and Expert Trimming (based on the [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory)).
 
 ```bash
 conda create -n moe-compression python=3.10
@@ -33,7 +35,7 @@ pip install -e .
 pip install flash-attn --no-build-isolation
 ```
 
-Install the pipeline for quantization (based on the [AutoAWQ](https://github.com/casper-hansen/AutoAWQ) and [AutoGPTQ](https://github.com/AutoGPTQ/AutoGPTQ)). Ensure you carefully install the packages that correspond to your CUDA version. For more details you can refer to the README files in corresponding folders.
+Install the pipeline for quantization (based on the [AutoAWQ](https://github.com/casper-hansen/AutoAWQ) and [AutoGPTQ](https://github.com/AutoGPTQ/AutoGPTQ)). Ensure you carefully install the packages that correspond to your CUDA version. For more details, you can refer to the README files in corresponding folders.
 
 ```bash
 cd ./AutoAWQ
@@ -48,7 +50,7 @@ pip install -vvv --no-build-isolation -e .
 
 
 
-#### Prepare Models
+#### Model Checkpoints
 
 Download the [Mixtral-8x7B](https://huggingface.co/mistralai/Mixtral-8x7B-v0.1) and [DeepSeek-MoE-16B](https://huggingface.co/deepseek-ai/deepseek-moe-16b-base) model from HuggingFace, and **delete** the following lines in the `config.json` of DeepSeek-MoE-16B.
 
@@ -63,6 +65,8 @@ Download the [Mixtral-8x7B](https://huggingface.co/mistralai/Mixtral-8x7B-v0.1) 
 
 
 ## Running Compression
+
+Just run the following shell scripts.
 
 ### Expert Slimming
 
@@ -85,8 +89,6 @@ bash scripts/compression/quantization/gptq.sh
 
 ### Expert Trimming
 
-> Note that the Expert Trimming methods can also be combined with each other. For example, you can apply Expert Drop after Layer Drop. This may provide better trade-off between performance and efficiency.
-
 #### Expert Drop
 
 ```bash
@@ -107,6 +109,8 @@ bash scripts/compression/layer_drop/deepseek_layer_drop.sh
 bash scripts/compression/block_drop/mixtral_block_drop.sh
 bash scripts/compression/block_drop/deepseek_block_drop.sh
 ```
+
+> Note that the Expert Trimming methods can also be combined with each other. For example, you can apply Expert Drop after Layer Drop. This may provide a better trade-off between performance and efficiency.
 
 
 
@@ -184,4 +188,4 @@ If you have any questions, please contact:
 
 - Shwai He: shwaihe@umd.edu
 
-- Daize Dong: dzdong2019@gmail.com
+- Daize Dong: daize.dong@rutgers.edu
