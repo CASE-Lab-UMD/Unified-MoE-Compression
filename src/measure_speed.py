@@ -25,6 +25,21 @@ AutoModel.register(MixtralConfig, MixtralModel, exist_ok=True)
 AutoModelForCausalLM.register(MixtralConfig, MixtralForCausalLM, exist_ok=True)
 
 
+def get_total_vram_stats():
+    total_memory_used = 0.0
+    total_memory_capacity = 0.0
+    for device in range(torch.cuda.device_count()):
+        memory_used = torch.cuda.max_memory_allocated(device) / (1024 ** 3)
+        memory_capacity = torch.cuda.get_device_properties(device).total_memory / (1024 ** 3)
+        total_memory_used += memory_used
+        total_memory_capacity += memory_capacity
+        memory_pct = 100.0 * memory_used / memory_capacity if memory_capacity > 0 else 0.0
+        print(f" ** Max Memory (device: {device}): {memory_used:.2f} GB ({memory_pct:.2f}%)")
+
+    total_memory_pct = 100.0 * total_memory_used / total_memory_capacity if total_memory_capacity > 0 else 0.0
+    return total_memory_used, total_memory_pct
+
+
 class TimeMeasuringLogitsProcessor(LogitsProcessor):
     def __init__(self):
         self.token_times = [time.time()]
@@ -157,14 +172,8 @@ def load_model(model_path, model_type, quant_file, n_generate, batch_size, no_sa
 
 def run_round(generator, model, n_generate, input_ids, batch_size, model_type):
     model.eval()
-    total_memory_used = 0
-    for device in range(torch.cuda.device_count()):
-        memory_used = torch.cuda.max_memory_allocated(device) / (1024 ** 3)
-        total_memory_used += memory_used
-        memory_pct = memory_used / (torch.cuda.get_device_properties(device).total_memory / (1024 ** 3)) * 100
-        print(f" ** Max Memory (device: {device}): {memory_used:.2f} GB ({memory_pct:.2f}%)")
-
-    print(f"Memory (VRAM): {total_memory_used:.2f} GB ({memory_pct:.2f}%)")
+    total_memory_used, total_memory_pct = get_total_vram_stats()
+    print(f"Memory (VRAM): {total_memory_used:.2f} GB ({total_memory_pct:.2f}%)")
 
     print(f" -- Warming up...")
     warmup(model)
@@ -180,8 +189,8 @@ def run_round(generator, model, n_generate, input_ids, batch_size, model_type):
         else:
             raise RuntimeError(ex)
 
-    total_memory_used = 0
-    memory_pct = 100
+    total_memory_used = 0.0
+    total_memory_pct = 100.0
     if successful_generate:
         # number of tokens in context / time for processing context * batch size
         prefill_tokens_per_second = round(input_ids.shape[1] / context_time * batch_size, 2)
@@ -191,11 +200,7 @@ def run_round(generator, model, n_generate, input_ids, batch_size, model_type):
         print(f" ** Speed (Prefill): {prefill_tokens_per_second:.2f} tokens/second")
         print(f" ** Speed (Decode): {decode_tokens_per_second:.2f} tokens/second")
 
-        for device in range(torch.cuda.device_count()):
-            memory_used = torch.cuda.max_memory_allocated(device) / (1024 ** 3)
-            total_memory_used += memory_used
-            memory_pct = memory_used / (torch.cuda.get_device_properties(device).total_memory / (1024 ** 3)) * 100
-            print(f" ** Max Memory (device: {device}): {memory_used:.2f} GB ({memory_pct:.2f}%)")
+        total_memory_used, total_memory_pct = get_total_vram_stats()
     else:
         prefill_tokens_per_second = 'OOM'
         decode_tokens_per_second = 'OOM'
@@ -215,11 +220,14 @@ def run_round(generator, model, n_generate, input_ids, batch_size, model_type):
         "Decode Length": n_generate,
         "Prefill tokens/s": prefill_tokens_per_second,
         "Decode tokens/s": decode_tokens_per_second,
-        "Memory (VRAM)": f"{total_memory_used:.2f} GB ({memory_pct:.2f}%)"
+        "Memory (VRAM)": f"{total_memory_used:.2f} GB ({total_memory_pct:.2f}%)"
     }, version
 
 
 def main(args):
+    if not torch.cuda.is_available():
+        raise EnvironmentError("`measure_speed.py` requires CUDA-enabled PyTorch and at least one visible GPU.")
+
     rounds = [
         {"context": 32, "n_generate": 32},
         {"context": 64, "n_generate": 64},
@@ -243,7 +251,7 @@ def main(args):
 
     model = None
     for settings in rounds:
-        input_ids = torch.randint(0, tokenizer.vocab_size, (args.batch_size, settings["context"])).cuda()
+        input_ids = torch.randint(0, tokenizer.vocab_size, (args.batch_size, settings["context"]), device="cuda")
 
         model = load_model(
             args.model_path,
@@ -274,7 +282,7 @@ def main(args):
         create_dir(os.path.dirname(args.save_file), suppress_errors=True)
         df.to_csv(args.save_file, index=False)
         print(f"Results saved to \"{args.save_file}\"!")
-    print('GPU:', torch.cuda.get_device_name())
+    print('GPU:', torch.cuda.get_device_name(0))
     print('Model:', args.model_path)
     print('Version:', model_version)
     print(df.to_markdown(index=False))

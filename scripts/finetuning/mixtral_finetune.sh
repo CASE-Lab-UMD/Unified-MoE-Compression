@@ -33,7 +33,6 @@ accelerate launch \
   --use_fast_tokenizer ${use_fast_tokenizer} \
   --dataset ${dataset} \
   --template default \
-  --finetuning_type full \
   --overwrite_output_dir \
   --output_dir ${output_dir} \
   --per_device_train_batch_size ${each_device_batch_size} \
