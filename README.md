@@ -4,9 +4,13 @@
 
 > **This is the official implementation of the paper [Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques](https://arxiv.org/abs/2406.02500).** We provide a comprehensive framework for compressing Mixture-of-Experts models. 
 
+[![Paper](https://img.shields.io/badge/Paper-arXiv-red)](https://arxiv.org/abs/2406.02500)
+[![Venue](https://img.shields.io/badge/TMLR-2025-blue)](https://openreview.net/forum?id=HTpMOl6xSI)
+![Python](https://img.shields.io/badge/Python-3.10+-green)
 
 
-## Introduction
+
+## ✨ Introduction
 
 The Mixture of Experts (MoE) approach dynamically selects and activates only a subset of experts, significantly reducing computational costs while maintaining high performance. However, MoE introduces potential redundancy (e.g., parameters) and extra costs (e.g., communication overhead). Since the compression of MoE remains under-explored, we address this gap with a cutting-edge unified framework that seamlessly integrates mainstream compression methods and helps systematically understand MoE compression. This framework approaches compression from two perspectives: Expert Slimming, which compresses individual experts, and Expert Trimming, which removes structured modules. Within this framework, we explore the optimization space unexplored by existing methods
 and introduce aggressive Expert Trimming techniques, such as Layer Drop and Block Drop, to eliminate redundancy on a larger scale. Based on these insights, we present a comprehensive recipe to guide practitioners in effectively compressing MoE.
@@ -17,7 +21,7 @@ and introduce aggressive Expert Trimming techniques, such as Layer Drop and Bloc
 
 
 
-## Installation
+## ⚙️ Installation
 
 #### Environment
 
@@ -62,7 +66,7 @@ Download the [Mixtral-8x7B](https://huggingface.co/mistralai/Mixtral-8x7B-v0.1) 
 
 
 
-## Running Compression
+## 🗜️ Running Compression
 
 ### Expert Slimming
 
@@ -110,7 +114,7 @@ bash scripts/compression/block_drop/deepseek_block_drop.sh
 
 
 
-## Running Post-Finetuning
+## 🛠️ Running Post-Finetuning
 
 We provide example scripts for finetuning the Mixtral-8x7B and DeepSeek-MoE-16B. Just run:
 
@@ -122,7 +126,7 @@ bash scripts/finetuning/deepseek_finetune.sh
 Note that the scripts are configurated for finetuning on 8 NVIDIA-A100-80G GPUs. You may need to adjust the `batch_size` according to your resources.
 
 
-## Running Evaluation
+## 📈 Running Evaluation
 
 #### FLOPs & Speed
 
@@ -155,13 +159,13 @@ bash scripts/evaluation/benchmark/run_benchmark.sh
 
 
 
-## Others
+## 📚 Others
 
 To add a dataset, please refer to the [README.md](data%2FREADME.md) in `./data`.
 
 
 
-## Citation
+## 📎 Citation
 
 ```latex
 @article{
@@ -178,7 +182,7 @@ To add a dataset, please refer to the [README.md](data%2FREADME.md) in `./data`.
 
 
 
-## Contact Us
+## 📬 Contact Us
 
 If you have any questions, please contact:
 
