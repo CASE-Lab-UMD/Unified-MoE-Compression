@@ -1,15 +1,10 @@
 # Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques
 
+[![Paper](https://img.shields.io/badge/Paper-arXiv-red)](https://arxiv.org/abs/2406.02500) [![Venue](https://img.shields.io/badge/TMLR-2025-blue)](https://openreview.net/forum?id=HTpMOl6xSI) ![Python](https://img.shields.io/badge/Python-3.10+-green)
+
 **[Shwai He](https://shwai-he.github.io/)\*, [Daize Dong](https://daizedong.github.io/)\*, [Liang Ding](https://liamding.cc/), [Ang Li](https://www.ang-li.com/)**
 
-Published on *Transactions on Machine Learning Research (TMLR)*.
-
-[![arXiv](https://img.shields.io/badge/arXiv-2406.02500-b31b1b.svg?style=plastic)](https://arxiv.org/abs/2406.02500)
-
-[![Paper](https://img.shields.io/badge/Paper-arXiv-red)](https://arxiv.org/abs/2406.02500)
-[![Venue](https://img.shields.io/badge/TMLR-2025-blue)](https://openreview.net/forum?id=HTpMOl6xSI)
-![Python](https://img.shields.io/badge/Python-3.10+-green)
-
+> **This is the official implementation of the paper [Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques](https://arxiv.org/abs/2406.02500), published in *Transactions on Machine Learning Research (TMLR)*.** We provide a comprehensive framework for compressing Mixture-of-Experts models.
 
 
 ## ✨ Introduction
