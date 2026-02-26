@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <a href="https://shwai-he.github.io/">Shwai He</a>*, <a href="https://daizedong.github.io/">Daize Dong</a>*, <a href="https://liamding.cc/">Liang Ding</a>, <a href="https://www.ang-li.com/">Ang Li</a>
+  <a href="https://shwai-he.github.io/">Shwai He*</a>, <a href="https://daizedong.github.io/">Daize Dong*</a>, <a href="https://liamding.cc/">Liang Ding</a>, <a href="https://www.ang-li.com/">Ang Li</a>
 </p>
 
 **This is the official implementation of the paper [Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques](https://arxiv.org/abs/2406.02500), published in *Transactions on Machine Learning Research (TMLR)*.** We provide a comprehensive framework for compressing Mixture-of-Experts models.
