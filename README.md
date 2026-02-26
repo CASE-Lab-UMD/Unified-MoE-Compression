@@ -1,4 +1,4 @@
-<h1 align="center">Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques</h1>
+<h1 align="center">[TMLR] Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques</h1>
 
 <p align="center">
   <a href="https://arxiv.org/abs/2406.02500"><img src="https://img.shields.io/badge/arXiv-2406.02500-b31b1b.svg" alt="arXiv"></a>
