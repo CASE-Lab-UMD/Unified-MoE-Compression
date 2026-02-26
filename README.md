@@ -1,10 +1,22 @@
-# Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques
+<h1 align="center">Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques</h1>
 
-[![Paper](https://img.shields.io/badge/Paper-arXiv-red)](https://arxiv.org/abs/2406.02500) [![Venue](https://img.shields.io/badge/TMLR-2025-blue)](https://openreview.net/forum?id=HTpMOl6xSI) ![Python](https://img.shields.io/badge/Python-3.10+-green)
+<p align="center">
+  <a href="https://arxiv.org/abs/2406.02500"><img src="https://img.shields.io/badge/arXiv-2406.02500-b31b1b.svg" alt="arXiv"></a>
+  <a href="https://openreview.net/forum?id=HTpMOl6xSI"><img src="https://img.shields.io/badge/TMLR-2025-blue" alt="TMLR 2025"></a>
+  <img src="https://img.shields.io/badge/Python-3.10+-green" alt="Python 3.10+">
+</p>
 
-**[Shwai He](https://shwai-he.github.io/)\*, [Daize Dong](https://daizedong.github.io/)\*, [Liang Ding](https://liamding.cc/), [Ang Li](https://www.ang-li.com/)**
+<p align="center">
+  <a href="#-introduction">📖 Introduction</a> •
+  <a href="#%EF%B8%8F-installation">⚙️ Installation</a> •
+  <a href="#%EF%B8%8F-running-compression">🗜️ Running</a>
+</p>
 
-> **This is the official implementation of the paper [Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques](https://arxiv.org/abs/2406.02500), published in *Transactions on Machine Learning Research (TMLR)*.** We provide a comprehensive framework for compressing Mixture-of-Experts models.
+<p align="center">
+  <a href="https://shwai-he.github.io/">Shwai He</a>\*, <a href="https://daizedong.github.io/">Daize Dong</a>\*, <a href="https://liamding.cc/">Liang Ding</a>, <a href="https://www.ang-li.com/">Ang Li</a>
+</p>
+
+**This is the official implementation of the paper [Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques](https://arxiv.org/abs/2406.02500), published in *Transactions on Machine Learning Research (TMLR)*.** We provide a comprehensive framework for compressing Mixture-of-Experts models.
 
 
 ## ✨ Introduction
@@ -109,7 +121,7 @@ bash scripts/compression/block_drop/mixtral_block_drop.sh
 bash scripts/compression/block_drop/deepseek_block_drop.sh
 ```
 
-> Note that the Expert Trimming methods can also be combined with each other. For example, you can apply Expert Drop after Layer Drop. This may provide a better trade-off between performance and efficiency.
+Note that the Expert Trimming methods can also be combined with each other. For example, you can apply Expert Drop after Layer Drop. This may provide a better trade-off between performance and efficiency.
 
 
 
