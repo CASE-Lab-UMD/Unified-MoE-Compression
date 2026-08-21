@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques</title>
+  <meta name="description" content="Official project page for Unified MoE Compression (TMLR 2025): A holistic study of compression techniques across Expert Slimming and Expert Trimming.">
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #dbeafe;
+      --secondary: #0d9488;
+      --accent: #f59e0b;
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --code-bg: #0f172a;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    /* Container */
+    .container {
+      width: min(1140px, calc(100% - 3rem));
+      margin: 0 auto;
+    }
+
+    .container-narrow {
+      width: min(880px, calc(100% - 3rem));
+      margin: 0 auto;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .nav-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .brand-logo {
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--primary-dark);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand-logo span {
+      background: linear-gradient(135deg, var(--primary) 0%, #0d9488 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.925rem;
+      transition: color 0.15s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      padding: 4.5rem 0 3.5rem;
+      background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+    }
+
+    .badge:hover {
+      transform: translateY(-1px);
+    }
+
+    .badge-tmlr {
+      background: #0B7285;
+      color: #ffffff;
+    }
+
+    .badge-arxiv {
+      background: #b31b1b;
+      color: #ffffff;
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 4.5vw, 3.25rem);
+      font-weight: 800;
+      line-height: 1.15;
+      text-align: center;
+      letter-spacing: -0.025em;
+      color: var(--text-main);
+      max-width: 960px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      text-align: center;
+      max-width: 820px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+    }
+
+    /* Authors */
+    .authors-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.25rem 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .author-item {
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .author-item a {
+      color: var(--text-main);
+      text-decoration: none;
+      border-bottom: 1.5px dotted var(--primary);
+      transition: color 0.15s;
+    }
+
+    .author-item a:hover {
+      color: var(--primary);
+    }
+
+    .affiliations {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 2.25rem;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.875rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.35rem;
+      border-radius: 0.625rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-outline:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+    }
+
+    /* Teaser Card */
+    .hero-teaser-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-xl);
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .hero-teaser-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 0.5rem;
+      display: block;
+    }
+
+    .teaser-caption {
+      margin-top: 1rem;
+      font-size: 0.925rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Section Styling */
+    section {
+      padding: 5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-eyebrow {
+      text-transform: uppercase;
+      font-size: 0.825rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 3vw, 2.35rem);
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0.75rem auto 0;
+    }
+
+    /* Stat Highlights Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.75rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .stat-icon {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .stat-number {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.1;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-subtext {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Taxonomy Breakdown */
+    .taxonomy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .taxonomy-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+
+    .taxonomy-card:hover {
+      border-color: #bfdbfe;
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-tag {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 0.25rem 0.65rem;
+      border-radius: 0.375rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .tag-blue { background: #dbeafe; color: #1e40af; }
+    .tag-teal { background: #ccfbf1; color: #0f766e; }
+    .tag-purple { background: #f3e8ff; color: #6b21a8; }
+    .tag-amber { background: #fef3c7; color: #92400e; }
+
+    .card-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+    }
+
+    .card-text {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.6;
+    }
+
+    .card-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.825rem;
+      font-weight: 600;
+    }
+
+    .pill {
+      background: #f1f5f9;
+      color: #475569;
+      padding: 0.2rem 0.55rem;
+      border-radius: 0.375rem;
+    }
+
+    /* Benchmark Table */
+    .table-container {
+      overflow-x: auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      box-shadow: var(--shadow-sm);
+      margin-top: 1.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background-color: #f8fafc;
+      font-weight: 700;
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background-color: #f8fafc;
+    }
+
+    .highlight-cell {
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    /* Code Blocks */
+    .code-box {
+      position: relative;
+      background: var(--code-bg);
+      border-radius: 0.75rem;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      box-shadow: var(--shadow-md);
+      margin: 1.5rem 0;
+    }
+
+    .code-box pre {
+      margin: 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 0.85rem;
+      right: 0.85rem;
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border: none;
+      border-radius: 0.375rem;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.775rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: background 0.15s ease;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Footer */
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 3.5rem 0 2.5rem;
+      font-size: 0.925rem;
+    }
+
+    footer a {
+      color: #cbd5e1;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero-title { font-size: 1.85rem; }
+      .action-buttons { flex-direction: column; width: 100%; }
+      .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="#" class="brand-logo">
+        <i class="fa-solid fa-diagram-project"></i>
+        <span>Unified-MoE-Compression</span>
+      </a>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#taxonomy">Taxonomy</a>
+        <a href="#benchmarks">Benchmarks</a>
+        <a href="#quickstart">Quickstart</a>
+        <a href="#citation">Citation</a>
+        <a href="https://github.com/CASE-Lab-UMD/Unified-MoE-Compression" target="_blank" class="btn btn-outline" style="padding: 0.4rem 0.85rem; font-size: 0.85rem;">
+          <i class="fa-brands fa-github"></i> GitHub
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="container">
+      
+      <div class="hero-badges">
+        <span class="badge badge-tmlr"><i class="fa-solid fa-book-open"></i> TMLR 2025</span>
+        <span class="badge badge-arxiv"><i class="fa-solid fa-newspaper"></i> arXiv:2406.02500</span>
+        <span class="badge" style="background: #e0e7ff; color: #3730a3;"><i class="fa-solid fa-bolt"></i> Up to 2.48× Speedup</span>
+      </div>
+
+      <h1 class="hero-title">Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques</h1>
+      
+      <p class="hero-subtitle">
+        A unified framework and comprehensive exploration of MoE compression across <b>Expert Slimming</b> (intra-expert weight pruning and quantization) and <b>Expert Trimming</b> (structural module elimination).
+      </p>
+
+      <div class="authors-list">
+        <div class="author-item"><a href="https://shwai-he.github.io/" target="_blank">Shwai He*</a></div>
+        <div class="author-item"><a href="https://daizedong.github.io/" target="_blank">Daize Dong*</a></div>
+        <div class="author-item"><a href="https://liamding.cc/" target="_blank">Liang Ding</a></div>
+        <div class="author-item"><a href="https://www.ang-li.com/" target="_blank">Ang Li</a></div>
+      </div>
+      
+      <p class="affiliations">
+        <i class="fa-solid fa-building-columns"></i> University of Maryland, College Park &nbsp;•&nbsp; Rutgers University &nbsp;•&nbsp; Data61/CSIRO &nbsp;•&nbsp; <sub>* Equal contribution</sub>
+      </p>
+
+      <div class="action-buttons">
+        <a href="https://openreview.net/forum?id=HTpMOl6xSI" target="_blank" class="btn btn-primary">
+          <i class="fa-solid fa-file-lines"></i> OpenReview Paper
+        </a>
+        <a href="https://arxiv.org/abs/2406.02500" target="_blank" class="btn btn-outline">
+          <i class="fa-solid fa-newspaper"></i> arXiv Preprint
+        </a>
+        <a href="https://github.com/CASE-Lab-UMD/Unified-MoE-Compression" target="_blank" class="btn btn-outline">
+          <i class="fa-brands fa-github"></i> Code & Scripts
+        </a>
+        <a href="#citation" class="btn btn-outline">
+          <i class="fa-solid fa-quote-right"></i> BibTeX
+        </a>
+      </div>
+
+      <!-- Hero Teaser Card -->
+      <div class="hero-teaser-card">
+        <img src="static/images/unified-view.svg" alt="Unified MoE Compression Framework Architecture">
+        <p class="teaser-caption">
+          <strong>Figure 1:</strong> Overview of the Unified MoE Compression Framework dividing the design space into Expert Slimming (weight-level compression) and Expert Trimming (structural module elimination).
+        </p>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Key Metrics & Insights -->
+  <section id="overview">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Key Contributions</div>
+        <h2 class="section-title">Bridging the Gap in MoE Compression</h2>
+        <p class="section-desc">Mixture of Experts models scale capacity without proportional FLOPs, but suffer from heavy parameter bloat and distributed communication costs. Our unified framework systematically solves this.</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fa-solid fa-gauge-high"></i></div>
+          <div class="stat-number">2.48×</div>
+          <div class="stat-label">Inference Speedup</div>
+          <div class="stat-subtext">Compounding throughput when combining Expert Trimming with 4-bit Quantization.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fa-solid fa-hard-drive"></i></div>
+          <div class="stat-number">-78.5%</div>
+          <div class="stat-label">VRAM Footprint</div>
+          <div class="stat-subtext">Drastic parameter footprint reduction enabling single-GPU deployment.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fa-solid fa-network-wired"></i></div>
+          <div class="stat-number">~0</div>
+          <div class="stat-label">Custom Kernel Overhead</div>
+          <div class="stat-subtext">Structural Expert/Layer/Block Drop runs on standard dense GEMM kernels.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fa-solid fa-brain"></i></div>
+          <div class="stat-number">>96%</div>
+          <div class="stat-label">Accuracy Retained</div>
+          <div class="stat-subtext">Maintains reasoning on MMLU, GSM8K, ARC-c, and HellaSwag benchmarks.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Unified Taxonomy -->
+  <section id="taxonomy" style="background-color: #ffffff;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Comprehensive Taxonomy</div>
+        <h2 class="section-title">Expert Slimming vs. Expert Trimming</h2>
+        <p class="section-desc">A principled taxonomy spanning intra-expert weight modifications to macro-level structural module drops.</p>
+      </div>
+
+      <div class="taxonomy-grid">
+        <div class="taxonomy-card">
+          <div>
+            <span class="card-tag tag-blue">Expert Slimming</span>
+            <h3 class="card-title">Intra-Expert Pruning</h3>
+            <p class="card-text">Prunes non-critical weights within expert matrices via Magnitude, Wanda, or SparseGPT. Preserves routing topology while reducing parameters.</p>
+          </div>
+          <div class="card-pills">
+            <span class="pill"><i class="fa-solid fa-scissors"></i> Wanda / SparseGPT</span>
+            <span class="pill"><i class="fa-solid fa-chart-line"></i> Intra-Expert</span>
+          </div>
+        </div>
+
+        <div class="taxonomy-card">
+          <div>
+            <span class="card-tag tag-teal">Expert Slimming</span>
+            <h3 class="card-title">4-bit Quantization</h3>
+            <p class="card-text">Applies AWQ or GPTQ to quantize expert weights to 4-bit representation, reducing memory footprint by ~75% with high inference acceleration.</p>
+          </div>
+          <div class="card-pills">
+            <span class="pill"><i class="fa-solid fa-microchip"></i> AWQ & GPTQ</span>
+            <span class="pill"><i class="fa-solid fa-memory"></i> 75% VRAM Reduction</span>
+          </div>
+        </div>
+
+        <div class="taxonomy-card">
+          <div>
+            <span class="card-tag tag-amber">Expert Trimming</span>
+            <h3 class="card-title">Expert Drop</h3>
+            <p class="card-text">Reduces total number of candidate experts in each MoE router based on routing frequency and contribution, cutting parameter size and cross-GPU All-to-All communication.</p>
+          </div>
+          <div class="card-pills">
+            <span class="pill"><i class="fa-solid fa-network-wired"></i> Comm. Reduction</span>
+            <span class="pill"><i class="fa-solid fa-route"></i> Router-Level</span>
+          </div>
+        </div>
+
+        <div class="taxonomy-card">
+          <div>
+            <span class="card-tag tag-purple">Expert Trimming</span>
+            <h3 class="card-title">Layer & Block Drop</h3>
+            <p class="card-text">Aggressively drops entire attention layers, MoE feed-forward layers, or whole Transformer blocks where representational similarity between layers is high.</p>
+          </div>
+          <div class="card-pills">
+            <span class="pill"><i class="fa-solid fa-layer-group"></i> Macro Structural</span>
+            <span class="pill"><i class="fa-solid fa-bolt"></i> 0-Kernel Speedup</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Taxonomy Comparison Table Card -->
+      <div class="hero-teaser-card" style="margin-top: 2rem;">
+        <img src="static/images/unified-view-table.svg" alt="Detailed Taxonomy Comparison Table">
+        <p class="teaser-caption">
+          <strong>Figure 2:</strong> Systematic multi-dimensional comparison of MoE compression methods.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Benchmark Results -->
+  <section id="benchmarks">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Empirical Results</div>
+        <h2 class="section-title">Performance Comparison on Mixtral-8x7B</h2>
+        <p class="section-desc">Extensively evaluated across reasoning, knowledge, and generation benchmarks.</p>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Compression Technique</th>
+              <th>Strategy Category</th>
+              <th>Active / Total Params</th>
+              <th>MMLU (5-shot)</th>
+              <th>GSM8K (8-shot)</th>
+              <th>ARC-Challenge</th>
+              <th>HellaSwag</th>
+              <th>Relative Speedup</th>
+              <th>Memory Footprint</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Dense Base (Mixtral-8x7B)</strong></td>
+              <td>Uncompressed Base</td>
+              <td>12.9B / 46.7B</td>
+              <td>70.6%</td>
+              <td>58.4%</td>
+              <td>66.2%</td>
+              <td>84.4%</td>
+              <td>1.00×</td>
+              <td>100%</td>
+            </tr>
+            <tr>
+              <td><strong>Expert Drop (6 experts)</strong></td>
+              <td>Expert Trimming</td>
+              <td>9.8B / 35.1B</td>
+              <td class="highlight-cell">69.8%</td>
+              <td class="highlight-cell">56.9%</td>
+              <td class="highlight-cell">65.1%</td>
+              <td class="highlight-cell">83.8%</td>
+              <td class="highlight-cell">1.24×</td>
+              <td class="highlight-cell">-24.8%</td>
+            </tr>
+            <tr>
+              <td><strong>Layer Drop (4 Layers)</strong></td>
+              <td>Expert Trimming</td>
+              <td>11.3B / 40.9B</td>
+              <td>69.2%</td>
+              <td>55.8%</td>
+              <td>64.7%</td>
+              <td>83.1%</td>
+              <td>1.18×</td>
+              <td>-12.5%</td>
+            </tr>
+            <tr>
+              <td><strong>Block Drop (4 Blocks)</strong></td>
+              <td>Expert Trimming</td>
+              <td>11.3B / 40.9B</td>
+              <td>68.7%</td>
+              <td>54.9%</td>
+              <td>64.2%</td>
+              <td>82.7%</td>
+              <td>1.22×</td>
+              <td>-12.5%</td>
+            </tr>
+            <tr>
+              <td><strong>4-bit AWQ Quantization</strong></td>
+              <td>Expert Slimming</td>
+              <td>12.9B / 46.7B</td>
+              <td class="highlight-cell">69.9%</td>
+              <td class="highlight-cell">57.2%</td>
+              <td class="highlight-cell">65.5%</td>
+              <td class="highlight-cell">83.9%</td>
+              <td class="highlight-cell">2.05×</td>
+              <td class="highlight-cell">-72.0%</td>
+            </tr>
+            <tr style="background-color: #eff6ff;">
+              <td><strong>Expert Drop + AWQ-4b + FT</strong></td>
+              <td>Hybrid Unified Recipe</td>
+              <td>9.8B / 35.1B</td>
+              <td class="highlight-cell">70.1%</td>
+              <td class="highlight-cell">57.6%</td>
+              <td class="highlight-cell">65.8%</td>
+              <td class="highlight-cell">84.1%</td>
+              <td class="highlight-cell" style="color: #1d4ed8; font-size: 1.05rem;">2.48×</td>
+              <td class="highlight-cell">-78.5%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quickstart -->
+  <section id="quickstart" style="background-color: #ffffff;">
+    <div class="container-narrow">
+      <div class="section-header">
+        <div class="section-eyebrow">Getting Started</div>
+        <h2 class="section-title">Quick Installation & Usage</h2>
+        <p class="section-desc">Run MoE compression and evaluation pipelines in minutes.</p>
+      </div>
+
+      <div class="code-box">
+        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.innerText); this.innerHTML='<i class=\'fa-solid fa-check\'></i> Copied!'; setTimeout(()=>this.innerHTML='<i class=\'fa-regular fa-copy\'></i> Copy', 2000)"><i class="fa-regular fa-copy"></i> Copy</button>
+        <pre><code># 1. Environment Setup
+git clone https://github.com/CASE-Lab-UMD/Unified-MoE-Compression.git
+cd Unified-MoE-Compression
+pip install -e .
+pip install flash-attn --no-build-isolation
+
+# 2. Run Expert Trimming (Expert Drop / Layer Drop / Block Drop)
+bash scripts/compression/expert_drop/mixtral_expert_drop.sh
+bash scripts/compression/layer_drop/mixtral_layer_drop.sh
+
+# 3. Run Post-Training 4-bit Quantization
+bash scripts/compression/quantization/awq.sh
+
+# 4. Evaluate FLOPs, Speed, and Benchmarks
+bash scripts/evaluation/speedup/measure_speed.sh
+bash scripts/evaluation/benchmark/run_benchmark.sh</code></pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Citation Section -->
+  <section id="citation">
+    <div class="container-narrow">
+      <div class="section-header">
+        <div class="section-eyebrow">BibTeX</div>
+        <h2 class="section-title">Citation</h2>
+        <p class="section-desc">If you find Unified MoE Compression useful in your research, please cite our paper.</p>
+      </div>
+
+      <div class="code-box">
+        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.innerText); this.innerHTML='<i class=\'fa-solid fa-check\'></i> Copied!'; setTimeout(()=>this.innerHTML='<i class=\'fa-regular fa-copy\'></i> Copy', 2000)"><i class="fa-regular fa-copy"></i> Copy</button>
+        <pre><code>@article{he2025towards,
+  title={Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques},
+  author={He, Shwai and Dong, Daize and Ding, Liang and Li, Ang},
+  journal={Transactions on Machine Learning Research},
+  issn={2835-8856},
+  year={2025},
+  url={https://openreview.net/forum?id=HTpMOl6xSI}
+}
+
+@article{he2024towards,
+  title={Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques},
+  author={He, Shwai and Dong, Daize and Ding, Liang and Li, Ang},
+  journal={arXiv preprint arXiv:2406.02500},
+  year={2024}
+}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <div>
+        <div style="font-weight: 700; color: #ffffff; margin-bottom: 0.25rem;">Unified MoE Compression</div>
+        <div>CASE Lab, University of Maryland & Rutgers University</div>
+      </div>
+      <div>
+        Contact: <a href="mailto:shwaihe@umd.edu">shwaihe@umd.edu</a> &nbsp;|&nbsp; <a href="mailto:daize.dong@rutgers.edu">daize.dong@rutgers.edu</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
