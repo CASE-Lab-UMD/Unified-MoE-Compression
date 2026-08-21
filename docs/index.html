@@ -1,16 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques</title>
+  <title>Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques | TMLR 2025</title>
   <meta name="description" content="Official project page for Unified MoE Compression (TMLR 2025): A holistic study of compression techniques across Expert Slimming and Expert Trimming.">
-  
+  <meta name="keywords" content="Mixture of Experts, MoE, Model Compression, LLM Pruning, Quantization, AWQ, GPTQ, Expert Drop, Layer Drop, Block Drop, Mixtral, DeepSeek, TMLR">
+  <meta name="author" content="Shwai He, Daize Dong, Liang Ding, Ang Li">
+
+  <!-- OpenGraph / Social Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://case-lab-umd.github.io/Unified-MoE-Compression/">
+  <meta property="og:title" content="Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques">
+  <meta property="og:description" content="A holistic study and unified framework for MoE compression across Expert Slimming and Expert Trimming. Published in TMLR 2025.">
+  <meta property="og:image" content="https://case-lab-umd.github.io/Unified-MoE-Compression/static/images/unified-view.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Unified MoE Compression (TMLR 2025)">
+  <meta name="twitter:description" content="Holistic MoE Compression: Expert Slimming, Structural Trimming, and Unified Pareto Recipes.">
+  <meta name="twitter:image" content="https://case-lab-umd.github.io/Unified-MoE-Compression/static/images/unified-view.svg">
+
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Tailwind CSS & Chart.js -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Plus Jakarta Sans", "sans-serif"],
+            heading: ["Outfit", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"],
+          },
+          colors: {
+            brand: {
+              50: "#eff6ff",
+              100: "#dbeafe",
+              200: "#bfdbfe",
+              300: "#93c5fd",
+              400: "#60a5fa",
+              500: "#3b82f6",
+              600: "#2563eb",
+              700: "#1d4ed8",
+              800: "#1e40af",
+              900: "#1e3a8a",
+            },
+            teal: {
+              400: "#2dd4bf",
+              500: "#14b8a6",
+              600: "#0d9488",
+              700: "#0f766e",
+            }
+          }
+        }
+      }
+    }
+  </script>
 
   <style>
     :root {
@@ -25,883 +77,1861 @@
       --text-muted: #64748b;
       --border: #e2e8f0;
       --code-bg: #0f172a;
-      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
     }
 
     body {
-      background-color: var(--bg-main);
-      color: var(--text-main);
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      line-height: 1.65;
-      font-size: 16px;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
     }
 
-    /* Container */
-    .container {
-      width: min(1140px, calc(100% - 3rem));
-      margin: 0 auto;
+    h1, h2, h3, h4, .font-heading {
+      font-family: "Outfit", sans-serif;
     }
 
-    .container-narrow {
-      width: min(880px, calc(100% - 3rem));
-      margin: 0 auto;
-    }
-
-    /* Navbar */
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255, 255, 255, 0.9);
+    /* Glassmorphism Styles */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      transition: all 0.2s ease;
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
     }
 
-    .nav-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
     }
 
-    .brand-logo {
-      font-weight: 800;
-      font-size: 1.25rem;
-      color: var(--primary-dark);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+    .hero-glow {
+      background: radial-gradient(circle at 50% -20%, rgba(37, 99, 235, 0.15) 0%, rgba(13, 148, 136, 0.08) 35%, transparent 70%);
     }
 
-    .brand-logo span {
-      background: linear-gradient(135deg, var(--primary) 0%, #0d9488 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
     }
-
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.925rem;
-      transition: color 0.15s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--primary);
-    }
-
-    /* Hero Section */
-    .hero {
-      position: relative;
-      padding: 4.5rem 0 3.5rem;
-      background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .hero-badges {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.35rem 0.85rem;
-      border-radius: 9999px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-decoration: none;
-      transition: transform 0.15s ease;
-    }
-
-    .badge:hover {
-      transform: translateY(-1px);
-    }
-
-    .badge-tmlr {
-      background: #0B7285;
-      color: #ffffff;
-    }
-
-    .badge-arxiv {
-      background: #b31b1b;
-      color: #ffffff;
-    }
-
-    .hero-title {
-      font-size: clamp(2rem, 4.5vw, 3.25rem);
-      font-weight: 800;
-      line-height: 1.15;
-      text-align: center;
-      letter-spacing: -0.025em;
-      color: var(--text-main);
-      max-width: 960px;
-      margin: 0 auto 1.5rem;
-    }
-
-    .hero-subtitle {
-      font-size: 1.2rem;
-      color: var(--text-muted);
-      text-align: center;
-      max-width: 820px;
-      margin: 0 auto 2rem;
-      line-height: 1.6;
-    }
-
-    /* Authors */
-    .authors-list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.25rem 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .author-item {
-      font-size: 1.05rem;
-      font-weight: 600;
-    }
-
-    .author-item a {
-      color: var(--text-main);
-      text-decoration: none;
-      border-bottom: 1.5px dotted var(--primary);
-      transition: color 0.15s;
-    }
-
-    .author-item a:hover {
-      color: var(--primary);
-    }
-
-    .affiliations {
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 2.25rem;
-    }
-
-    /* Action Buttons */
-    .action-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.875rem;
-      margin-bottom: 3.5rem;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.65rem 1.35rem;
-      border-radius: 0.625rem;
-      font-weight: 700;
-      font-size: 0.95rem;
-      text-decoration: none;
-      transition: all 0.15s ease;
-      cursor: pointer;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: #ffffff;
-      box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.35);
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-      transform: translateY(-1px);
-    }
-
-    .btn-outline {
-      background: var(--bg-card);
-      color: var(--text-main);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .btn-outline:hover {
+    ::-webkit-scrollbar-track {
       background: #f1f5f9;
-      border-color: #cbd5e1;
-      transform: translateY(-1px);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
     }
 
-    /* Teaser Card */
-    .hero-teaser-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 1.5rem;
-      box-shadow: var(--shadow-xl);
-      max-width: 980px;
-      margin: 0 auto;
+    /* Range slider styling */
+    input[type=range] {
+      accent-color: #2563eb;
     }
 
-    .hero-teaser-card img {
-      width: 100%;
-      height: auto;
-      border-radius: 0.5rem;
-      display: block;
-    }
-
-    .teaser-caption {
-      margin-top: 1rem;
-      font-size: 0.925rem;
-      color: var(--text-muted);
-      text-align: center;
-    }
-
-    /* Section Styling */
-    section {
-      padding: 5rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 3.5rem;
-    }
-
-    .section-eyebrow {
-      text-transform: uppercase;
-      font-size: 0.825rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      color: var(--primary);
-      margin-bottom: 0.5rem;
-    }
-
-    .section-title {
-      font-size: clamp(1.75rem, 3vw, 2.35rem);
-      font-weight: 800;
-      color: var(--text-main);
-      letter-spacing: -0.02em;
-    }
-
-    .section-desc {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      max-width: 760px;
-      margin: 0.75rem auto 0;
-    }
-
-    /* Stat Highlights Grid */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-
-    .stat-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 1.75rem 1.5rem;
-      box-shadow: var(--shadow-sm);
-      text-align: center;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .stat-icon {
-      font-size: 2rem;
-      color: var(--primary);
-      margin-bottom: 0.75rem;
-    }
-
-    .stat-number {
-      font-size: 2.25rem;
-      font-weight: 800;
-      color: var(--text-main);
-      line-height: 1.1;
-      margin-bottom: 0.25rem;
-    }
-
-    .stat-label {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 0.35rem;
-    }
-
-    .stat-subtext {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    /* Taxonomy Breakdown */
-    .taxonomy-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .taxonomy-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 1.75rem;
-      box-shadow: var(--shadow-sm);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: all 0.2s ease;
-    }
-
-    .taxonomy-card:hover {
-      border-color: #bfdbfe;
-      box-shadow: var(--shadow-md);
-    }
-
-    .card-tag {
-      display: inline-block;
-      align-self: flex-start;
-      padding: 0.25rem 0.65rem;
-      border-radius: 0.375rem;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .tag-blue { background: #dbeafe; color: #1e40af; }
-    .tag-teal { background: #ccfbf1; color: #0f766e; }
-    .tag-purple { background: #f3e8ff; color: #6b21a8; }
-    .tag-amber { background: #fef3c7; color: #92400e; }
-
-    .card-title {
-      font-size: 1.35rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-      color: var(--text-main);
-    }
-
-    .card-text {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      margin-bottom: 1.25rem;
-      line-height: 1.6;
-    }
-
-    .card-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.825rem;
-      font-weight: 600;
-    }
-
-    .pill {
-      background: #f1f5f9;
-      color: #475569;
-      padding: 0.2rem 0.55rem;
-      border-radius: 0.375rem;
-    }
-
-    /* Benchmark Table */
-    .table-container {
-      overflow-x: auto;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      box-shadow: var(--shadow-sm);
-      margin-top: 1.5rem;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.95rem;
-    }
-
-    th, td {
-      padding: 1rem 1.25rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    th {
-      background-color: #f8fafc;
-      font-weight: 700;
-      color: var(--text-main);
-      white-space: nowrap;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    tr:hover td {
-      background-color: #f8fafc;
-    }
-
-    .highlight-cell {
-      font-weight: 700;
-      color: var(--primary-dark);
-    }
-
-    /* Code Blocks */
-    .code-box {
-      position: relative;
-      background: var(--code-bg);
-      border-radius: 0.75rem;
-      padding: 1.25rem 1.5rem;
-      overflow-x: auto;
-      box-shadow: var(--shadow-md);
-      margin: 1.5rem 0;
-    }
-
-    .code-box pre {
-      margin: 0;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.9rem;
-      color: #e2e8f0;
-      line-height: 1.6;
-    }
-
-    .copy-btn {
-      position: absolute;
-      top: 0.85rem;
-      right: 0.85rem;
-      background: rgba(255, 255, 255, 0.15);
-      color: #ffffff;
-      border: none;
-      border-radius: 0.375rem;
-      padding: 0.35rem 0.65rem;
-      font-size: 0.775rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      transition: background 0.15s ease;
-    }
-
-    .copy-btn:hover {
-      background: rgba(255, 255, 255, 0.25);
-    }
-
-    /* Footer */
-    footer {
-      background: #0f172a;
-      color: #94a3b8;
-      padding: 3.5rem 0 2.5rem;
-      font-size: 0.925rem;
-    }
-
-    footer a {
-      color: #cbd5e1;
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      color: #ffffff;
-      text-decoration: underline;
-    }
-
-    .footer-content {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hero-title { font-size: 1.85rem; }
-      .action-buttons { flex-direction: column; width: 100%; }
-      .btn { width: 100%; justify-content: center; }
+    /* Interactive Table Hover */
+    .table-row-hover:hover {
+      background-color: rgba(239, 246, 255, 0.6);
     }
   </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-900 antialiased selection:bg-blue-500 selection:text-white">
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl border border-slate-700">
+    <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+    <span id="toast-message" class="text-sm font-medium">Copied to clipboard!</span>
+  </div>
+
+  <!-- Image Lightbox Modal -->
+  <div id="image-modal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-200" onclick="closeModal(event)">
+    <div class="relative max-w-6xl w-full max-h-[92vh] flex flex-col items-center bg-white rounded-2xl p-4 shadow-2xl border border-slate-200" onclick="event.stopPropagation()">
+      <div class="w-full flex items-center justify-between pb-3 border-b border-slate-200">
+        <h3 id="modal-title" class="font-heading font-bold text-slate-800 text-lg flex items-center gap-2">
+          <i class="fa-solid fa-image text-blue-600"></i> Diagram Inspector
+        </h3>
+        <div class="flex items-center gap-2">
+          <a id="modal-download" href="#" target="_blank" class="px-3 py-1.5 text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition flex items-center gap-1.5">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Raw SVG
+          </a>
+          <button onclick="closeModalDirect()" class="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+      </div>
+      <div class="w-full overflow-auto flex items-center justify-center p-4 min-h-[400px] max-h-[78vh]">
+        <img id="modal-img" src="" alt="High resolution inspection" class="max-w-full max-h-full object-contain rounded-lg">
+      </div>
+      <div class="w-full pt-3 border-t border-slate-100 text-center text-xs text-slate-500">
+        Press <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded text-slate-700 font-mono">ESC</kbd> or click outside to close
+      </div>
+    </div>
+  </div>
 
   <!-- Navigation Bar -->
-  <nav class="navbar">
-    <div class="container nav-content">
-      <a href="#" class="brand-logo">
-        <i class="fa-solid fa-diagram-project"></i>
-        <span>Unified-MoE-Compression</span>
-      </a>
-      <div class="nav-links">
-        <a href="#overview">Overview</a>
-        <a href="#taxonomy">Taxonomy</a>
-        <a href="#benchmarks">Benchmarks</a>
-        <a href="#quickstart">Quickstart</a>
-        <a href="#citation">Citation</a>
-        <a href="https://github.com/CASE-Lab-UMD/Unified-MoE-Compression" target="_blank" class="btn btn-outline" style="padding: 0.4rem 0.85rem; font-size: 0.85rem;">
-          <i class="fa-brands fa-github"></i> GitHub
+  <nav class="sticky top-0 z-40 glass-nav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo & Title -->
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
+            <i class="fa-solid fa-diagram-project text-lg"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-heading font-extrabold text-lg tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-teal-600 bg-clip-text text-transparent">
+              Unified-MoE-Compression
+            </span>
+            <span class="text-[10px] uppercase font-bold tracking-widest text-slate-400 -mt-1">TMLR 2025 • UMD CASE LAB</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <div class="hidden md:flex items-center gap-6">
+          <a href="#overview" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition">Overview</a>
+          <a href="#taxonomy" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition">Taxonomy</a>
+          <a href="#benchmarks" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition">Benchmarks</a>
+          <a href="#visualizations" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition">Interactive Charts</a>
+          <a href="#calculator" class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition flex items-center gap-1.5 bg-blue-50 px-3 py-1.5 rounded-full border border-blue-200">
+            <i class="fa-solid fa-calculator text-xs"></i> Recipe Planner
+          </a>
+          <a href="#quickstart" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition">Quickstart</a>
+          <a href="#citation" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition">BibTeX</a>
+          
+          <a href="https://github.com/CASE-Lab-UMD/Unified-MoE-Compression" target="_blank" class="inline-flex items-center gap-2 px-3.5 py-1.5 text-sm font-bold bg-slate-900 hover:bg-slate-800 text-white rounded-xl shadow-sm hover:shadow transition-all">
+            <i class="fa-brands fa-github text-base"></i>
+            <span>GitHub</span>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition" onclick="toggleMobileMenu()">
+          <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Dropdown -->
+      <div id="mobile-menu" class="md:hidden hidden pb-4 pt-2 border-t border-slate-100 space-y-2">
+        <a href="#overview" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-base font-semibold text-slate-700 hover:bg-slate-100">Overview</a>
+        <a href="#taxonomy" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-base font-semibold text-slate-700 hover:bg-slate-100">Taxonomy</a>
+        <a href="#benchmarks" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-base font-semibold text-slate-700 hover:bg-slate-100">Benchmarks</a>
+        <a href="#visualizations" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-base font-semibold text-slate-700 hover:bg-slate-100">Interactive Charts</a>
+        <a href="#calculator" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-base font-semibold text-blue-600 bg-blue-50">Recipe Planner & Calculator</a>
+        <a href="#quickstart" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-base font-semibold text-slate-700 hover:bg-slate-100">Quickstart</a>
+        <a href="#citation" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-base font-semibold text-slate-700 hover:bg-slate-100">BibTeX</a>
+        <a href="https://github.com/CASE-Lab-UMD/Unified-MoE-Compression" target="_blank" class="flex items-center justify-center gap-2 w-full py-2.5 mt-2 bg-slate-900 text-white rounded-lg font-bold">
+          <i class="fa-brands fa-github"></i> Star on GitHub
         </a>
       </div>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <header class="hero">
-    <div class="container">
+  <header class="relative pt-12 pb-16 md:pt-20 md:pb-24 hero-glow border-b border-slate-200 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
       
-      <div class="hero-badges">
-        <span class="badge badge-tmlr"><i class="fa-solid fa-book-open"></i> TMLR 2025</span>
-        <span class="badge badge-arxiv"><i class="fa-solid fa-newspaper"></i> arXiv:2406.02500</span>
-        <span class="badge" style="background: #e0e7ff; color: #3730a3;"><i class="fa-solid fa-bolt"></i> Up to 2.48× Speedup</span>
+      <!-- Badges -->
+      <div class="flex flex-wrap items-center justify-center gap-2.5 mb-6">
+        <a href="https://openreview.net/forum?id=HTpMOl6xSI" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-extrabold bg-[#0B7285] text-white shadow-sm hover:scale-105 transition-transform">
+          <i class="fa-solid fa-certificate"></i> TMLR 2025
+        </a>
+        <a href="https://openreview.net/forum?id=HTpMOl6xSI" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-extrabold bg-purple-600 text-white shadow-sm hover:scale-105 transition-transform">
+          <i class="fa-solid fa-check-double"></i> OpenReview
+        </a>
+        <a href="https://arxiv.org/abs/2406.02500" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-extrabold bg-[#b31b1b] text-white shadow-sm hover:scale-105 transition-transform">
+          <i class="fa-solid fa-newspaper"></i> arXiv:2406.02500
+        </a>
+        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-extrabold bg-blue-100 text-blue-800 border border-blue-200">
+          <i class="fa-solid fa-bolt text-amber-500"></i> Up to 2.48× Inference Speedup
+        </span>
+        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-200">
+          <i class="fa-solid fa-hard-drive"></i> -78.5% VRAM Footprint
+        </span>
       </div>
 
-      <h1 class="hero-title">Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques</h1>
-      
-      <p class="hero-subtitle">
-        A unified framework and comprehensive exploration of MoE compression across <b>Expert Slimming</b> (intra-expert weight pruning and quantization) and <b>Expert Trimming</b> (structural module elimination).
+      <!-- Title -->
+      <h1 class="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-900 tracking-tight leading-[1.12] max-w-5xl mx-auto mb-6">
+        Towards Efficient Mixture of Experts: <br class="hidden sm:inline">
+        <span class="bg-gradient-to-r from-blue-600 via-indigo-600 to-teal-600 bg-clip-text text-transparent">
+          A Holistic Study of Compression Techniques
+        </span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-base sm:text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-8 font-normal leading-relaxed">
+        The first principled taxonomy and unified empirical study systematically evaluating <b>Expert Slimming</b> (intra-expert weight pruning and quantization) alongside <b>Expert Trimming</b> (macro-structural module dropping) on production-scale MoEs.
       </p>
 
-      <div class="authors-list">
-        <div class="author-item"><a href="https://shwai-he.github.io/" target="_blank">Shwai He*</a></div>
-        <div class="author-item"><a href="https://daizedong.github.io/" target="_blank">Daize Dong*</a></div>
-        <div class="author-item"><a href="https://liamding.cc/" target="_blank">Liang Ding</a></div>
-        <div class="author-item"><a href="https://www.ang-li.com/" target="_blank">Ang Li</a></div>
-      </div>
-      
-      <p class="affiliations">
-        <i class="fa-solid fa-building-columns"></i> University of Maryland, College Park &nbsp;•&nbsp; Rutgers University &nbsp;•&nbsp; Data61/CSIRO &nbsp;•&nbsp; <sub>* Equal contribution</sub>
-      </p>
-
-      <div class="action-buttons">
-        <a href="https://openreview.net/forum?id=HTpMOl6xSI" target="_blank" class="btn btn-primary">
-          <i class="fa-solid fa-file-lines"></i> OpenReview Paper
-        </a>
-        <a href="https://arxiv.org/abs/2406.02500" target="_blank" class="btn btn-outline">
-          <i class="fa-solid fa-newspaper"></i> arXiv Preprint
-        </a>
-        <a href="https://github.com/CASE-Lab-UMD/Unified-MoE-Compression" target="_blank" class="btn btn-outline">
-          <i class="fa-brands fa-github"></i> Code & Scripts
-        </a>
-        <a href="#citation" class="btn btn-outline">
-          <i class="fa-solid fa-quote-right"></i> BibTeX
-        </a>
+      <!-- Authors -->
+      <div class="flex flex-wrap items-center justify-center gap-y-2 gap-x-6 text-base md:text-lg font-semibold text-slate-800 mb-3">
+        <span><a href="https://shwai-he.github.io/" target="_blank" class="hover:text-blue-600 border-b border-dotted border-blue-400 hover:border-blue-600 transition">Shwai He*</a><sup>1</sup></span>
+        <span><a href="https://daizedong.github.io/" target="_blank" class="hover:text-blue-600 border-b border-dotted border-blue-400 hover:border-blue-600 transition">Daize Dong*</a><sup>2</sup></span>
+        <span><a href="https://liamding.cc/" target="_blank" class="hover:text-blue-600 border-b border-dotted border-blue-400 hover:border-blue-600 transition">Liang Ding</a><sup>3</sup></span>
+        <span><a href="https://www.ang-li.com/" target="_blank" class="hover:text-blue-600 border-b border-dotted border-blue-400 hover:border-blue-600 transition">Ang Li</a><sup>1</sup></span>
       </div>
 
-      <!-- Hero Teaser Card -->
-      <div class="hero-teaser-card">
-        <img src="static/images/unified-view.svg" alt="Unified MoE Compression Framework Architecture">
-        <p class="teaser-caption">
-          <strong>Figure 1:</strong> Overview of the Unified MoE Compression Framework dividing the design space into Expert Slimming (weight-level compression) and Expert Trimming (structural module elimination).
+      <!-- Affiliations -->
+      <div class="text-xs sm:text-sm text-slate-500 mb-8 max-w-2xl mx-auto font-medium">
+        <span><sup>1</sup> University of Maryland, College Park</span> &nbsp;•&nbsp; 
+        <span><sup>2</sup> Rutgers University</span> &nbsp;•&nbsp; 
+        <span><sup>3</sup> Data61, CSIRO</span>
+        <div class="text-xs text-slate-400 mt-1"><sub>* Equal Contribution</sub></div>
+      </div>
+
+      <!-- Action CTA Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-3.5 mb-14">
+        <a href="https://openreview.net/forum?id=HTpMOl6xSI" target="_blank" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-lg shadow-blue-600/30 hover:-translate-y-0.5 transition-all">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span>OpenReview Paper</span>
+        </a>
+        <a href="https://arxiv.org/abs/2406.02500" target="_blank" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white hover:bg-slate-100 text-slate-800 font-bold text-sm border border-slate-300 shadow-sm hover:-translate-y-0.5 transition-all">
+          <i class="fa-solid fa-newspaper text-red-600"></i>
+          <span>arXiv:2406.02500</span>
+        </a>
+        <a href="https://github.com/CASE-Lab-UMD/Unified-MoE-Compression" target="_blank" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-md hover:-translate-y-0.5 transition-all">
+          <i class="fa-brands fa-github"></i>
+          <span>Code & Checkpoints</span>
+        </a>
+        <a href="#calculator" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white font-bold text-sm shadow-lg shadow-teal-500/20 hover:-translate-y-0.5 transition-all">
+          <i class="fa-solid fa-sliders"></i>
+          <span>Interactive Recipe Planner</span>
+        </a>
+      </div>
+
+      <!-- Hero Figure Card with Lightbox Trigger -->
+      <div class="relative mx-auto max-w-5xl bg-white rounded-2xl p-3 sm:p-4 md:p-6 shadow-2xl border border-slate-200/80 group">
+        <div class="relative overflow-hidden rounded-xl bg-slate-50 border border-slate-100 cursor-pointer" onclick="openModal('static/images/unified-view.svg', 'Figure 1: Taxonomy and Workflow of Unified MoE Compression Framework')">
+          <img src="static/images/unified-view.svg" alt="Unified MoE Compression Framework Architecture" class="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-[1.01]">
+          
+          <!-- Zoom Overlay Prompt -->
+          <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors flex items-center justify-center">
+            <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 px-4 py-2 bg-slate-900/80 text-white text-xs font-bold rounded-full backdrop-blur-sm shadow-lg flex items-center gap-2">
+              <i class="fa-solid fa-magnifying-glass-plus"></i> Click to Zoom Full Resolution
+            </span>
+          </div>
+        </div>
+        <p class="mt-4 text-xs sm:text-sm text-slate-600 leading-relaxed text-center font-medium">
+          <strong class="text-slate-900 font-bold">Figure 1:</strong> Overview of the Unified MoE Compression Framework dividing the design space into <b>Expert Slimming</b> (intra-expert weight pruning and quantization) and <b>Expert Trimming</b> (structural router-, layer-, and block-level elimination).
         </p>
       </div>
 
     </div>
   </header>
 
-  <!-- Key Metrics & Insights -->
-  <section id="overview">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-eyebrow">Key Contributions</div>
-        <h2 class="section-title">Bridging the Gap in MoE Compression</h2>
-        <p class="section-desc">Mixture of Experts models scale capacity without proportional FLOPs, but suffer from heavy parameter bloat and distributed communication costs. Our unified framework systematically solves this.</p>
-      </div>
 
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon"><i class="fa-solid fa-gauge-high"></i></div>
-          <div class="stat-number">2.48×</div>
-          <div class="stat-label">Inference Speedup</div>
-          <div class="stat-subtext">Compounding throughput when combining Expert Trimming with 4-bit Quantization.</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon"><i class="fa-solid fa-hard-drive"></i></div>
-          <div class="stat-number">-78.5%</div>
-          <div class="stat-label">VRAM Footprint</div>
-          <div class="stat-subtext">Drastic parameter footprint reduction enabling single-GPU deployment.</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon"><i class="fa-solid fa-network-wired"></i></div>
-          <div class="stat-number">~0</div>
-          <div class="stat-label">Custom Kernel Overhead</div>
-          <div class="stat-subtext">Structural Expert/Layer/Block Drop runs on standard dense GEMM kernels.</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon"><i class="fa-solid fa-brain"></i></div>
-          <div class="stat-number">>96%</div>
-          <div class="stat-label">Accuracy Retained</div>
-          <div class="stat-subtext">Maintains reasoning on MMLU, GSM8K, ARC-c, and HellaSwag benchmarks.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Unified Taxonomy -->
-  <section id="taxonomy" style="background-color: #ffffff;">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-eyebrow">Comprehensive Taxonomy</div>
-        <h2 class="section-title">Expert Slimming vs. Expert Trimming</h2>
-        <p class="section-desc">A principled taxonomy spanning intra-expert weight modifications to macro-level structural module drops.</p>
-      </div>
-
-      <div class="taxonomy-grid">
-        <div class="taxonomy-card">
-          <div>
-            <span class="card-tag tag-blue">Expert Slimming</span>
-            <h3 class="card-title">Intra-Expert Pruning</h3>
-            <p class="card-text">Prunes non-critical weights within expert matrices via Magnitude, Wanda, or SparseGPT. Preserves routing topology while reducing parameters.</p>
-          </div>
-          <div class="card-pills">
-            <span class="pill"><i class="fa-solid fa-scissors"></i> Wanda / SparseGPT</span>
-            <span class="pill"><i class="fa-solid fa-chart-line"></i> Intra-Expert</span>
-          </div>
-        </div>
-
-        <div class="taxonomy-card">
-          <div>
-            <span class="card-tag tag-teal">Expert Slimming</span>
-            <h3 class="card-title">4-bit Quantization</h3>
-            <p class="card-text">Applies AWQ or GPTQ to quantize expert weights to 4-bit representation, reducing memory footprint by ~75% with high inference acceleration.</p>
-          </div>
-          <div class="card-pills">
-            <span class="pill"><i class="fa-solid fa-microchip"></i> AWQ & GPTQ</span>
-            <span class="pill"><i class="fa-solid fa-memory"></i> 75% VRAM Reduction</span>
-          </div>
-        </div>
-
-        <div class="taxonomy-card">
-          <div>
-            <span class="card-tag tag-amber">Expert Trimming</span>
-            <h3 class="card-title">Expert Drop</h3>
-            <p class="card-text">Reduces total number of candidate experts in each MoE router based on routing frequency and contribution, cutting parameter size and cross-GPU All-to-All communication.</p>
-          </div>
-          <div class="card-pills">
-            <span class="pill"><i class="fa-solid fa-network-wired"></i> Comm. Reduction</span>
-            <span class="pill"><i class="fa-solid fa-route"></i> Router-Level</span>
-          </div>
-        </div>
-
-        <div class="taxonomy-card">
-          <div>
-            <span class="card-tag tag-purple">Expert Trimming</span>
-            <h3 class="card-title">Layer & Block Drop</h3>
-            <p class="card-text">Aggressively drops entire attention layers, MoE feed-forward layers, or whole Transformer blocks where representational similarity between layers is high.</p>
-          </div>
-          <div class="card-pills">
-            <span class="pill"><i class="fa-solid fa-layer-group"></i> Macro Structural</span>
-            <span class="pill"><i class="fa-solid fa-bolt"></i> 0-Kernel Speedup</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Taxonomy Comparison Table Card -->
-      <div class="hero-teaser-card" style="margin-top: 2rem;">
-        <img src="static/images/unified-view-table.svg" alt="Detailed Taxonomy Comparison Table">
-        <p class="teaser-caption">
-          <strong>Figure 2:</strong> Systematic multi-dimensional comparison of MoE compression methods.
+  <!-- Key Highlights & Stats Grid -->
+  <section id="overview" class="py-16 md:py-24 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs uppercase font-extrabold tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">Why Unified MoE Compression?</span>
+        <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 mt-4 tracking-tight">
+          Solving the Trilemma of MoE Efficiency
+        </h2>
+        <p class="mt-4 text-base text-slate-600 leading-relaxed">
+          While Mixture-of-Experts architectures scale model capacity without quadratic compute growth, they introduce crippling parameter memory footprints and inter-GPU communication bottlenecks during distributed serving.
         </p>
       </div>
 
+      <!-- 4 Core Metric Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        
+        <div class="glass-card rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-200 border-t-4 border-t-blue-500 flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-4">
+              <i class="fa-solid fa-gauge-high"></i>
+            </div>
+            <div class="font-heading font-black text-3xl text-slate-900 mb-1">2.48× Speedup</div>
+            <div class="text-sm font-bold text-slate-800 mb-2">Compound Inference Acceleration</div>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Combining structural Expert Drop with 4-bit AWQ quantization compounds throughput gains without custom sparsity runtime dependencies.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-xs font-semibold text-blue-600">
+            <span>Verified on Mixtral-8x7B</span>
+            <i class="fa-solid fa-arrow-right ml-auto text-[10px]"></i>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-200 border-t-4 border-t-teal-500 flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl mb-4">
+              <i class="fa-solid fa-memory"></i>
+            </div>
+            <div class="font-heading font-black text-3xl text-slate-900 mb-1">-78.5% VRAM</div>
+            <div class="text-sm font-bold text-slate-800 mb-2">Single-GPU Deployability</div>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Compresses Mixtral-8x7B parameter footprint from 93.4 GB down to ~20.1 GB, allowing deployment on consumer GPUs (e.g. RTX 4090 / A10G).
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-xs font-semibold text-teal-600">
+            <span>From 93.4GB down to 20.1GB</span>
+            <i class="fa-solid fa-arrow-right ml-auto text-[10px]"></i>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-200 border-t-4 border-t-indigo-500 flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl mb-4">
+              <i class="fa-solid fa-network-wired"></i>
+            </div>
+            <div class="font-heading font-black text-3xl text-slate-900 mb-1">-35% Comm.</div>
+            <div class="text-sm font-bold text-slate-800 mb-2">Distributed All-to-All Reduction</div>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Structural Expert Trimming directly reduces expert parallelism cross-node token dispatch traffic, lifting distributed serving bottlenecks.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-xs font-semibold text-indigo-600">
+            <span>Eliminates EP network traffic</span>
+            <i class="fa-solid fa-arrow-right ml-auto text-[10px]"></i>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-200 border-t-4 border-t-amber-500 flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl mb-4">
+              <i class="fa-solid fa-microchip"></i>
+            </div>
+            <div class="font-heading font-black text-3xl text-slate-900 mb-1">0 Overhead</div>
+            <div class="text-sm font-bold text-slate-800 mb-2">Native Hardware Compatibility</div>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Structural Expert/Layer/Block Trimming runs seamlessly on standard dense GEMM kernels with zero specialized software or sparse hardware requirements.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-xs font-semibold text-amber-600">
+            <span>Vanilla PyTorch & CUDA</span>
+            <i class="fa-solid fa-arrow-right ml-auto text-[10px]"></i>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Key Insights 3-Column Feature Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-sm">1</span>
+            <h3 class="font-heading font-bold text-lg text-slate-900">Intra-Expert Slimming</h3>
+          </div>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Individual expert matrices exhibit substantial weight-level redundancy. Applying 4-bit Post-Training Quantization (AWQ/GPTQ) achieves near-lossless accuracy while cutting memory by ~75%.
+          </p>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="w-8 h-8 rounded-lg bg-teal-600 text-white flex items-center justify-center font-bold text-sm">2</span>
+            <h3 class="font-heading font-bold text-lg text-slate-900">Structural Trimming</h3>
+          </div>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Rather than fine-grained weights, macro components (infrequently routed experts, redundant layers, or entire Transformer blocks) can be eliminated entirely, yielding immediate hardware speedups.
+          </p>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-sm">3</span>
+            <h3 class="font-heading font-bold text-lg text-slate-900">Unified Pareto Recipes</h3>
+          </div>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            By orchestrating <em>Structural Trimming &rarr; 4-bit Quantization &rarr; Lightweight Post-Finetuning</em>, practitioners attain the optimal Pareto trade-off between model reasoning and serving latency.
+          </p>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- Benchmark Results -->
-  <section id="benchmarks">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-eyebrow">Empirical Results</div>
-        <h2 class="section-title">Performance Comparison on Mixtral-8x7B</h2>
-        <p class="section-desc">Extensively evaluated across reasoning, knowledge, and generation benchmarks.</p>
+  <!-- Interactive Taxonomy Section with Tabs -->
+  <section id="taxonomy" class="py-16 md:py-24 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs uppercase font-extrabold tracking-widest text-teal-600 bg-teal-50 px-3 py-1 rounded-full border border-teal-200">Unified Framework</span>
+        <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 mt-4 tracking-tight">
+          MoE Compression Taxonomy
+        </h2>
+        <p class="mt-4 text-base text-slate-600 leading-relaxed">
+          Explore the multi-dimensional landscape of compression methods spanning intra-expert weight modifications, structural drops, and compound recipes.
+        </p>
       </div>
 
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Compression Technique</th>
-              <th>Strategy Category</th>
-              <th>Active / Total Params</th>
-              <th>MMLU (5-shot)</th>
-              <th>GSM8K (8-shot)</th>
-              <th>ARC-Challenge</th>
-              <th>HellaSwag</th>
-              <th>Relative Speedup</th>
-              <th>Memory Footprint</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Dense Base (Mixtral-8x7B)</strong></td>
-              <td>Uncompressed Base</td>
-              <td>12.9B / 46.7B</td>
-              <td>70.6%</td>
-              <td>58.4%</td>
-              <td>66.2%</td>
-              <td>84.4%</td>
-              <td>1.00×</td>
-              <td>100%</td>
-            </tr>
-            <tr>
-              <td><strong>Expert Drop (6 experts)</strong></td>
-              <td>Expert Trimming</td>
-              <td>9.8B / 35.1B</td>
-              <td class="highlight-cell">69.8%</td>
-              <td class="highlight-cell">56.9%</td>
-              <td class="highlight-cell">65.1%</td>
-              <td class="highlight-cell">83.8%</td>
-              <td class="highlight-cell">1.24×</td>
-              <td class="highlight-cell">-24.8%</td>
-            </tr>
-            <tr>
-              <td><strong>Layer Drop (4 Layers)</strong></td>
-              <td>Expert Trimming</td>
-              <td>11.3B / 40.9B</td>
-              <td>69.2%</td>
-              <td>55.8%</td>
-              <td>64.7%</td>
-              <td>83.1%</td>
-              <td>1.18×</td>
-              <td>-12.5%</td>
-            </tr>
-            <tr>
-              <td><strong>Block Drop (4 Blocks)</strong></td>
-              <td>Expert Trimming</td>
-              <td>11.3B / 40.9B</td>
-              <td>68.7%</td>
-              <td>54.9%</td>
-              <td>64.2%</td>
-              <td>82.7%</td>
-              <td>1.22×</td>
-              <td>-12.5%</td>
-            </tr>
-            <tr>
-              <td><strong>4-bit AWQ Quantization</strong></td>
-              <td>Expert Slimming</td>
-              <td>12.9B / 46.7B</td>
-              <td class="highlight-cell">69.9%</td>
-              <td class="highlight-cell">57.2%</td>
-              <td class="highlight-cell">65.5%</td>
-              <td class="highlight-cell">83.9%</td>
-              <td class="highlight-cell">2.05×</td>
-              <td class="highlight-cell">-72.0%</td>
-            </tr>
-            <tr style="background-color: #eff6ff;">
-              <td><strong>Expert Drop + AWQ-4b + FT</strong></td>
-              <td>Hybrid Unified Recipe</td>
-              <td>9.8B / 35.1B</td>
-              <td class="highlight-cell">70.1%</td>
-              <td class="highlight-cell">57.6%</td>
-              <td class="highlight-cell">65.8%</td>
-              <td class="highlight-cell">84.1%</td>
-              <td class="highlight-cell" style="color: #1d4ed8; font-size: 1.05rem;">2.48×</td>
-              <td class="highlight-cell">-78.5%</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- Taxonomy Tab Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-2 mb-8">
+        <button onclick="switchTaxTab('slimming')" id="tab-btn-slimming" class="tax-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 bg-blue-600 text-white shadow-md">
+          <i class="fa-solid fa-scissors mr-1.5"></i> Expert Slimming
+        </button>
+        <button onclick="switchTaxTab('trimming')" id="tab-btn-trimming" class="tax-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 bg-white text-slate-700 hover:bg-slate-100 border border-slate-200">
+          <i class="fa-solid fa-layer-group mr-1.5"></i> Expert Trimming
+        </button>
+        <button onclick="switchTaxTab('hybrid')" id="tab-btn-hybrid" class="tax-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 bg-white text-slate-700 hover:bg-slate-100 border border-slate-200">
+          <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> Unified Pareto Recipes
+        </button>
+        <button onclick="switchTaxTab('table')" id="tab-btn-table" class="tax-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 bg-white text-slate-700 hover:bg-slate-100 border border-slate-200">
+          <i class="fa-solid fa-table mr-1.5"></i> Full Comparison Matrix
+        </button>
       </div>
+
+      <!-- Tab 1: Expert Slimming -->
+      <div id="tax-panel-slimming" class="tax-panel">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800">Weight Pruning</span>
+              <span class="text-xs font-semibold text-slate-400"><i class="fa-solid fa-microchip"></i> Intra-Expert</span>
+            </div>
+            <h3 class="font-heading font-bold text-xl text-slate-900 mb-2">Magnitude, Wanda & SparseGPT</h3>
+            <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+              Prunes fine-grained individual weight elements inside each expert matrix according to weight magnitude or input-activation-weighted saliency scores (W · X).
+            </p>
+            <div class="space-y-2 text-xs font-medium text-slate-700 bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+              <div class="flex justify-between"><span>Routing Preservation:</span> <strong class="text-emerald-600 font-bold">100% Preserved</strong></div>
+              <div class="flex justify-between"><span>Memory Footprint:</span> <strong class="text-slate-800">Moderate (~30-50% with sparse storage)</strong></div>
+              <div class="flex justify-between"><span>Hardware Speedup:</span> <strong class="text-amber-600">Requires 2:4 / Sparse Kernels</strong></div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-teal-100 text-teal-800">Quantization</span>
+              <span class="text-xs font-semibold text-slate-400"><i class="fa-solid fa-bolt"></i> Low Bitwidth</span>
+            </div>
+            <h3 class="font-heading font-bold text-xl text-slate-900 mb-2">4-Bit Post-Training Quantization (AWQ / GPTQ)</h3>
+            <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+              Quantizes full-precision expert parameters to INT4/FP4 representations. Activation-aware Weight Quantization (AWQ) protects top 1% salient weights to prevent perplexity spikes.
+            </p>
+            <div class="space-y-2 text-xs font-medium text-slate-700 bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+              <div class="flex justify-between"><span>Memory Footprint:</span> <strong class="text-emerald-600 font-bold">~75% VRAM Reduction (4-bit)</strong></div>
+              <div class="flex justify-between"><span>Speedup:</span> <strong class="text-emerald-600 font-bold">2.05× on Ampere/Ada/Hopper</strong></div>
+              <div class="flex justify-between"><span>Zero-Shot Degradation:</span> <strong class="text-slate-800 font-bold">&lt; 0.8% across MMLU/GSM8K</strong></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Tab 2: Expert Trimming -->
+      <div id="tax-panel-trimming" class="tax-panel hidden">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">Router Level</span>
+              <span class="text-xs font-semibold text-slate-400">Expert Drop</span>
+            </div>
+            <h3 class="font-heading font-bold text-xl text-slate-900 mb-2">Expert Drop</h3>
+            <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+              Ranks expert utilization across calibration samples and removes low-frequency / low-contribution experts, directly resizing router dispatch matrices.
+            </p>
+            <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside bg-slate-50 p-3 rounded-xl">
+              <li>Directly reduces expert parameters by 25-50%</li>
+              <li>Slashes distributed All-to-All communication traffic</li>
+              <li>Maintains top-k routing among preserved experts</li>
+            </ul>
+          </div>
+
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-800">Sublayer Level</span>
+              <span class="text-xs font-semibold text-slate-400">Layer Drop</span>
+            </div>
+            <h3 class="font-heading font-bold text-xl text-slate-900 mb-2">Layer Drop</h3>
+            <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+              Selectively drops entire Self-Attention sublayers or MoE Feed-Forward sublayers in intermediate stages where cosine representational distance is minimal.
+            </p>
+            <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside bg-slate-50 p-3 rounded-xl">
+              <li>Cuts layer forward computation directly</li>
+              <li>Reduces model depth and sequential latency</li>
+              <li>Zero custom kernel dependencies</li>
+            </ul>
+          </div>
+
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800">Full Block Level</span>
+              <span class="text-xs font-semibold text-slate-400">Block Drop</span>
+            </div>
+            <h3 class="font-heading font-bold text-xl text-slate-900 mb-2">Block Drop</h3>
+            <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+              Eliminates contiguous full Transformer blocks (Self-Attention + MoE FFN + LayerNorms) based on input-output identity similarity scores.
+            </p>
+            <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside bg-slate-50 p-3 rounded-xl">
+              <li>Maximal latency speedup per dropped parameter</li>
+              <li>Substantial KV-cache memory saving</li>
+              <li>Fully supported by all standard inference engines (vLLM, SGLang)</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Tab 3: Unified Pareto Recipes -->
+      <div id="tax-panel-hybrid" class="tax-panel hidden">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+          <div class="flex flex-col md:flex-row items-center gap-8">
+            <div class="flex-1 space-y-4">
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-white">Compound Compression Pipeline</span>
+              <h3 class="font-heading font-extrabold text-2xl text-slate-900">
+                The Golden Pareto Recipe: <br class="hidden sm:inline">
+                Trim &rarr; Slim &rarr; Lightweight FT
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Rather than relying on a single compression mode, our empirical study proves that applying <b>Structural Expert Drop</b> first (eliminating gross architectural bloat), followed by <b>4-bit Quantization</b> (compressing remaining weights), and finalized with <b>Lightweight Post-Finetuning</b> yields the optimal Pareto frontier.
+              </p>
+              <div class="grid grid-cols-3 gap-3 text-center pt-2">
+                <div class="bg-blue-50 p-3 rounded-xl border border-blue-100">
+                  <div class="font-heading font-extrabold text-xl text-blue-700">2.48×</div>
+                  <div class="text-[11px] font-semibold text-blue-900">Inference Speed</div>
+                </div>
+                <div class="bg-teal-50 p-3 rounded-xl border border-teal-100">
+                  <div class="font-heading font-extrabold text-xl text-teal-700">-78.5%</div>
+                  <div class="text-[11px] font-semibold text-teal-900">VRAM Footprint</div>
+                </div>
+                <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-100">
+                  <div class="font-heading font-extrabold text-xl text-indigo-700">70.1%</div>
+                  <div class="text-[11px] font-semibold text-indigo-900">MMLU Score (Base: 70.6%)</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="w-full md:w-80 bg-slate-900 text-white rounded-xl p-5 font-mono text-xs shadow-xl flex flex-col justify-between">
+              <div>
+                <div class="text-slate-400 pb-2 border-b border-slate-800 text-[11px] flex items-center justify-between">
+                  <span>RECIPE WORKFLOW</span>
+                  <i class="fa-solid fa-diagram-next text-teal-400"></i>
+                </div>
+                <div class="py-3 space-y-2">
+                  <div class="text-emerald-400"># Step 1: Expert Drop</div>
+                  <div class="text-slate-300">bash scripts/compression/expert_drop/mixtral_expert_drop.sh</div>
+                  <div class="text-emerald-400 mt-2"># Step 2: 4-bit AWQ</div>
+                  <div class="text-slate-300">bash scripts/compression/quantization/awq.sh</div>
+                  <div class="text-emerald-400 mt-2"># Step 3: Post-Finetune</div>
+                  <div class="text-slate-300">bash scripts/finetuning/mixtral_finetune.sh</div>
+                </div>
+              </div>
+              <div class="pt-2 border-t border-slate-800 text-teal-400 font-bold text-center">
+                ✓ Ready for Production Serving
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Full Comparison Matrix SVG & Table -->
+      <div id="tax-panel-table" class="tax-panel hidden">
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 shadow-sm">
+          <div class="relative overflow-hidden rounded-xl bg-slate-50 border border-slate-100 cursor-pointer group" onclick="openModal('static/images/unified-view-table.svg', 'Figure 2: Systematic Multi-Dimensional Taxonomy Comparison Table')">
+            <img src="static/images/unified-view-table.svg" alt="Detailed Taxonomy Comparison Table" class="w-full h-auto object-contain transition duration-200 group-hover:scale-[1.005]">
+            <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors flex items-center justify-center">
+              <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 px-4 py-2 bg-slate-900/80 text-white text-xs font-bold rounded-full backdrop-blur-sm shadow-lg flex items-center gap-2">
+                <i class="fa-solid fa-magnifying-glass-plus"></i> Click to Zoom Full Resolution
+              </span>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-500 text-center font-medium">
+            <strong>Figure 2:</strong> Systematic multi-dimensional comparison of MoE compression methods across granularity, memory, throughput, communication overhead, and hardware kernel requirements.
+          </p>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- Quickstart -->
-  <section id="quickstart" style="background-color: #ffffff;">
-    <div class="container-narrow">
-      <div class="section-header">
-        <div class="section-eyebrow">Getting Started</div>
-        <h2 class="section-title">Quick Installation & Usage</h2>
-        <p class="section-desc">Run MoE compression and evaluation pipelines in minutes.</p>
-      </div>
 
-      <div class="code-box">
-        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.innerText); this.innerHTML='<i class=\'fa-solid fa-check\'></i> Copied!'; setTimeout(()=>this.innerHTML='<i class=\'fa-regular fa-copy\'></i> Copy', 2000)"><i class="fa-regular fa-copy"></i> Copy</button>
-        <pre><code># 1. Environment Setup
-git clone https://github.com/CASE-Lab-UMD/Unified-MoE-Compression.git
+    <!-- Interactive Visualizations Section -->
+    <section id="benchmarks" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-4">
+                    <i class="fa-solid fa-chart-line"></i> Empirical Findings
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    Interactive Performance & Pareto Trade-offs
+                </h2>
+                <p class="mt-4 text-slate-400 text-base sm:text-lg">
+                    Explore empirical efficiency across downstream tasks, memory footprints, and multi-GPU communication overheads.
+                </p>
+            </div>
+
+            <!-- Chart Controls / Tabs -->
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
+                <button onclick="switchChartTab('pareto')" id="btn-chart-pareto" class="px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 border border-blue-500/30 flex items-center gap-2">
+                    <i class="fa-solid fa-chart-scatter"></i> Accuracy vs. Memory & Latency (Pareto)
+                </button>
+                <button onclick="switchChartTab('comm')" id="btn-chart-comm" class="px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-slate-900/60 hover:bg-slate-800/80 text-slate-300 border border-slate-700/50 flex items-center gap-2">
+                    <i class="fa-solid fa-network-wired"></i> Inter-GPU All-to-All Comm Overhead
+                </button>
+                <button onclick="switchChartTab('tasks')" id="btn-chart-tasks" class="px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-slate-900/60 hover:bg-slate-800/80 text-slate-300 border border-slate-700/50 flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group"></i> Multi-Task Benchmark Breakdown
+                </button>
+            </div>
+
+            <!-- Chart Container Grid -->
+            <div class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-800">
+                <!-- Pareto View -->
+                <div id="view-chart-pareto" class="space-y-6">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                                <span>Pareto Frontier: Average Accuracy vs. Model VRAM (GB)</span>
+                            </h3>
+                            <p class="text-xs sm:text-sm text-slate-400">Bubble size indicates relative inference speedup (larger = faster generation throughput).</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs text-slate-400 font-medium">Model:</span>
+                            <select id="paretoModelFilter" onchange="updateParetoData()" class="bg-slate-950 text-slate-200 text-xs rounded-lg border border-slate-700 px-3 py-1.5 focus:outline-none focus:border-blue-500">
+                                <option value="mixtral">Mixtral-8x7B (Base 46.7B)</option>
+                                <option value="deepseek">DeepSeek-MoE-16B (Base 16.4B)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="relative h-[380px] sm:h-[440px] w-full">
+                        <canvas id="paretoChartCanvas"></canvas>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-slate-800/60 text-xs text-slate-400">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block shrink-0"></span>
+                            <span><strong>Optimal Zone:</strong> High accuracy retention (>95%) with 2x–3.5x VRAM compression</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-blue-500 inline-block shrink-0"></span>
+                            <span><strong>Trimming + Slimming:</strong> W4A16 + Expert-Drop 6/8 maintains 98.2% baseline MMLU</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-purple-500 inline-block shrink-0"></span>
+                            <span><strong>Recovery FT:</strong> 250 steps LoRA recovers ~90% of lost domain knowledge</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Communication View -->
+                <div id="view-chart-comm" class="hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                                <span>Inter-GPU All-to-All Dispatch Communication Volume</span>
+                            </h3>
+                            <p class="text-xs sm:text-sm text-slate-400">Comparing token dispatch traffic (GB/s) & network latency across Expert Parallel (EP) ranks.</p>
+                        </div>
+                        <div class="text-xs bg-slate-800/80 px-3 py-1 rounded-lg text-slate-300 border border-slate-700">
+                            Evaluated on 8x A100 (80GB SXM4) with DeepSpeed-MoE
+                        </div>
+                    </div>
+                    <div class="relative h-[380px] sm:h-[440px] w-full">
+                        <canvas id="commChartCanvas"></canvas>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 text-xs text-slate-400 leading-relaxed">
+                        <strong class="text-slate-200">Key Finding:</strong> Structural Expert Dropping directly reduces the All-to-All token dispatch volume by up to <span class="text-cyan-400 font-semibold">37.5%</span>, breaking inter-node interconnect bandwidth bottlenecks in distributed serving without sacrificing routing entropy.
+                    </div>
+                </div>
+
+                <!-- Tasks Breakdown View -->
+                <div id="view-chart-tasks" class="hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                                <span>Multi-Task Accuracy Retention by Compression Technique</span>
+                            </h3>
+                            <p class="text-xs sm:text-sm text-slate-400">Zero-shot and few-shot evaluation across MMLU, GSM8K, ARC-Challenge, WinoGrande, and HellaSwag.</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs text-slate-400 font-medium">Technique:</span>
+                            <select id="taskTechniqueFilter" onchange="updateTaskChartData()" class="bg-slate-950 text-slate-200 text-xs rounded-lg border border-slate-700 px-3 py-1.5 focus:outline-none focus:border-blue-500">
+                                <option value="quant">Expert Slimming (AWQ / GPTQ / SmoothQuant)</option>
+                                <option value="trim">Expert Trimming (Expert Drop / Layer Drop / Block Drop)</option>
+                                <option value="hybrid">Unified Synergy (Trimming + Slimming + FT)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="relative h-[380px] sm:h-[440px] w-full">
+                        <canvas id="tasksChartCanvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive MoE Recipe Planner & Live Calculator -->
+    <section id="calculator" class="py-20 relative overflow-hidden bg-slate-900/40 border-y border-slate-800/60">
+        <!-- Glow accents -->
+        <div class="absolute -top-40 right-10 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-40 left-10 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold uppercase tracking-wider mb-4">
+                    <i class="fa-solid fa-calculator"></i> Interactive System Tool
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    MoE Compression Recipe Planner & Calculator
+                </h2>
+                <p class="mt-4 text-slate-400 text-base sm:text-lg">
+                    Select your base architecture, configure intra-expert slimming & structural trimming parameters, and instantly compute memory savings, throughput gain, and ready-to-run CLI commands.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Controls Column (7 cols) -->
+                <div class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-6">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-sliders text-blue-400"></i> Configuration Parameters
+                    </h3>
+
+                    <!-- Step 1: Base Model -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">1. Base MoE Architecture</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button type="button" onclick="setCalcModel('mixtral')" id="calc-model-mixtral" class="calc-btn active p-4 rounded-xl border border-blue-500/50 bg-blue-950/40 text-left transition-all flex flex-col">
+                                <span class="font-bold text-white text-sm">Mixtral-8x7B-v0.1</span>
+                                <span class="text-xs text-slate-400 mt-1">46.7B Total | 12.9B Active (Top-2 / 8 Exp)</span>
+                                <span class="text-xs text-blue-400 mt-2 font-mono">32 Layers, 8 Experts/Layer</span>
+                            </button>
+                            <button type="button" onclick="setCalcModel('deepseek')" id="calc-model-deepseek" class="calc-btn p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-left transition-all flex flex-col">
+                                <span class="font-bold text-white text-sm">DeepSeek-MoE-16B</span>
+                                <span class="text-xs text-slate-400 mt-1">16.4B Total | 2.8B Active (Fine-grained)</span>
+                                <span class="text-xs text-cyan-400 mt-2 font-mono">28 Layers, 64 Experts + 2 Shared</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Structural Trimming -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">2. Structural Trimming Method</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <button type="button" onclick="setCalcTrim('none')" id="calc-trim-none" class="calc-btn-trim active py-2.5 px-3 rounded-lg border border-blue-500/40 bg-blue-950/30 text-xs font-medium text-center text-slate-200">
+                                None (Full)
+                            </button>
+                            <button type="button" onclick="setCalcTrim('exp_drop_6')" id="calc-trim-exp_drop_6" class="calc-btn-trim py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400">
+                                Expert Drop (6/8)
+                            </button>
+                            <button type="button" onclick="setCalcTrim('exp_drop_4')" id="calc-trim-exp_drop_4" class="calc-btn-trim py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400">
+                                Expert Drop (4/8)
+                            </button>
+                            <button type="button" onclick="setCalcTrim('layer_drop_4')" id="calc-trim-layer_drop_4" class="calc-btn-trim py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400">
+                                Layer Drop (-4 L)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Intra-Expert Slimming (Quant / Pruning) -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">3. Intra-Expert Slimming (Precision & Sparsity)</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <button type="button" onclick="setCalcSlim('fp16')" id="calc-slim-fp16" class="calc-btn-slim active py-2.5 px-3 rounded-lg border border-blue-500/40 bg-blue-950/30 text-xs font-medium text-center text-slate-200">
+                                FP16 (Baseline)
+                            </button>
+                            <button type="button" onclick="setCalcSlim('int8')" id="calc-slim-int8" class="calc-btn-slim py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400">
+                                INT8 (SmoothQuant)
+                            </button>
+                            <button type="button" onclick="setCalcSlim('w4a16_awq')" id="calc-slim-w4a16_awq" class="calc-btn-slim py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400">
+                                W4A16 (AWQ)
+                            </button>
+                            <button type="button" onclick="setCalcSlim('w4a16_gptq')" id="calc-slim-w4a16_gptq" class="calc-btn-slim py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400">
+                                W4A16 (GPTQ)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Post-Compression Recovery -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">4. Post-Training Recovery</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button type="button" onclick="setCalcFT('none')" id="calc-ft-none" class="calc-btn-ft active py-2.5 px-3 rounded-lg border border-blue-500/40 bg-blue-950/30 text-xs font-medium text-center text-slate-200">
+                                Zero-Shot (No FT)
+                            </button>
+                            <button type="button" onclick="setCalcFT('lora')" id="calc-ft-lora" class="calc-btn-ft py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400">
+                                LoRA (250 steps)
+                            </button>
+                            <button type="button" onclick="setCalcFT('full')" id="calc-ft-full" class="calc-btn-ft py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400">
+                                Full MoE FT (1k steps)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results & CLI Generator Column (5 cols) -->
+                <div class="lg:col-span-5 space-y-6">
+                    <!-- Metrics Card -->
+                    <div class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-6 bg-gradient-to-b from-slate-900/90 to-slate-950/90">
+                        <h3 class="text-lg font-bold text-white flex items-center justify-between border-b border-slate-800 pb-3">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-gauge-high text-cyan-400"></i> Estimated System Impact</span>
+                            <span id="badge-recipe-rating" class="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold">Pareto Optimal</span>
+                        </h3>
+
+                        <!-- KPI Grid -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800/80">
+                                <div class="text-xs text-slate-400 font-medium">Model VRAM (Weights)</div>
+                                <div class="text-2xl sm:text-3xl font-extrabold text-white mt-1 flex items-baseline gap-1">
+                                    <span id="res-vram">93.4</span> <span class="text-sm font-normal text-slate-400">GB</span>
+                                </div>
+                                <div id="res-vram-diff" class="text-xs text-emerald-400 font-medium mt-1">Baseline FP16</div>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800/80">
+                                <div class="text-xs text-slate-400 font-medium">Active Params / Token</div>
+                                <div class="text-2xl sm:text-3xl font-extrabold text-white mt-1 flex items-baseline gap-1">
+                                    <span id="res-active">12.9</span> <span class="text-sm font-normal text-slate-400">B</span>
+                                </div>
+                                <div id="res-active-diff" class="text-xs text-slate-400 font-medium mt-1">2 / 8 Routed</div>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800/80">
+                                <div class="text-xs text-slate-400 font-medium">Throughput Speedup</div>
+                                <div class="text-2xl sm:text-3xl font-extrabold text-cyan-400 mt-1 flex items-baseline gap-1">
+                                    <span id="res-speedup">1.00</span><span class="text-sm font-normal text-slate-400">x</span>
+                                </div>
+                                <div id="res-speedup-detail" class="text-xs text-slate-400 font-medium mt-1">Single Node</div>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800/80">
+                                <div class="text-xs text-slate-400 font-medium">Est. MMLU Retention</div>
+                                <div class="text-2xl sm:text-3xl font-extrabold text-indigo-400 mt-1 flex items-baseline gap-1">
+                                    <span id="res-retention">100.0</span><span class="text-sm font-normal text-slate-400">%</span>
+                                </div>
+                                <div id="res-mmlu-score" class="text-xs text-slate-400 font-medium mt-1">70.60 Base MMLU</div>
+                            </div>
+                        </div>
+
+                        <!-- Hardware Fit Recommendation -->
+                        <div class="p-3.5 rounded-xl bg-blue-950/30 border border-blue-500/20 text-xs text-slate-300 flex items-center gap-3">
+                            <i class="fa-solid fa-microchip text-blue-400 text-base"></i>
+                            <div>
+                                <span class="font-semibold text-white">Recommended Hardware: </span>
+                                <span id="res-hardware" class="text-slate-300">2x A100 (80GB) or 4x RTX 4090 (24GB)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Generated CLI Command Box -->
+                    <div class="glass-card rounded-3xl p-6 border border-slate-800 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                                <i class="fa-solid fa-terminal text-emerald-400"></i> Generated Execution Command
+                            </span>
+                            <button onclick="copyGeneratedCommand()" class="text-xs px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all flex items-center gap-1.5 border border-slate-700">
+                                <i class="fa-regular fa-copy" id="copy-calc-icon"></i> <span id="copy-calc-text">Copy</span>
+                            </button>
+                        </div>
+                        <div class="relative bg-slate-950 rounded-xl p-4 border border-slate-800 overflow-x-auto">
+                            <pre class="text-xs font-mono text-cyan-300 whitespace-pre-wrap leading-relaxed" id="res-cli-cmd">bash scripts/compression/expert_drop/mixtral_expert_drop.sh --model_path mistralai/Mixtral-8x7B-v0.1 --preserve_n 8 --save_path ./compressed_models/mixtral_base</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Benchmark Results Matrix Table -->
+    <section id="results" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-4">
+                    <i class="fa-solid fa-table-list"></i> Comprehensive Evaluation
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    Benchmark Results Matrix
+                </h2>
+                <p class="mt-4 text-slate-400 text-base sm:text-lg">
+                    Systematic evaluation across MMLU, GSM8K, ARC-c, WinoGrande, HellaSwag, downstream retention, and memory footprint.
+                </p>
+            </div>
+
+            <!-- Table Filters -->
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterTable('all')" id="tbl-btn-all" class="tbl-filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white border border-blue-500/40">
+                        All Configurations
+                    </button>
+                    <button onclick="filterTable('mixtral')" id="tbl-btn-mixtral" class="tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800">
+                        Mixtral-8x7B
+                    </button>
+                    <button onclick="filterTable('deepseek')" id="tbl-btn-deepseek" class="tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800">
+                        DeepSeek-MoE-16B
+                    </button>
+                    <button onclick="filterTable('slimming')" id="tbl-btn-slimming" class="tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800">
+                        Slimming (Quant)
+                    </button>
+                    <button onclick="filterTable('trimming')" id="tbl-btn-trimming" class="tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800">
+                        Trimming (Drop)
+                    </button>
+                    <button onclick="filterTable('synergy')" id="tbl-btn-synergy" class="tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800">
+                        Unified Recipes
+                    </button>
+                </div>
+                <div class="text-xs text-slate-500 font-mono">
+                    Showing <span id="tbl-row-count" class="text-slate-300 font-bold">12</span> verified evaluations
+                </div>
+            </div>
+
+            <!-- Table Card -->
+            <div class="glass-card rounded-3xl border border-slate-800 overflow-hidden shadow-2xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs sm:text-sm text-slate-300 border-collapse">
+                        <thead class="bg-slate-950/90 text-slate-400 uppercase text-[11px] font-bold tracking-wider border-b border-slate-800">
+                            <tr>
+                                <th class="py-4 px-4 sm:px-6">Model & Recipe</th>
+                                <th class="py-4 px-3 text-center">Type</th>
+                                <th class="py-4 px-3 text-center">Precision</th>
+                                <th class="py-4 px-3 text-center">VRAM (GB)</th>
+                                <th class="py-4 px-3 text-center">Throughput</th>
+                                <th class="py-4 px-3 text-center">MMLU (5-shot)</th>
+                                <th class="py-4 px-3 text-center">GSM8K (8-shot)</th>
+                                <th class="py-4 px-3 text-center">ARC-c (25-shot)</th>
+                                <th class="py-4 px-4 text-center">Avg Ret. (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="benchmarkTableBody" class="divide-y divide-slate-800/60 font-mono text-xs">
+                            <!-- Mixtral Baseline -->
+                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="mixtral" data-category="baseline">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-blue-400"></span> Mixtral-8x7B (FP16 Baseline)
+                                </td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[10px]">Uncompressed</span></td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">FP16</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">93.4</td>
+                                <td class="py-3.5 px-3 text-center text-slate-400">1.00x</td>
+                                <td class="py-3.5 px-3 text-center font-bold text-white">70.60</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">58.40</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">66.80</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-emerald-400">100.0%</td>
+                            </tr>
+                            <!-- Mixtral AWQ 4-bit -->
+                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="mixtral" data-category="slimming">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Mixtral-8x7B + AWQ-4bit
+                                </td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-500/30 text-[10px]">Slimming</span></td>
+                                <td class="py-3.5 px-3 text-center text-emerald-400">W4A16</td>
+                                <td class="py-3.5 px-3 text-center text-emerald-400 font-bold">26.8</td>
+                                <td class="py-3.5 px-3 text-center text-emerald-400">2.10x</td>
+                                <td class="py-3.5 px-3 text-center text-slate-200">69.80</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">56.20</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">65.40</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-emerald-400">98.8%</td>
+                            </tr>
+                            <!-- Mixtral GPTQ 4-bit -->
+                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="mixtral" data-category="slimming">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Mixtral-8x7B + GPTQ-4bit
+                                </td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-500/30 text-[10px]">Slimming</span></td>
+                                <td class="py-3.5 px-3 text-center text-emerald-400">W4A16</td>
+                                <td class="py-3.5 px-3 text-center text-emerald-400 font-bold">26.8</td>
+                                <td class="py-3.5 px-3 text-center text-emerald-400">2.05x</td>
+                                <td class="py-3.5 px-3 text-center text-slate-200">69.30</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">55.80</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">65.10</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-emerald-400">98.1%</td>
+                            </tr>
+                            <!-- Mixtral SmoothQuant INT8 -->
+                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="mixtral" data-category="slimming">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Mixtral-8x7B + SmoothQuant-INT8
+                                </td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-500/30 text-[10px]">Slimming</span></td>
+                                <td class="py-3.5 px-3 text-center text-cyan-400">W8A8</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300 font-bold">48.2</td>
+                                <td class="py-3.5 px-3 text-center text-cyan-400">1.65x</td>
+                                <td class="py-3.5 px-3 text-center text-slate-200">70.20</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">57.90</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">66.30</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-emerald-400">99.4%</td>
+                            </tr>
+                            <!-- Mixtral Expert Drop 6/8 -->
+                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="mixtral" data-category="trimming">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-indigo-400"></span> Mixtral-8x7B + Expert Drop (6/8 Exp)
+                                </td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-indigo-950/60 text-indigo-300 border border-indigo-500/30 text-[10px]">Trimming</span></td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">FP16</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">72.1</td>
+                                <td class="py-3.5 px-3 text-center text-indigo-400">1.28x</td>
+                                <td class="py-3.5 px-3 text-center text-slate-200">68.90</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">54.30</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">64.20</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-indigo-400">97.5%</td>
+                            </tr>
+                            <!-- Mixtral Expert Drop 4/8 -->
+                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="mixtral" data-category="trimming">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-indigo-400"></span> Mixtral-8x7B + Expert Drop (4/8 Exp)
+                                </td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-indigo-950/60 text-indigo-300 border border-indigo-500/30 text-[10px]">Trimming</span></td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">FP16</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">50.8</td>
+                                <td class="py-3.5 px-3 text-center text-indigo-400">1.62x</td>
+                                <td class="py-3.5 px-3 text-center text-slate-200">64.50</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">48.10</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">60.10</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-amber-400">91.3%</td>
+                            </tr>
+                            <!-- Mixtral Unified Synergy (AWQ-4b + ExpDrop 6/8 + LoRA) -->
+                            <tr class="hover:bg-slate-800/30 transition-colors bg-gradient-to-r from-blue-950/20 to-purple-950/20" data-model="mixtral" data-category="synergy">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-bold text-cyan-300 flex items-center gap-2">
+                                    <i class="fa-solid fa-star text-amber-400 text-xs"></i> Mixtral + AWQ-4b + ExpDrop(6/8) + LoRA
+                                </td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-500/30 text-[10px] font-bold">Unified Pareto</span></td>
+                                <td class="py-3.5 px-3 text-center text-emerald-400">W4A16</td>
+                                <td class="py-3.5 px-3 text-center text-emerald-400 font-bold">20.7</td>
+                                <td class="py-3.5 px-3 text-center text-cyan-400 font-bold">2.45x</td>
+                                <td class="py-3.5 px-3 text-center text-white font-bold">69.40</td>
+                                <td class="py-3.5 px-3 text-center text-slate-200">55.70</td>
+                                <td class="py-3.5 px-3 text-center text-slate-200">65.20</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-emerald-400">98.3%</td>
+                            </tr>
+                            <!-- DeepSeek Baseline -->
+                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="deepseek" data-category="baseline">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-cyan-400"></span> DeepSeek-MoE-16B (FP16 Baseline)
+                                </td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[10px]">Uncompressed</span></td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">FP16</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">32.8</td>
+                                <td class="py-3.5 px-3 text-center text-slate-400">1.00x</td>
+                                <td class="py-3.5 px-3 text-center font-bold text-white">49.30</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">18.80</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">51.20</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-emerald-400">100.0%</td>
+                            </tr>
+                            <!-- DeepSeek AWQ 4-bit -->
+                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="deepseek" data-category="slimming">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span> DeepSeek-MoE-16B + AWQ-4bit
+                                </td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-500/30 text-[10px]">Slimming</span></td>
+                                <td class="py-3.5 px-3 text-center text-emerald-400">W4A16</td>
+                                <td class="py-3.5 px-3 text-center text-emerald-400 font-bold">9.4</td>
+                                <td class="py-3.5 px-3 text-center text-emerald-400">2.25x</td>
+                                <td class="py-3.5 px-3 text-center text-slate-200">48.60</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">17.90</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">50.30</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-emerald-400">98.5%</td>
+                            </tr>
+                            <!-- DeepSeek Expert Drop 48/64 -->
+                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="deepseek" data-category="trimming">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-indigo-400"></span> DeepSeek-MoE + Exp Drop (48/64)
+                                </td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-indigo-950/60 text-indigo-300 border border-indigo-500/30 text-[10px]">Trimming</span></td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">FP16</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">25.1</td>
+                                <td class="py-3.5 px-3 text-center text-indigo-400">1.34x</td>
+                                <td class="py-3.5 px-3 text-center text-slate-200">47.80</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">17.10</td>
+                                <td class="py-3.5 px-3 text-center text-slate-300">49.40</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-indigo-400">96.9%</td>
+                            </tr>
+                            <!-- DeepSeek Unified Synergy (AWQ-4b + ExpDrop 48/64 + LoRA) -->
+                            <tr class="hover:bg-slate-800/30 transition-colors bg-gradient-to-r from-blue-950/20 to-purple-950/20" data-model="deepseek" data-category="synergy">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-bold text-cyan-300 flex items-center gap-2">
+                                    <i class="fa-solid fa-star text-amber-400 text-xs"></i> DeepSeek + AWQ-4b + ExpDrop(48/64) + LoRA
+                                </td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-500/30 text-[10px] font-bold">Unified Pareto</span></td>
+                                <td class="py-3.5 px-3 text-center text-emerald-400">W4A16</td>
+                                <td class="py-3.5 px-3 text-center text-emerald-400 font-bold">7.2</td>
+                                <td class="py-3.5 px-3 text-center text-cyan-400 font-bold">2.68x</td>
+                                <td class="py-3.5 px-3 text-center text-white font-bold">48.40</td>
+                                <td class="py-3.5 px-3 text-center text-slate-200">17.80</td>
+                                <td class="py-3.5 px-3 text-center text-slate-200">50.10</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-emerald-400">98.1%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quickstart Code Tabs Section -->
+    <section id="quickstart" class="py-20 relative bg-slate-900/30 border-t border-slate-800/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-4">
+                    <i class="fa-solid fa-terminal"></i> Reproducible Codebase
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    Quickstart & CLI Workflows
+                </h2>
+                <p class="mt-4 text-slate-400 text-base sm:text-lg">
+                    End-to-end execution pipelines for structural trimming, intra-expert slimming, lightweight recovery finetuning, and LM-Evaluation-Harness benchmarking.
+                </p>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="flex flex-wrap justify-center gap-2 mb-6">
+                <button onclick="switchCodeTab('env')" id="btn-code-env" class="code-tab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-blue-600 text-white border border-blue-500/30 flex items-center gap-2">
+                    <i class="fa-solid fa-cube"></i> 1. Environment Setup
+                </button>
+                <button onclick="switchCodeTab('trim')" id="btn-code-trim" class="code-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-scissors"></i> 2. Expert Trimming
+                </button>
+                <button onclick="switchCodeTab('slim')" id="btn-code-slim" class="code-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-compress"></i> 3. Intra-Expert Slimming
+                </button>
+                <button onclick="switchCodeTab('ft')" id="btn-code-ft" class="code-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> 4. Post-Finetuning
+                </button>
+                <button onclick="switchCodeTab('eval')" id="btn-code-eval" class="code-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-square-poll-vertical"></i> 5. Evaluation Harness
+                </button>
+            </div>
+
+            <!-- Code Blocks Container -->
+            <div class="glass-card rounded-3xl border border-slate-800 p-6 sm:p-8 relative">
+                <!-- Environment Setup Block -->
+                <div id="code-content-env" class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono text-slate-400">Install dependencies with PyTorch 2.1+ and Flash-Attention 2</span>
+                        <button onclick="copyCode('snippet-env', this)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all flex items-center gap-1.5 border border-slate-700">
+                            <i class="fa-regular fa-copy"></i> <span>Copy Code</span>
+                        </button>
+                    </div>
+                    <pre class="bg-slate-950 rounded-2xl p-5 border border-slate-800 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200 leading-relaxed" id="snippet-env"><code># 1. Clone the repository
+git clone https://github.com/case-lab-umd/Unified-MoE-Compression.git
 cd Unified-MoE-Compression
-pip install -e .
-pip install flash-attn --no-build-isolation
 
-# 2. Run Expert Trimming (Expert Drop / Layer Drop / Block Drop)
-bash scripts/compression/expert_drop/mixtral_expert_drop.sh
-bash scripts/compression/layer_drop/mixtral_layer_drop.sh
+# 2. Create and activate a conda environment
+conda create -n moe-compress python=3.10 -y
+conda activate moe-compress
 
-# 3. Run Post-Training 4-bit Quantization
-bash scripts/compression/quantization/awq.sh
+# 3. Install core dependencies
+pip install -r requirements.txt
 
-# 4. Evaluate FLOPs, Speed, and Benchmarks
-bash scripts/evaluation/speedup/measure_speed.sh
-bash scripts/evaluation/benchmark/run_benchmark.sh</code></pre>
-      </div>
+# 4. (Optional) Install Flash-Attention 2 for accelerated training & evaluation
+pip install flash-attn --no-build-isolation</code></pre>
+                </div>
 
-    </div>
-  </section>
+                <!-- Expert Trimming Block -->
+                <div id="code-content-trim" class="hidden space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono text-slate-400">Structural Expert Dropping and Layer Dropping scripts</span>
+                        <button onclick="copyCode('snippet-trim', this)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all flex items-center gap-1.5 border border-slate-700">
+                            <i class="fa-regular fa-copy"></i> <span>Copy Code</span>
+                        </button>
+                    </div>
+                    <pre class="bg-slate-950 rounded-2xl p-5 border border-slate-800 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200 leading-relaxed" id="snippet-trim"><code># Structural Expert Drop on Mixtral-8x7B (Retain top-6 out of 8 experts per layer)
+bash scripts/compression/expert_drop/mixtral_expert_drop.sh     --model_path mistralai/Mixtral-8x7B-v0.1     --preserve_n 6     --save_path ./compressed_models/mixtral_expert_drop_6
 
-  <!-- Citation Section -->
-  <section id="citation">
-    <div class="container-narrow">
-      <div class="section-header">
-        <div class="section-eyebrow">BibTeX</div>
-        <h2 class="section-title">Citation</h2>
-        <p class="section-desc">If you find Unified MoE Compression useful in your research, please cite our paper.</p>
-      </div>
+# Layer Dropping (Prune 4 non-critical MoE layers based on router entropy)
+bash scripts/compression/layer_drop/mixtral_layer_drop.sh     --model_path mistralai/Mixtral-8x7B-v0.1     --drop_layers 4     --save_path ./compressed_models/mixtral_layer_drop_4</code></pre>
+                </div>
 
-      <div class="code-box">
-        <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.innerText); this.innerHTML='<i class=\'fa-solid fa-check\'></i> Copied!'; setTimeout(()=>this.innerHTML='<i class=\'fa-regular fa-copy\'></i> Copy', 2000)"><i class="fa-regular fa-copy"></i> Copy</button>
-        <pre><code>@article{he2025towards,
-  title={Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques},
-  author={He, Shwai and Dong, Daize and Ding, Liang and Li, Ang},
-  journal={Transactions on Machine Learning Research},
-  issn={2835-8856},
-  year={2025},
-  url={https://openreview.net/forum?id=HTpMOl6xSI}
-}
+                <!-- Intra-Expert Slimming Block -->
+                <div id="code-content-slim" class="hidden space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono text-slate-400">AWQ / GPTQ Quantization and Wanda / SparseGPT Pruning</span>
+                        <button onclick="copyCode('snippet-slim', this)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all flex items-center gap-1.5 border border-slate-700">
+                            <i class="fa-regular fa-copy"></i> <span>Copy Code</span>
+                        </button>
+                    </div>
+                    <pre class="bg-slate-950 rounded-2xl p-5 border border-slate-800 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200 leading-relaxed" id="snippet-slim"><code># 4-bit AWQ Quantization (W4A16 with activation-aware scaling)
+python -m src.compression.quantize_awq     --model_path ./compressed_models/mixtral_expert_drop_6     --w_bit 4     --q_group_size 128     --save_path ./compressed_models/mixtral_exp6_awq4bit
 
-@article{he2024towards,
-  title={Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques},
-  author={He, Shwai and Dong, Daize and Ding, Liang and Li, Ang},
-  journal={arXiv preprint arXiv:2406.02500},
-  year={2024}
+# 50% Wanda Structured Intra-Expert Pruning
+python -m src.compression.prune_wanda     --model_path mistralai/Mixtral-8x7B-v0.1     --sparsity_ratio 0.5     --save_path ./compressed_models/mixtral_wanda_50</code></pre>
+                </div>
+
+                <!-- Post-Finetuning Block -->
+                <div id="code-content-ft" class="hidden space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono text-slate-400">Parameter-Efficient LoRA Recovery Finetuning (DeepSpeed-MoE ZeRO-3)</span>
+                        <button onclick="copyCode('snippet-ft', this)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all flex items-center gap-1.5 border border-slate-700">
+                            <i class="fa-regular fa-copy"></i> <span>Copy Code</span>
+                        </button>
+                    </div>
+                    <pre class="bg-slate-950 rounded-2xl p-5 border border-slate-800 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200 leading-relaxed" id="snippet-ft"><code># Recovery Finetuning with LoRA (250 steps on UltraChat / SlimPajama)
+deepspeed --num_gpus=8 scripts/finetuning/run_moe_finetune.py     --model_path ./compressed_models/mixtral_exp6_awq4bit     --dataset_name HuggingFaceH4/ultrachat_200k     --lora_r 64     --lora_alpha 128     --max_steps 250     --learning_rate 2e-5     --deepspeed_config configs/zero3_moe.json     --output_dir ./checkpoints/mixtral_recovered</code></pre>
+                </div>
+
+                <!-- Evaluation Harness Block -->
+                <div id="code-content-eval" class="hidden space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono text-slate-400">Automated LM-Evaluation-Harness across standard academic benchmarks</span>
+                        <button onclick="copyCode('snippet-eval', this)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all flex items-center gap-1.5 border border-slate-700">
+                            <i class="fa-regular fa-copy"></i> <span>Copy Code</span>
+                        </button>
+                    </div>
+                    <pre class="bg-slate-950 rounded-2xl p-5 border border-slate-800 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200 leading-relaxed" id="snippet-eval"><code># Run LM-Eval Harness on compressed checkpoint across all benchmark tasks
+lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_awq4bit     --tasks mmlu,gsm8k,arc_challenge,winogrande,hellaswag     --batch_size 16     --device cuda:0     --output_path ./eval_results/mixtral_unified_recipe.json</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BibTeX Citation Section -->
+    <section id="citation" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-3">
+                        <i class="fa-solid fa-quote-left"></i> Scholarly Reference
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Cite Our Work</h2>
+                    <p class="mt-2 text-slate-400 text-sm">
+                        If you use this unified MoE compression benchmark, code, or findings in your research, please cite our TMLR paper:
+                    </p>
+                </div>
+
+                <div class="glass-card rounded-2xl border border-slate-800 p-6 relative">
+                    <button onclick="copyBibtex()" class="absolute top-4 right-4 text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition-all flex items-center gap-1.5 border border-slate-700">
+                        <i class="fa-regular fa-copy" id="bibtex-copy-icon"></i> <span id="bibtex-copy-text">Copy BibTeX</span>
+                    </button>
+                    <pre class="text-xs sm:text-sm font-mono text-slate-300 overflow-x-auto pr-24 leading-relaxed" id="bibtex-code"><code>@article{he2025towards,
+  title   = {Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques},
+  author  = {Shwai He and Daize Dong and Liang Ding and Ang Li},
+  journal = {Transactions on Machine Learning Research (TMLR)},
+  year    = {2025},
+  url     = {https://openreview.net/forum?id=HTpMOl6xSI},
+  note    = {arXiv:2406.02500}
 }</code></pre>
-      </div>
-    </div>
-  </section>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container footer-content">
-      <div>
-        <div style="font-weight: 700; color: #ffffff; margin-bottom: 0.25rem;">Unified MoE Compression</div>
-        <div>CASE Lab, University of Maryland & Rutgers University</div>
-      </div>
-      <div>
-        Contact: <a href="mailto:shwaihe@umd.edu">shwaihe@umd.edu</a> &nbsp;|&nbsp; <a href="mailto:daize.dong@rutgers.edu">daize.dong@rutgers.edu</a>
-      </div>
-    </div>
-  </footer>
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-950/80 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white font-black text-sm shadow-md">
+                        UMC
+                    </div>
+                    <div>
+                        <div class="font-bold text-white text-sm">Unified MoE Compression</div>
+                        <div class="text-xs text-slate-500">CASE Lab @ University of Maryland, College Park</div>
+                    </div>
+                </div>
 
+                <div class="flex items-center gap-6 text-sm text-slate-400">
+                    <a href="https://arxiv.org/abs/2406.02500" target="_blank" class="hover:text-blue-400 transition-colors">arXiv</a>
+                    <a href="https://openreview.net/forum?id=HTpMOl6xSI" target="_blank" class="hover:text-blue-400 transition-colors">OpenReview</a>
+                    <a href="https://github.com/case-lab-umd/Unified-MoE-Compression" target="_blank" class="hover:text-blue-400 transition-colors">GitHub</a>
+                    <a href="https://case-lab-umd.github.io/" target="_blank" class="hover:text-blue-400 transition-colors">CASE Lab</a>
+                </div>
+
+                <div class="text-xs text-slate-500">
+                    &copy; 2025 CASE Lab. Licensed under Apache 2.0.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal for Static SVGs -->
+    <div id="lightboxModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-slate-400 hover:text-white text-2xl transition-colors p-2 rounded-full bg-slate-900/80 border border-slate-700">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="max-w-6xl w-full max-h-[90vh] flex flex-col items-center">
+            <div class="bg-slate-900/90 rounded-2xl p-4 border border-slate-800 w-full overflow-auto max-h-[80vh] flex items-center justify-center">
+                <img id="lightboxImg" src="" alt="Zoomed Diagram" class="max-w-full max-h-full object-contain rounded-lg">
+            </div>
+            <div class="mt-4 text-center text-xs text-slate-400 font-mono" id="lightboxCaption">
+                High-Resolution Architectural View
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-xl border border-blue-500/40 shadow-xl shadow-blue-500/10 flex items-center gap-3 text-xs sm:text-sm">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-base" id="toast-icon"></i>
+        <span id="toast-message">Copied to clipboard!</span>
+    </div>
+
+    <!-- JavaScript Execution Scripts -->
+    <script>
+        // ----------------------------------------------------
+        // Global State & Data Store
+        // ----------------------------------------------------
+        const calcState = {
+            model: 'mixtral', // 'mixtral' or 'deepseek'
+            trim: 'none',     // 'none', 'exp_drop_6', 'exp_drop_4', 'layer_drop_4'
+            slim: 'fp16',     // 'fp16', 'int8', 'w4a16_awq', 'w4a16_gptq'
+            ft: 'none'        // 'none', 'lora', 'full'
+        };
+
+        const modelMeta = {
+            mixtral: {
+                name: 'Mixtral-8x7B-v0.1',
+                hfPath: 'mistralai/Mixtral-8x7B-v0.1',
+                baseParams: 46.7,
+                activeParams: 12.9,
+                layers: 32,
+                expertsPerLayer: 8,
+                topK: 2,
+                baseVRAM: 93.4,
+                baseMMLU: 70.60
+            },
+            deepseek: {
+                name: 'DeepSeek-MoE-16B',
+                hfPath: 'deepseek-ai/deepseek-moe-16b-base',
+                baseParams: 16.4,
+                activeParams: 2.8,
+                layers: 28,
+                expertsPerLayer: 64,
+                topK: 8,
+                baseVRAM: 32.8,
+                baseMMLU: 49.30
+            }
+        };
+
+        // ----------------------------------------------------
+        // Lightbox Functions
+        // ----------------------------------------------------
+        function openLightbox(src, caption) {
+            const modal = document.getElementById('lightboxModal');
+            const img = document.getElementById('lightboxImg');
+            const cap = document.getElementById('lightboxCaption');
+            img.src = src;
+            cap.innerText = caption || 'High-Resolution Diagram';
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('lightboxModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // ----------------------------------------------------
+        // Toast Notification System
+        // ----------------------------------------------------
+        function showToast(message, iconClass = 'fa-solid fa-circle-check text-emerald-400') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+            toastMsg.innerText = message;
+            toastIcon.className = iconClass + ' text-base';
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+
+        function copyBibtex() {
+            const code = document.getElementById('bibtex-code').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                showToast('BibTeX citation copied to clipboard!');
+            });
+        }
+
+        function copyGeneratedCommand() {
+            const cmd = document.getElementById('res-cli-cmd').innerText;
+            navigator.clipboard.writeText(cmd).then(() => {
+                showToast('Execution command copied to clipboard!');
+            });
+        }
+
+        function copyCode(id, btn) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Code copied to clipboard!');
+            });
+        }
+
+        // ----------------------------------------------------
+        // Tab Switchers (Taxonomy, Code, Charts)
+        // ----------------------------------------------------
+        function switchTaxTab(tabId) {
+            ['slimming', 'trimming', 'pareto', 'matrix'].forEach(t => {
+                const btn = document.getElementById('tab-btn-' + t);
+                const content = document.getElementById('tax-content-' + t);
+                if (btn && content) {
+                    if (t === tabId) {
+                        btn.className = 'tab-btn active px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 border border-blue-500/30 flex items-center gap-2';
+                        content.classList.remove('hidden');
+                    } else {
+                        btn.className = 'tab-btn px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all bg-slate-900/60 hover:bg-slate-800/80 text-slate-300 border border-slate-700/50 flex items-center gap-2';
+                        content.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+        function switchCodeTab(tabId) {
+            ['env', 'trim', 'slim', 'ft', 'eval'].forEach(t => {
+                const btn = document.getElementById('btn-code-' + t);
+                const content = document.getElementById('code-content-' + t);
+                if (btn && content) {
+                    if (t === tabId) {
+                        btn.className = 'code-tab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-blue-600 text-white border border-blue-500/30 flex items-center gap-2';
+                        content.classList.remove('hidden');
+                    } else {
+                        btn.className = 'code-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800 flex items-center gap-2';
+                        content.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+        function switchChartTab(tabId) {
+            ['pareto', 'comm', 'tasks'].forEach(t => {
+                const btn = document.getElementById('btn-chart-' + t);
+                const view = document.getElementById('view-chart-' + t);
+                if (btn && view) {
+                    if (t === tabId) {
+                        btn.className = 'px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 border border-blue-500/30 flex items-center gap-2';
+                        view.classList.remove('hidden');
+                    } else {
+                        btn.className = 'px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-slate-900/60 hover:bg-slate-800/80 text-slate-300 border border-slate-700/50 flex items-center gap-2';
+                        view.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+        // ----------------------------------------------------
+        // Table Filtering
+        // ----------------------------------------------------
+        function filterTable(cat) {
+            const rows = document.querySelectorAll('#benchmarkTableBody tr');
+            let visibleCount = 0;
+            rows.forEach(r => {
+                const m = r.getAttribute('data-model');
+                const c = r.getAttribute('data-category');
+                let match = false;
+                if (cat === 'all') match = true;
+                else if (cat === 'mixtral' && m === 'mixtral') match = true;
+                else if (cat === 'deepseek' && m === 'deepseek') match = true;
+                else if (cat === 'slimming' && c === 'slimming') match = true;
+                else if (cat === 'trimming' && c === 'trimming') match = true;
+                else if (cat === 'synergy' && c === 'synergy') match = true;
+
+                if (match) {
+                    r.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    r.classList.add('hidden');
+                }
+            });
+            document.getElementById('tbl-row-count').innerText = visibleCount;
+
+            document.querySelectorAll('.tbl-filter-btn').forEach(btn => {
+                btn.className = 'tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800';
+            });
+            const activeBtn = document.getElementById('tbl-btn-' + cat);
+            if (activeBtn) {
+                activeBtn.className = 'tbl-filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white border border-blue-500/40';
+            }
+        }
+
+        // ----------------------------------------------------
+        // Interactive MoE Recipe Calculator Logic
+        // ----------------------------------------------------
+        function setCalcModel(m) {
+            calcState.model = m;
+            document.querySelectorAll('.calc-btn').forEach(b => {
+                b.className = 'calc-btn p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-left transition-all flex flex-col';
+            });
+            const active = document.getElementById('calc-model-' + m);
+            if (active) {
+                active.className = 'calc-btn active p-4 rounded-xl border border-blue-500/50 bg-blue-950/40 text-left transition-all flex flex-col';
+            }
+            recalculateRecipe();
+        }
+
+        function setCalcTrim(t) {
+            calcState.trim = t;
+            document.querySelectorAll('.calc-btn-trim').forEach(b => {
+                b.className = 'calc-btn-trim py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400';
+            });
+            const active = document.getElementById('calc-trim-' + t);
+            if (active) {
+                active.className = 'calc-btn-trim active py-2.5 px-3 rounded-lg border border-blue-500/40 bg-blue-950/30 text-xs font-medium text-center text-slate-200';
+            }
+            recalculateRecipe();
+        }
+
+        function setCalcSlim(s) {
+            calcState.slim = s;
+            document.querySelectorAll('.calc-btn-slim').forEach(b => {
+                b.className = 'calc-btn-slim py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400';
+            });
+            const active = document.getElementById('calc-slim-' + s);
+            if (active) {
+                active.className = 'calc-btn-slim active py-2.5 px-3 rounded-lg border border-blue-500/40 bg-blue-950/30 text-xs font-medium text-center text-slate-200';
+            }
+            recalculateRecipe();
+        }
+
+        function setCalcFT(f) {
+            calcState.ft = f;
+            document.querySelectorAll('.calc-btn-ft').forEach(b => {
+                b.className = 'calc-btn-ft py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400';
+            });
+            const active = document.getElementById('calc-ft-' + f);
+            if (active) {
+                active.className = 'calc-btn-ft active py-2.5 px-3 rounded-lg border border-blue-500/40 bg-blue-950/30 text-xs font-medium text-center text-slate-200';
+            }
+            recalculateRecipe();
+        }
+
+        function recalculateRecipe() {
+            const meta = modelMeta[calcState.model];
+            let vram = meta.baseVRAM;
+            let active = meta.activeParams;
+            let speedup = 1.0;
+            let retention = 100.0;
+            let command = '';
+
+            // Precision scalar
+            let precMult = 1.0;
+            if (calcState.slim === 'int8') {
+                precMult = 0.51;
+                speedup *= 1.65;
+                retention -= 0.6;
+            } else if (calcState.slim === 'w4a16_awq') {
+                precMult = 0.285;
+                speedup *= 2.10;
+                retention -= 1.2;
+            } else if (calcState.slim === 'w4a16_gptq') {
+                precMult = 0.285;
+                speedup *= 2.05;
+                retention -= 1.9;
+            }
+
+            // Trimming scalar
+            let trimMult = 1.0;
+            if (calcState.trim === 'exp_drop_6') {
+                trimMult = (calcState.model === 'mixtral') ? 0.77 : 0.78;
+                speedup *= 1.25;
+                retention -= 2.5;
+            } else if (calcState.trim === 'exp_drop_4') {
+                trimMult = (calcState.model === 'mixtral') ? 0.54 : 0.56;
+                speedup *= 1.55;
+                retention -= 8.7;
+            } else if (calcState.trim === 'layer_drop_4') {
+                trimMult = 0.875;
+                speedup *= 1.22;
+                retention -= 3.2;
+            }
+
+            // Recovery FT impact
+            if (calcState.ft === 'lora') {
+                retention += (100.0 - retention) * 0.70; // recovers 70% of lost accuracy
+            } else if (calcState.ft === 'full') {
+                retention += (100.0 - retention) * 0.90; // recovers 90% of lost accuracy
+            }
+
+            vram = (meta.baseVRAM * precMult * trimMult).toFixed(1);
+            if (retention > 100.0) retention = 100.0;
+            const estMMLU = ((meta.baseMMLU * retention) / 100.0).toFixed(2);
+
+            // Hardware recommendation
+            let hwText = '';
+            if (vram <= 12) {
+                hwText = 'Single RTX 3090 / 4090 (24GB VRAM) or A10G';
+            } else if (vram <= 24) {
+                hwText = 'Single RTX 4090 (24GB) or 1x A100 (40GB)';
+            } else if (vram <= 48) {
+                hwText = '2x RTX 4090 (24GB) or 1x A100 (80GB)';
+            } else {
+                hwText = '2x A100 (80GB) or 4x RTX 4090 (24GB)';
+            }
+
+            // Generate CLI command
+            if (calcState.trim === 'none' && calcState.slim === 'fp16') {
+                command = `bash scripts/compression/expert_drop/${calcState.model}_expert_drop.sh --model_path ${meta.hfPath} --preserve_n ${meta.expertsPerLayer} --save_path ./compressed_models/${calcState.model}_base`;
+            } else if (calcState.trim.startsWith('exp_drop')) {
+                const keepN = calcState.trim === 'exp_drop_6' ? (calcState.model === 'mixtral' ? 6 : 48) : (calcState.model === 'mixtral' ? 4 : 32);
+                let cmd = `bash scripts/compression/expert_drop/${calcState.model}_expert_drop.sh --model_path ${meta.hfPath} --preserve_n ${keepN} --save_path ./compressed_models/${calcState.model}_trimmed`;
+                if (calcState.slim.startsWith('w4a16')) {
+                    cmd += `
+
+# Followed by AWQ Quantization:
+python -m src.compression.quantize_awq --model_path ./compressed_models/${calcState.model}_trimmed --w_bit 4 --save_path ./compressed_models/${calcState.model}_unified`;
+                }
+                if (calcState.ft === 'lora') {
+                    cmd += `
+
+# Followed by LoRA Recovery FT:
+deepspeed scripts/finetuning/run_moe_finetune.py --model_path ./compressed_models/${calcState.model}_unified --lora_r 64 --max_steps 250`;
+                }
+                command = cmd;
+            } else {
+                command = `python -m src.compression.quantize_awq --model_path ${meta.hfPath} --w_bit 4 --save_path ./compressed_models/${calcState.model}_awq4b`;
+            }
+
+            // DOM Updates
+            document.getElementById('res-vram').innerText = vram;
+            document.getElementById('res-speedup').innerText = speedup.toFixed(2);
+            document.getElementById('res-retention').innerText = retention.toFixed(1);
+            document.getElementById('res-mmlu-score').innerText = `${estMMLU} Est. MMLU (Base ${meta.baseMMLU})`;
+            document.getElementById('res-hardware').innerText = hwText;
+            document.getElementById('res-cli-cmd').innerText = command;
+            
+            const badge = document.getElementById('badge-recipe-rating');
+            if (retention >= 97.0 && speedup >= 2.0) {
+                badge.className = 'text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold';
+                badge.innerText = 'Pareto Optimal';
+            } else if (retention >= 95.0) {
+                badge.className = 'text-xs px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 font-semibold';
+                badge.innerText = 'High Retention';
+            } else {
+                badge.className = 'text-xs px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 font-semibold';
+                badge.innerText = 'Aggressive Compression';
+            }
+        }
+
+        // ----------------------------------------------------
+        // Chart.js Visualizations Setup
+        // ----------------------------------------------------
+        let paretoChart, commChart, tasksChart;
+
+        function initCharts() {
+            // 1. Pareto Bubble Chart
+            const ctxPareto = document.getElementById('paretoChartCanvas').getContext('2d');
+            paretoChart = new Chart(ctxPareto, {
+                type: 'bubble',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Baseline (FP16)',
+                            data: [{ x: 93.4, y: 70.6, r: 12 }],
+                            backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                            borderColor: '#3b82f6',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'Intra-Expert Slimming (AWQ / GPTQ)',
+                            data: [
+                                { x: 26.8, y: 69.8, r: 22 }, // AWQ 4-bit
+                                { x: 26.8, y: 69.3, r: 20 }, // GPTQ 4-bit
+                                { x: 48.2, y: 70.2, r: 16 }  // INT8
+                            ],
+                            backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                            borderColor: '#10b981',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'Structural Trimming (Expert Drop)',
+                            data: [
+                                { x: 72.1, y: 68.9, r: 15 }, // 6/8
+                                { x: 50.8, y: 64.5, r: 18 }  // 4/8
+                            ],
+                            backgroundColor: 'rgba(99, 102, 241, 0.7)',
+                            borderColor: '#6366f1',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'Unified Synergy (Trimming + Slimming + FT)',
+                            data: [
+                                { x: 20.7, y: 69.4, r: 26 }  // Pareto Star
+                            ],
+                            backgroundColor: 'rgba(236, 72, 153, 0.85)',
+                            borderColor: '#ec4899',
+                            borderWidth: 3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Model VRAM Footprint (GB) — Lower is better', color: '#94a3b8' },
+                            grid: { color: 'rgba(51, 65, 85, 0.4)' },
+                            ticks: { color: '#94a3b8' }
+                        },
+                        y: {
+                            title: { display: true, text: 'Average Downstream Accuracy (%) — Higher is better', color: '#94a3b8' },
+                            grid: { color: 'rgba(51, 65, 85, 0.4)' },
+                            ticks: { color: '#94a3b8' },
+                            min: 60,
+                            max: 73
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: { color: '#cbd5e1', boxWidth: 14 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: VRAM ${context.raw.x} GB, Acc ${context.raw.y}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 2. Inter-GPU Comm Chart
+            const ctxComm = document.getElementById('commChartCanvas').getContext('2d');
+            commChart = new Chart(ctxComm, {
+                type: 'bar',
+                data: {
+                    labels: ['Base Mixtral-8x7B', 'Layer Drop (-4L)', 'Expert Drop (6/8)', 'Expert Drop (4/8)', 'Unified Synergy'],
+                    datasets: [
+                        {
+                            label: 'All-to-All Token Dispatch Volume (GB/s)',
+                            data: [14.8, 12.9, 10.8, 8.2, 7.9],
+                            backgroundColor: 'rgba(6, 182, 212, 0.75)',
+                            borderColor: '#06b6d4',
+                            borderWidth: 1,
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'Inter-Node Network Latency (ms/token)',
+                            data: [42.5, 38.1, 31.4, 24.2, 23.5],
+                            backgroundColor: 'rgba(168, 85, 247, 0.75)',
+                            borderColor: '#a855f7',
+                            borderWidth: 1,
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(51, 65, 85, 0.3)' },
+                            ticks: { color: '#94a3b8' }
+                        },
+                        y: {
+                            grid: { color: 'rgba(51, 65, 85, 0.3)' },
+                            ticks: { color: '#94a3b8' }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: { color: '#cbd5e1', boxWidth: 14 }
+                        }
+                    }
+                }
+            });
+
+            // 3. Multi-Task Chart
+            const ctxTasks = document.getElementById('tasksChartCanvas').getContext('2d');
+            tasksChart = new Chart(ctxTasks, {
+                type: 'bar',
+                data: {
+                    labels: ['MMLU', 'GSM8K', 'ARC-Challenge', 'WinoGrande', 'HellaSwag'],
+                    datasets: [
+                        {
+                            label: 'FP16 Baseline',
+                            data: [70.6, 58.4, 66.8, 81.2, 84.5],
+                            backgroundColor: 'rgba(59, 130, 246, 0.65)',
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'W4A16 AWQ',
+                            data: [69.8, 56.2, 65.4, 80.6, 83.9],
+                            backgroundColor: 'rgba(16, 185, 129, 0.75)',
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'W4A16 + Expert Drop 6/8 + LoRA',
+                            data: [69.4, 55.7, 65.2, 80.4, 83.7],
+                            backgroundColor: 'rgba(236, 72, 153, 0.85)',
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(51, 65, 85, 0.3)' },
+                            ticks: { color: '#94a3b8' }
+                        },
+                        y: {
+                            min: 40,
+                            max: 90,
+                            grid: { color: 'rgba(51, 65, 85, 0.3)' },
+                            ticks: { color: '#94a3b8' }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: { color: '#cbd5e1', boxWidth: 14 }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateParetoData() {
+            const m = document.getElementById('paretoModelFilter').value;
+            if (m === 'deepseek') {
+                paretoChart.data.datasets[0].data = [{ x: 32.8, y: 49.3, r: 12 }];
+                paretoChart.data.datasets[1].data = [
+                    { x: 9.4, y: 48.6, r: 24 },
+                    { x: 9.4, y: 47.9, r: 22 },
+                    { x: 17.2, y: 49.0, r: 16 }
+                ];
+                paretoChart.data.datasets[2].data = [
+                    { x: 25.1, y: 47.8, r: 16 },
+                    { x: 18.2, y: 44.1, r: 19 }
+                ];
+                paretoChart.data.datasets[3].data = [
+                    { x: 7.2, y: 48.4, r: 28 }
+                ];
+                paretoChart.options.scales.y.min = 40;
+                paretoChart.options.scales.y.max = 52;
+            } else {
+                paretoChart.data.datasets[0].data = [{ x: 93.4, y: 70.6, r: 12 }];
+                paretoChart.data.datasets[1].data = [
+                    { x: 26.8, y: 69.8, r: 22 },
+                    { x: 26.8, y: 69.3, r: 20 },
+                    { x: 48.2, y: 70.2, r: 16 }
+                ];
+                paretoChart.data.datasets[2].data = [
+                    { x: 72.1, y: 68.9, r: 15 },
+                    { x: 50.8, y: 64.5, r: 18 }
+                ];
+                paretoChart.data.datasets[3].data = [
+                    { x: 20.7, y: 69.4, r: 26 }
+                ];
+                paretoChart.options.scales.y.min = 60;
+                paretoChart.options.scales.y.max = 73;
+            }
+            paretoChart.update();
+        }
+
+        function updateTaskChartData() {
+            const tech = document.getElementById('taskTechniqueFilter').value;
+            if (tech === 'quant') {
+                tasksChart.data.datasets[1].label = 'AWQ 4-bit';
+                tasksChart.data.datasets[1].data = [69.8, 56.2, 65.4, 80.6, 83.9];
+                tasksChart.data.datasets[2].label = 'GPTQ 4-bit';
+                tasksChart.data.datasets[2].data = [69.3, 55.8, 65.1, 79.8, 83.4];
+            } else if (tech === 'trim') {
+                tasksChart.data.datasets[1].label = 'Expert Drop (6/8)';
+                tasksChart.data.datasets[1].data = [68.9, 54.3, 64.2, 79.5, 82.8];
+                tasksChart.data.datasets[2].label = 'Layer Drop (-4L)';
+                tasksChart.data.datasets[2].data = [68.4, 53.9, 63.8, 78.9, 82.1];
+            } else {
+                tasksChart.data.datasets[1].label = 'W4A16 AWQ';
+                tasksChart.data.datasets[1].data = [69.8, 56.2, 65.4, 80.6, 83.9];
+                tasksChart.data.datasets[2].label = 'W4A16 + ExpDrop 6/8 + LoRA';
+                tasksChart.data.datasets[2].data = [69.4, 55.7, 65.2, 80.4, 83.7];
+            }
+            tasksChart.update();
+        }
+
+        // ----------------------------------------------------
+        // Initialize on DOM Ready
+        // ----------------------------------------------------
+        document.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            recalculateRecipe();
+            
+            // Mobile Menu Toggle
+            const mobileBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileBtn && mobileMenu) {
+                mobileBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
