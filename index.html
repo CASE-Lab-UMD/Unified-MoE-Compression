@@ -592,7 +592,7 @@
               </div>
             </div>
             
-            <div class="w-full md:w-80 bg-slate-900 text-slate-900 rounded-xl p-5 font-mono text-xs shadow-xl flex flex-col justify-between">
+            <div class="w-full md:w-80 bg-slate-50 text-slate-800 rounded-xl p-5 font-mono text-xs border border-slate-200 shadow-sm flex flex-col justify-between">
               <div>
                 <div class="text-slate-600 pb-2 border-b border-slate-800 text-xs flex items-center justify-between">
                   <span>RECIPE WORKFLOW</span>
@@ -918,8 +918,8 @@
                                 <i class="fa-regular fa-copy" id="copy-calc-icon"></i> <span id="copy-calc-text">Copy</span>
                             </button>
                         </div>
-                        <div class="relative bg-slate-950 rounded-xl p-4 border border-slate-800 overflow-x-auto">
-                            <pre class="text-xs font-mono text-cyan-300 whitespace-pre-wrap leading-relaxed" id="res-cli-cmd">bash scripts/compression/expert_drop/mixtral_expert_drop.sh --model_path mistralai/Mixtral-8x7B-v0.1 --preserve_n 8 --save_path ./compressed_models/mixtral_base</pre>
+                        <div class="relative bg-slate-50 rounded-xl p-4 border border-slate-200 overflow-x-auto">
+                            <pre class="text-xs font-mono text-slate-800 whitespace-pre-wrap leading-relaxed" id="res-cli-cmd">bash scripts/compression/expert_drop/mixtral_expert_drop.sh --model_path mistralai/Mixtral-8x7B-v0.1 --preserve_n 8 --save_path ./compressed_models/mixtral_base</pre>
                         </div>
                     </div>
                 </div>
@@ -1204,7 +1204,7 @@
                             <i class="fa-regular fa-copy"></i> <span>Copy Code</span>
                         </button>
                     </div>
-                    <pre class="bg-slate-950 rounded-2xl p-5 border border-slate-800 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200 leading-relaxed" id="snippet-env"><code># 1. Clone the repository
+                    <pre class="bg-slate-50 rounded-2xl p-5 border border-slate-200 overflow-x-auto text-xs sm:text-sm font-mono text-slate-800 leading-relaxed" id="snippet-env"><code># 1. Clone the repository
 git clone https://github.com/case-lab-umd/Unified-MoE-Compression.git
 cd Unified-MoE-Compression
 
@@ -1227,7 +1227,7 @@ pip install flash-attn --no-build-isolation</code></pre>
                             <i class="fa-regular fa-copy"></i> <span>Copy Code</span>
                         </button>
                     </div>
-                    <pre class="bg-slate-950 rounded-2xl p-5 border border-slate-800 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200 leading-relaxed" id="snippet-trim"><code># Structural Expert Drop on Mixtral-8x7B (Retain top-6 out of 8 experts per layer)
+                    <pre class="bg-slate-50 rounded-2xl p-5 border border-slate-200 overflow-x-auto text-xs sm:text-sm font-mono text-slate-800 leading-relaxed" id="snippet-trim"><code># Structural Expert Drop on Mixtral-8x7B (Retain top-6 out of 8 experts per layer)
 bash scripts/compression/expert_drop/mixtral_expert_drop.sh     --model_path mistralai/Mixtral-8x7B-v0.1     --preserve_n 6     --save_path ./compressed_models/mixtral_expert_drop_6
 
 # Layer Dropping (Prune 4 non-critical MoE layers based on router entropy)
@@ -1242,7 +1242,7 @@ bash scripts/compression/layer_drop/mixtral_layer_drop.sh     --model_path mistr
                             <i class="fa-regular fa-copy"></i> <span>Copy Code</span>
                         </button>
                     </div>
-                    <pre class="bg-slate-950 rounded-2xl p-5 border border-slate-800 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200 leading-relaxed" id="snippet-slim"><code># 4-bit AWQ Quantization (W4A16 with activation-aware scaling)
+                    <pre class="bg-slate-50 rounded-2xl p-5 border border-slate-200 overflow-x-auto text-xs sm:text-sm font-mono text-slate-800 leading-relaxed" id="snippet-slim"><code># 4-bit AWQ Quantization (W4A16 with activation-aware scaling)
 python -m src.compression.quantize_awq     --model_path ./compressed_models/mixtral_expert_drop_6     --w_bit 4     --q_group_size 128     --save_path ./compressed_models/mixtral_exp6_awq4bit
 
 # 50% Wanda Structured Intra-Expert Pruning
@@ -1257,7 +1257,7 @@ python -m src.compression.prune_wanda     --model_path mistralai/Mixtral-8x7B-v0
                             <i class="fa-regular fa-copy"></i> <span>Copy Code</span>
                         </button>
                     </div>
-                    <pre class="bg-slate-950 rounded-2xl p-5 border border-slate-800 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200 leading-relaxed" id="snippet-ft"><code># Recovery Finetuning with LoRA (250 steps on UltraChat / SlimPajama)
+                    <pre class="bg-slate-50 rounded-2xl p-5 border border-slate-200 overflow-x-auto text-xs sm:text-sm font-mono text-slate-800 leading-relaxed" id="snippet-ft"><code># Recovery Finetuning with LoRA (250 steps on UltraChat / SlimPajama)
 deepspeed --num_gpus=8 scripts/finetuning/run_moe_finetune.py     --model_path ./compressed_models/mixtral_exp6_awq4bit     --dataset_name HuggingFaceH4/ultrachat_200k     --lora_r 64     --lora_alpha 128     --max_steps 250     --learning_rate 2e-5     --deepspeed_config configs/zero3_moe.json     --output_dir ./checkpoints/mixtral_recovered</code></pre>
                 </div>
 
@@ -1269,7 +1269,7 @@ deepspeed --num_gpus=8 scripts/finetuning/run_moe_finetune.py     --model_path .
                             <i class="fa-regular fa-copy"></i> <span>Copy Code</span>
                         </button>
                     </div>
-                    <pre class="bg-slate-950 rounded-2xl p-5 border border-slate-800 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200 leading-relaxed" id="snippet-eval"><code># Run LM-Eval Harness on compressed checkpoint across all benchmark tasks
+                    <pre class="bg-slate-50 rounded-2xl p-5 border border-slate-200 overflow-x-auto text-xs sm:text-sm font-mono text-slate-800 leading-relaxed" id="snippet-eval"><code># Run LM-Eval Harness on compressed checkpoint across all benchmark tasks
 lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_awq4bit     --tasks mmlu,gsm8k,arc_challenge,winogrande,hellaswag     --batch_size 16     --device cuda:0     --output_path ./eval_results/mixtral_unified_recipe.json</code></pre>
                 </div>
             </div>
@@ -1291,7 +1291,7 @@ lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_
                 </div>
 
                 <div class="bg-slate-50 rounded-2xl border border-slate-200 p-6 relative shadow-sm">
-                    <button onclick="copyBibtex()" class="absolute top-4 right-4 text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition-all flex items-center gap-1.5 border border-slate-700">
+                    <button onclick="copyBibtex()" class="absolute top-4 right-4 text-xs px-3 py-1.5 rounded-lg bg-white hover:bg-slate-100 text-slate-700 font-semibold border border-slate-300 shadow-sm transition-all flex items-center gap-1.5 border border-slate-700">
                         <i class="fa-regular fa-copy" id="bibtex-copy-icon"></i> <span id="bibtex-copy-text">Copy BibTeX</span>
                     </button>
                     <pre class="text-xs sm:text-sm font-mono text-slate-700 overflow-x-auto pr-24 leading-relaxed" id="bibtex-code"><code>@article{he2025towards,
