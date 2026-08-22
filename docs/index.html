@@ -65,7 +65,7 @@
   </script>
 
   <style>
-    :root {
+        :root {
       --primary: #2563eb;
       --primary-dark: #1d4ed8;
       --primary-light: #dbeafe;
@@ -74,7 +74,7 @@
       --bg-main: #f8fafc;
       --bg-card: #ffffff;
       --text-main: #0f172a;
-      --text-muted: #64748b;
+      --text-muted: #475569;
       --border: #e2e8f0;
       --code-bg: #0f172a;
     }
@@ -89,23 +89,22 @@
       font-family: "Outfit", sans-serif;
     }
 
-    /* Glassmorphism Styles */
+    /* Clean Card Styles */
     .glass-card {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(226, 232, 240, 0.8);
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
     }
 
     .glass-nav {
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+      border-bottom: 1px solid #e2e8f0;
     }
 
     .hero-glow {
-      background: radial-gradient(circle at 50% -20%, rgba(37, 99, 235, 0.15) 0%, rgba(13, 148, 136, 0.08) 35%, transparent 70%);
+      background: radial-gradient(circle at 50% -20%, rgba(37, 99, 235, 0.12) 0%, rgba(13, 148, 136, 0.06) 35%, transparent 70%);
     }
 
     /* Custom Scrollbar */
@@ -131,15 +130,14 @@
 
     /* Interactive Table Hover */
     .table-row-hover:hover {
-      background-color: rgba(239, 246, 255, 0.6);
-    }
-  </style>
+      background-color: rgba(239, 246, 255, 0.7);
+    }</style>
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased selection:bg-blue-500 selection:text-white">
+<body class="bg-slate-50 text-slate-900 antialiased selection:bg-blue-500 selection:text-slate-900">
 
   <!-- Toast Notification -->
-  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl border border-slate-700">
-    <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 bg-slate-900 text-slate-900 px-5 py-3 rounded-xl shadow-2xl border border-slate-700">
+    <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-700 font-bold text-lg"></i>
     <span id="toast-message" class="text-sm font-medium">Copied to clipboard!</span>
   </div>
 
@@ -154,7 +152,7 @@
           <a id="modal-download" href="#" target="_blank" class="px-3 py-1.5 text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition flex items-center gap-1.5">
             <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Raw SVG
           </a>
-          <button onclick="closeModalDirect()" class="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition">
+          <button onclick="closeModalDirect()" class="p-2 text-slate-600 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition">
             <i class="fa-solid fa-xmark text-lg"></i>
           </button>
         </div>
@@ -174,14 +172,14 @@
       <div class="flex items-center justify-between h-16">
         <!-- Logo & Title -->
         <a href="#" class="flex items-center gap-3 group">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-teal-500 flex items-center justify-center text-slate-900 shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
             <i class="fa-solid fa-diagram-project text-lg"></i>
           </div>
           <div class="flex flex-col">
             <span class="font-heading font-extrabold text-lg tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-teal-600 bg-clip-text text-transparent">
               Unified-MoE-Compression
             </span>
-            <span class="text-[10px] uppercase font-bold tracking-widest text-slate-400 -mt-1">TMLR 2025 • UMD CASE LAB</span>
+            <span class="text-xs uppercase font-bold tracking-widest text-slate-600 -mt-1">TMLR 2025 • UMD CASE LAB</span>
           </div>
         </a>
 
@@ -197,7 +195,7 @@
           <a href="#quickstart" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition">Quickstart</a>
           <a href="#citation" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition">BibTeX</a>
           
-          <a href="https://github.com/CASE-Lab-UMD/Unified-MoE-Compression" target="_blank" class="inline-flex items-center gap-2 px-3.5 py-1.5 text-sm font-bold bg-slate-900 hover:bg-slate-800 text-white rounded-xl shadow-sm hover:shadow transition-all">
+          <a href="https://github.com/CASE-Lab-UMD/Unified-MoE-Compression" target="_blank" class="inline-flex items-center gap-2 px-3.5 py-1.5 text-sm font-bold bg-slate-900 hover:bg-slate-800 text-slate-900 rounded-xl shadow-sm hover:shadow transition-all">
             <i class="fa-brands fa-github text-base"></i>
             <span>GitHub</span>
           </a>
@@ -218,7 +216,7 @@
         <a href="#calculator" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-base font-semibold text-blue-600 bg-blue-50">Recipe Planner & Calculator</a>
         <a href="#quickstart" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-base font-semibold text-slate-700 hover:bg-slate-100">Quickstart</a>
         <a href="#citation" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-base font-semibold text-slate-700 hover:bg-slate-100">BibTeX</a>
-        <a href="https://github.com/CASE-Lab-UMD/Unified-MoE-Compression" target="_blank" class="flex items-center justify-center gap-2 w-full py-2.5 mt-2 bg-slate-900 text-white rounded-lg font-bold">
+        <a href="https://github.com/CASE-Lab-UMD/Unified-MoE-Compression" target="_blank" class="flex items-center justify-center gap-2 w-full py-2.5 mt-2 bg-slate-900 text-slate-900 rounded-lg font-bold">
           <i class="fa-brands fa-github"></i> Star on GitHub
         </a>
       </div>
@@ -231,13 +229,13 @@
       
       <!-- Badges -->
       <div class="flex flex-wrap items-center justify-center gap-2.5 mb-6">
-        <a href="https://openreview.net/forum?id=HTpMOl6xSI" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-extrabold bg-[#0B7285] text-white shadow-sm hover:scale-105 transition-transform">
+        <a href="https://openreview.net/forum?id=HTpMOl6xSI" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-extrabold bg-[#0B7285] text-slate-900 shadow-sm hover:scale-105 transition-transform">
           <i class="fa-solid fa-certificate"></i> TMLR 2025
         </a>
-        <a href="https://openreview.net/forum?id=HTpMOl6xSI" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-extrabold bg-purple-600 text-white shadow-sm hover:scale-105 transition-transform">
+        <a href="https://openreview.net/forum?id=HTpMOl6xSI" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-extrabold bg-purple-600 text-slate-900 shadow-sm hover:scale-105 transition-transform">
           <i class="fa-solid fa-check-double"></i> OpenReview
         </a>
-        <a href="https://arxiv.org/abs/2406.02500" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-extrabold bg-[#b31b1b] text-white shadow-sm hover:scale-105 transition-transform">
+        <a href="https://arxiv.org/abs/2406.02500" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-extrabold bg-[#b31b1b] text-slate-900 shadow-sm hover:scale-105 transition-transform">
           <i class="fa-solid fa-newspaper"></i> arXiv:2406.02500
         </a>
         <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-extrabold bg-blue-100 text-blue-800 border border-blue-200">
@@ -274,12 +272,12 @@
         <span><sup>1</sup> University of Maryland, College Park</span> &nbsp;•&nbsp; 
         <span><sup>2</sup> Rutgers University</span> &nbsp;•&nbsp; 
         <span><sup>3</sup> Data61, CSIRO</span>
-        <div class="text-xs text-slate-400 mt-1"><sub>* Equal Contribution</sub></div>
+        <div class="text-xs text-slate-600 mt-1"><sub>* Equal Contribution</sub></div>
       </div>
 
       <!-- Action CTA Buttons -->
       <div class="flex flex-wrap items-center justify-center gap-3.5 mb-14">
-        <a href="https://openreview.net/forum?id=HTpMOl6xSI" target="_blank" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-lg shadow-blue-600/30 hover:-translate-y-0.5 transition-all">
+        <a href="https://openreview.net/forum?id=HTpMOl6xSI" target="_blank" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-slate-900 font-bold text-sm shadow-lg shadow-blue-600/30 hover:-translate-y-0.5 transition-all">
           <i class="fa-solid fa-file-pdf"></i>
           <span>OpenReview Paper</span>
         </a>
@@ -287,11 +285,11 @@
           <i class="fa-solid fa-newspaper text-red-600"></i>
           <span>arXiv:2406.02500</span>
         </a>
-        <a href="https://github.com/CASE-Lab-UMD/Unified-MoE-Compression" target="_blank" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-md hover:-translate-y-0.5 transition-all">
+        <a href="https://github.com/CASE-Lab-UMD/Unified-MoE-Compression" target="_blank" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-900 font-bold text-sm shadow-md hover:-translate-y-0.5 transition-all">
           <i class="fa-brands fa-github"></i>
           <span>Code & Checkpoints</span>
         </a>
-        <a href="#calculator" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white font-bold text-sm shadow-lg shadow-teal-500/20 hover:-translate-y-0.5 transition-all">
+        <a href="#calculator" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-slate-900 font-bold text-sm shadow-lg shadow-teal-500/20 hover:-translate-y-0.5 transition-all">
           <i class="fa-solid fa-sliders"></i>
           <span>Interactive Recipe Planner</span>
         </a>
@@ -304,7 +302,7 @@
           
           <!-- Zoom Overlay Prompt -->
           <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors flex items-center justify-center">
-            <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 px-4 py-2 bg-slate-900/80 text-white text-xs font-bold rounded-full backdrop-blur-sm shadow-lg flex items-center gap-2">
+            <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 px-4 py-2 bg-slate-900/80 text-slate-900 text-xs font-bold rounded-full backdrop-blur-sm shadow-lg flex items-center gap-2">
               <i class="fa-solid fa-magnifying-glass-plus"></i> Click to Zoom Full Resolution
             </span>
           </div>
@@ -348,7 +346,7 @@
           </div>
           <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-xs font-semibold text-blue-600">
             <span>Verified on Mixtral-8x7B</span>
-            <i class="fa-solid fa-arrow-right ml-auto text-[10px]"></i>
+            <i class="fa-solid fa-arrow-right ml-auto text-xs"></i>
           </div>
         </div>
 
@@ -365,7 +363,7 @@
           </div>
           <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-xs font-semibold text-teal-600">
             <span>From 93.4GB down to 20.1GB</span>
-            <i class="fa-solid fa-arrow-right ml-auto text-[10px]"></i>
+            <i class="fa-solid fa-arrow-right ml-auto text-xs"></i>
           </div>
         </div>
 
@@ -382,7 +380,7 @@
           </div>
           <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-xs font-semibold text-indigo-600">
             <span>Eliminates EP network traffic</span>
-            <i class="fa-solid fa-arrow-right ml-auto text-[10px]"></i>
+            <i class="fa-solid fa-arrow-right ml-auto text-xs"></i>
           </div>
         </div>
 
@@ -399,7 +397,7 @@
           </div>
           <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-xs font-semibold text-amber-600">
             <span>Vanilla PyTorch & CUDA</span>
-            <i class="fa-solid fa-arrow-right ml-auto text-[10px]"></i>
+            <i class="fa-solid fa-arrow-right ml-auto text-xs"></i>
           </div>
         </div>
 
@@ -409,7 +407,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
           <div class="flex items-center gap-3 mb-4">
-            <span class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-sm">1</span>
+            <span class="w-8 h-8 rounded-lg bg-blue-600 text-slate-900 flex items-center justify-center font-bold text-sm">1</span>
             <h3 class="font-heading font-bold text-lg text-slate-900">Intra-Expert Slimming</h3>
           </div>
           <p class="text-sm text-slate-600 leading-relaxed">
@@ -419,7 +417,7 @@
 
         <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
           <div class="flex items-center gap-3 mb-4">
-            <span class="w-8 h-8 rounded-lg bg-teal-600 text-white flex items-center justify-center font-bold text-sm">2</span>
+            <span class="w-8 h-8 rounded-lg bg-teal-600 text-slate-900 flex items-center justify-center font-bold text-sm">2</span>
             <h3 class="font-heading font-bold text-lg text-slate-900">Structural Trimming</h3>
           </div>
           <p class="text-sm text-slate-600 leading-relaxed">
@@ -429,7 +427,7 @@
 
         <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
           <div class="flex items-center gap-3 mb-4">
-            <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-sm">3</span>
+            <span class="w-8 h-8 rounded-lg bg-indigo-600 text-slate-900 flex items-center justify-center font-bold text-sm">3</span>
             <h3 class="font-heading font-bold text-lg text-slate-900">Unified Pareto Recipes</h3>
           </div>
           <p class="text-sm text-slate-600 leading-relaxed">
@@ -457,7 +455,7 @@
 
       <!-- Taxonomy Tab Buttons -->
       <div class="flex flex-wrap items-center justify-center gap-2 mb-8">
-        <button onclick="switchTaxTab('slimming')" id="tab-btn-slimming" class="tax-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 bg-blue-600 text-white shadow-md">
+        <button onclick="switchTaxTab('slimming')" id="tab-btn-slimming" class="tax-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 bg-blue-600 text-slate-900 shadow-md">
           <i class="fa-solid fa-scissors mr-1.5"></i> Expert Slimming
         </button>
         <button onclick="switchTaxTab('trimming')" id="tab-btn-trimming" class="tax-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 bg-white text-slate-700 hover:bg-slate-100 border border-slate-200">
@@ -478,7 +476,7 @@
           <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
             <div class="flex items-center justify-between mb-4">
               <span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800">Weight Pruning</span>
-              <span class="text-xs font-semibold text-slate-400"><i class="fa-solid fa-microchip"></i> Intra-Expert</span>
+              <span class="text-xs font-semibold text-slate-600"><i class="fa-solid fa-microchip"></i> Intra-Expert</span>
             </div>
             <h3 class="font-heading font-bold text-xl text-slate-900 mb-2">Magnitude, Wanda & SparseGPT</h3>
             <p class="text-sm text-slate-600 mb-4 leading-relaxed">
@@ -494,7 +492,7 @@
           <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
             <div class="flex items-center justify-between mb-4">
               <span class="px-3 py-1 rounded-full text-xs font-bold bg-teal-100 text-teal-800">Quantization</span>
-              <span class="text-xs font-semibold text-slate-400"><i class="fa-solid fa-bolt"></i> Low Bitwidth</span>
+              <span class="text-xs font-semibold text-slate-600"><i class="fa-solid fa-bolt"></i> Low Bitwidth</span>
             </div>
             <h3 class="font-heading font-bold text-xl text-slate-900 mb-2">4-Bit Post-Training Quantization (AWQ / GPTQ)</h3>
             <p class="text-sm text-slate-600 mb-4 leading-relaxed">
@@ -517,7 +515,7 @@
           <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
             <div class="flex items-center justify-between mb-4">
               <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">Router Level</span>
-              <span class="text-xs font-semibold text-slate-400">Expert Drop</span>
+              <span class="text-xs font-semibold text-slate-600">Expert Drop</span>
             </div>
             <h3 class="font-heading font-bold text-xl text-slate-900 mb-2">Expert Drop</h3>
             <p class="text-sm text-slate-600 mb-4 leading-relaxed">
@@ -533,7 +531,7 @@
           <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
             <div class="flex items-center justify-between mb-4">
               <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-800">Sublayer Level</span>
-              <span class="text-xs font-semibold text-slate-400">Layer Drop</span>
+              <span class="text-xs font-semibold text-slate-600">Layer Drop</span>
             </div>
             <h3 class="font-heading font-bold text-xl text-slate-900 mb-2">Layer Drop</h3>
             <p class="text-sm text-slate-600 mb-4 leading-relaxed">
@@ -549,7 +547,7 @@
           <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
             <div class="flex items-center justify-between mb-4">
               <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800">Full Block Level</span>
-              <span class="text-xs font-semibold text-slate-400">Block Drop</span>
+              <span class="text-xs font-semibold text-slate-600">Block Drop</span>
             </div>
             <h3 class="font-heading font-bold text-xl text-slate-900 mb-2">Block Drop</h3>
             <p class="text-sm text-slate-600 mb-4 leading-relaxed">
@@ -570,7 +568,7 @@
         <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
           <div class="flex flex-col md:flex-row items-center gap-8">
             <div class="flex-1 space-y-4">
-              <span class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-white">Compound Compression Pipeline</span>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-slate-900">Compound Compression Pipeline</span>
               <h3 class="font-heading font-extrabold text-2xl text-slate-900">
                 The Golden Pareto Recipe: <br class="hidden sm:inline">
                 Trim &rarr; Slim &rarr; Lightweight FT
@@ -581,32 +579,32 @@
               <div class="grid grid-cols-3 gap-3 text-center pt-2">
                 <div class="bg-blue-50 p-3 rounded-xl border border-blue-100">
                   <div class="font-heading font-extrabold text-xl text-blue-700">2.48×</div>
-                  <div class="text-[11px] font-semibold text-blue-900">Inference Speed</div>
+                  <div class="text-xs font-semibold text-blue-900">Inference Speed</div>
                 </div>
                 <div class="bg-teal-50 p-3 rounded-xl border border-teal-100">
                   <div class="font-heading font-extrabold text-xl text-teal-700">-78.5%</div>
-                  <div class="text-[11px] font-semibold text-teal-900">VRAM Footprint</div>
+                  <div class="text-xs font-semibold text-teal-900">VRAM Footprint</div>
                 </div>
                 <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-100">
                   <div class="font-heading font-extrabold text-xl text-indigo-700">70.1%</div>
-                  <div class="text-[11px] font-semibold text-indigo-900">MMLU Score (Base: 70.6%)</div>
+                  <div class="text-xs font-semibold text-indigo-900">MMLU Score (Base: 70.6%)</div>
                 </div>
               </div>
             </div>
             
-            <div class="w-full md:w-80 bg-slate-900 text-white rounded-xl p-5 font-mono text-xs shadow-xl flex flex-col justify-between">
+            <div class="w-full md:w-80 bg-slate-900 text-slate-900 rounded-xl p-5 font-mono text-xs shadow-xl flex flex-col justify-between">
               <div>
-                <div class="text-slate-400 pb-2 border-b border-slate-800 text-[11px] flex items-center justify-between">
+                <div class="text-slate-600 pb-2 border-b border-slate-800 text-xs flex items-center justify-between">
                   <span>RECIPE WORKFLOW</span>
                   <i class="fa-solid fa-diagram-next text-teal-400"></i>
                 </div>
                 <div class="py-3 space-y-2">
-                  <div class="text-emerald-400"># Step 1: Expert Drop</div>
-                  <div class="text-slate-300">bash scripts/compression/expert_drop/mixtral_expert_drop.sh</div>
-                  <div class="text-emerald-400 mt-2"># Step 2: 4-bit AWQ</div>
-                  <div class="text-slate-300">bash scripts/compression/quantization/awq.sh</div>
-                  <div class="text-emerald-400 mt-2"># Step 3: Post-Finetune</div>
-                  <div class="text-slate-300">bash scripts/finetuning/mixtral_finetune.sh</div>
+                  <div class="text-emerald-700 font-bold"># Step 1: Expert Drop</div>
+                  <div class="text-slate-700">bash scripts/compression/expert_drop/mixtral_expert_drop.sh</div>
+                  <div class="text-emerald-700 font-bold mt-2"># Step 2: 4-bit AWQ</div>
+                  <div class="text-slate-700">bash scripts/compression/quantization/awq.sh</div>
+                  <div class="text-emerald-700 font-bold mt-2"># Step 3: Post-Finetune</div>
+                  <div class="text-slate-700">bash scripts/finetuning/mixtral_finetune.sh</div>
                 </div>
               </div>
               <div class="pt-2 border-t border-slate-800 text-teal-400 font-bold text-center">
@@ -623,7 +621,7 @@
           <div class="relative overflow-hidden rounded-xl bg-slate-50 border border-slate-100 cursor-pointer group" onclick="openModal('static/images/unified-view-table.svg', 'Figure 2: Systematic Multi-Dimensional Taxonomy Comparison Table')">
             <img src="static/images/unified-view-table.svg" alt="Detailed Taxonomy Comparison Table" class="w-full h-auto object-contain transition duration-200 group-hover:scale-[1.005]">
             <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors flex items-center justify-center">
-              <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 px-4 py-2 bg-slate-900/80 text-white text-xs font-bold rounded-full backdrop-blur-sm shadow-lg flex items-center gap-2">
+              <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 px-4 py-2 bg-slate-900/80 text-slate-900 text-xs font-bold rounded-full backdrop-blur-sm shadow-lg flex items-center gap-2">
                 <i class="fa-solid fa-magnifying-glass-plus"></i> Click to Zoom Full Resolution
               </span>
             </div>
@@ -639,47 +637,54 @@
 
 
     <!-- Interactive Visualizations Section -->
-    <section id="benchmarks" class="py-20 relative">
+    <section id="benchmarks" class="py-16 md:py-24 bg-white border-b border-slate-200 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-4">
-                    <i class="fa-solid fa-chart-line"></i> Empirical Findings
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold uppercase tracking-wider mb-4">
+                    <i class="fa-solid fa-chart-line text-cyan-600"></i> Empirical Findings
                 </div>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
                     Interactive Performance & Pareto Trade-offs
                 </h2>
-                <p class="mt-4 text-slate-400 text-base sm:text-lg">
+                <p class="mt-4 text-slate-600 text-base sm:text-lg leading-relaxed">
+                    Explore empirical efficiency across downstream tasks, memory footprints, and multi-GPU communication overheads.
+                </p>
+            </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    Interactive Performance & Pareto Trade-offs
+                </h2>
+                <p class="mt-4 text-slate-600 text-base sm:text-lg">
                     Explore empirical efficiency across downstream tasks, memory footprints, and multi-GPU communication overheads.
                 </p>
             </div>
 
             <!-- Chart Controls / Tabs -->
             <div class="flex flex-wrap justify-center gap-3 mb-10">
-                <button onclick="switchChartTab('pareto')" id="btn-chart-pareto" class="px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 border border-blue-500/30 flex items-center gap-2">
+                <button onclick="switchChartTab('pareto')" id="btn-chart-pareto" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all bg-blue-600 text-slate-900 shadow-sm border border-blue-700 flex items-center gap-2">
                     <i class="fa-solid fa-chart-scatter"></i> Accuracy vs. Memory & Latency (Pareto)
                 </button>
-                <button onclick="switchChartTab('comm')" id="btn-chart-comm" class="px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-slate-900/60 hover:bg-slate-800/80 text-slate-300 border border-slate-700/50 flex items-center gap-2">
+                <button onclick="switchChartTab('comm')" id="btn-chart-comm" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 flex items-center gap-2">
                     <i class="fa-solid fa-network-wired"></i> Inter-GPU All-to-All Comm Overhead
                 </button>
-                <button onclick="switchChartTab('tasks')" id="btn-chart-tasks" class="px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-slate-900/60 hover:bg-slate-800/80 text-slate-300 border border-slate-700/50 flex items-center gap-2">
+                <button onclick="switchChartTab('tasks')" id="btn-chart-tasks" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 flex items-center gap-2">
                     <i class="fa-solid fa-layer-group"></i> Multi-Task Benchmark Breakdown
                 </button>
             </div>
 
             <!-- Chart Container Grid -->
-            <div class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-800">
+            <div class="bg-slate-50 rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
                 <!-- Pareto View -->
                 <div id="view-chart-pareto" class="space-y-6">
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
                         <div>
-                            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
                                 <span>Pareto Frontier: Average Accuracy vs. Model VRAM (GB)</span>
                             </h3>
-                            <p class="text-xs sm:text-sm text-slate-400">Bubble size indicates relative inference speedup (larger = faster generation throughput).</p>
+                            <p class="text-xs sm:text-sm text-slate-600 font-medium">Bubble size indicates relative inference speedup (larger = faster generation throughput).</p>
                         </div>
                         <div class="flex items-center gap-3">
-                            <span class="text-xs text-slate-400 font-medium">Model:</span>
-                            <select id="paretoModelFilter" onchange="updateParetoData()" class="bg-slate-950 text-slate-200 text-xs rounded-lg border border-slate-700 px-3 py-1.5 focus:outline-none focus:border-blue-500">
+                            <span class="text-xs text-slate-700 font-bold">Model:</span>
+                            <select id="paretoModelFilter" onchange="updateParetoData()" class="bg-white text-slate-800 text-xs sm:text-sm font-semibold rounded-lg border border-slate-300 px-3 py-1.5 focus:outline-none focus:border-blue-500 shadow-sm">
                                 <option value="mixtral">Mixtral-8x7B (Base 46.7B)</option>
                                 <option value="deepseek">DeepSeek-MoE-16B (Base 16.4B)</option>
                             </select>
@@ -688,7 +693,7 @@
                     <div class="relative h-[380px] sm:h-[440px] w-full">
                         <canvas id="paretoChartCanvas"></canvas>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-slate-800/60 text-xs text-slate-400">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-slate-200 text-xs text-slate-700 font-medium">
                         <div class="flex items-center gap-2">
                             <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block shrink-0"></span>
                             <span><strong>Optimal Zone:</strong> High accuracy retention (>95%) with 2x–3.5x VRAM compression</span>
@@ -708,20 +713,20 @@
                 <div id="view-chart-comm" class="hidden space-y-6">
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
                         <div>
-                            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
                                 <span>Inter-GPU All-to-All Dispatch Communication Volume</span>
                             </h3>
-                            <p class="text-xs sm:text-sm text-slate-400">Comparing token dispatch traffic (GB/s) & network latency across Expert Parallel (EP) ranks.</p>
+                            <p class="text-xs sm:text-sm text-slate-600 font-medium">Comparing token dispatch traffic (GB/s) & network latency across Expert Parallel (EP) ranks.</p>
                         </div>
-                        <div class="text-xs bg-slate-800/80 px-3 py-1 rounded-lg text-slate-300 border border-slate-700">
+                        <div class="text-xs bg-white px-3 py-1 rounded-lg text-slate-700 border border-slate-200 font-semibold shadow-sm">
                             Evaluated on 8x A100 (80GB SXM4) with DeepSpeed-MoE
                         </div>
                     </div>
                     <div class="relative h-[380px] sm:h-[440px] w-full">
                         <canvas id="commChartCanvas"></canvas>
                     </div>
-                    <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 text-xs text-slate-400 leading-relaxed">
-                        <strong class="text-slate-200">Key Finding:</strong> Structural Expert Dropping directly reduces the All-to-All token dispatch volume by up to <span class="text-cyan-400 font-semibold">37.5%</span>, breaking inter-node interconnect bandwidth bottlenecks in distributed serving without sacrificing routing entropy.
+                    <div class="p-4 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm text-slate-700 leading-relaxed shadow-sm">
+                        <strong class="text-slate-900 font-bold">Key Finding:</strong> Structural Expert Dropping directly reduces the All-to-All token dispatch volume by up to <span class="text-cyan-700 font-bold">37.5%</span>, breaking inter-node interconnect bandwidth bottlenecks in distributed serving without sacrificing routing entropy.
                     </div>
                 </div>
 
@@ -729,14 +734,14 @@
                 <div id="view-chart-tasks" class="hidden space-y-6">
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
                         <div>
-                            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
                                 <span>Multi-Task Accuracy Retention by Compression Technique</span>
                             </h3>
-                            <p class="text-xs sm:text-sm text-slate-400">Zero-shot and few-shot evaluation across MMLU, GSM8K, ARC-Challenge, WinoGrande, and HellaSwag.</p>
+                            <p class="text-xs sm:text-sm text-slate-600 font-medium">Zero-shot and few-shot evaluation across MMLU, GSM8K, ARC-Challenge, WinoGrande, and HellaSwag.</p>
                         </div>
                         <div class="flex items-center gap-3">
-                            <span class="text-xs text-slate-400 font-medium">Technique:</span>
-                            <select id="taskTechniqueFilter" onchange="updateTaskChartData()" class="bg-slate-950 text-slate-200 text-xs rounded-lg border border-slate-700 px-3 py-1.5 focus:outline-none focus:border-blue-500">
+                            <span class="text-xs text-slate-700 font-bold">Technique:</span>
+                            <select id="taskTechniqueFilter" onchange="updateTaskChartData()" class="bg-white text-slate-800 text-xs sm:text-sm font-semibold rounded-lg border border-slate-300 px-3 py-1.5 focus:outline-none focus:border-blue-500 shadow-sm">
                                 <option value="quant">Expert Slimming (AWQ / GPTQ / SmoothQuant)</option>
                                 <option value="trim">Expert Trimming (Expert Drop / Layer Drop / Block Drop)</option>
                                 <option value="hybrid">Unified Synergy (Trimming + Slimming + FT)</option>
@@ -752,62 +757,65 @@
     </section>
 
     <!-- Interactive MoE Recipe Planner & Live Calculator -->
-    <section id="calculator" class="py-20 relative overflow-hidden bg-slate-900/40 border-y border-slate-800/60">
-        <!-- Glow accents -->
-        <div class="absolute -top-40 right-10 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-40 left-10 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
-
+    <section id="calculator" class="py-16 md:py-24 bg-slate-50 border-b border-slate-200 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold uppercase tracking-wider mb-4">
-                    <i class="fa-solid fa-calculator"></i> Interactive System Tool
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 border border-purple-200 text-purple-800 text-xs font-bold uppercase tracking-wider mb-4">
+                    <i class="fa-solid fa-calculator text-purple-600"></i> Interactive System Tool
                 </div>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
                     MoE Compression Recipe Planner & Calculator
                 </h2>
-                <p class="mt-4 text-slate-400 text-base sm:text-lg">
+                <p class="mt-4 text-slate-600 text-base sm:text-lg leading-relaxed">
+                    Select your base architecture, configure intra-expert slimming & structural trimming parameters, and instantly compute memory savings, throughput gain, and ready-to-run CLI commands.
+                </p>
+            </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    MoE Compression Recipe Planner & Calculator
+                </h2>
+                <p class="mt-4 text-slate-600 text-base sm:text-lg">
                     Select your base architecture, configure intra-expert slimming & structural trimming parameters, and instantly compute memory savings, throughput gain, and ready-to-run CLI commands.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <!-- Controls Column (7 cols) -->
-                <div class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-6">
-                    <h3 class="text-lg font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-3">
+                <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2 border-b border-slate-200 pb-3">
                         <i class="fa-solid fa-sliders text-blue-400"></i> Configuration Parameters
                     </h3>
 
                     <!-- Step 1: Base Model -->
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">1. Base MoE Architecture</label>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">1. Base MoE Architecture</label>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <button type="button" onclick="setCalcModel('mixtral')" id="calc-model-mixtral" class="calc-btn active p-4 rounded-xl border border-blue-500/50 bg-blue-950/40 text-left transition-all flex flex-col">
-                                <span class="font-bold text-white text-sm">Mixtral-8x7B-v0.1</span>
-                                <span class="text-xs text-slate-400 mt-1">46.7B Total | 12.9B Active (Top-2 / 8 Exp)</span>
-                                <span class="text-xs text-blue-400 mt-2 font-mono">32 Layers, 8 Experts/Layer</span>
+                            <button type="button" onclick="setCalcModel('mixtral')" id="calc-model-mixtral" class="calc-btn active p-4 rounded-xl border-2 border-blue-600 bg-blue-50/70 text-left transition-all flex flex-col shadow-sm">
+                                <span class="font-bold text-blue-950 text-sm sm:text-base">Mixtral-8x7B-v0.1</span>
+                                <span class="text-xs text-slate-700 font-medium mt-1">46.7B Total | 12.9B Active (Top-2 / 8 Exp)</span>
+                                <span class="text-xs text-blue-700 font-bold mt-2 font-mono">32 Layers, 8 Experts/Layer</span>
                             </button>
-                            <button type="button" onclick="setCalcModel('deepseek')" id="calc-model-deepseek" class="calc-btn p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-left transition-all flex flex-col">
-                                <span class="font-bold text-white text-sm">DeepSeek-MoE-16B</span>
-                                <span class="text-xs text-slate-400 mt-1">16.4B Total | 2.8B Active (Fine-grained)</span>
-                                <span class="text-xs text-cyan-400 mt-2 font-mono">28 Layers, 64 Experts + 2 Shared</span>
+                            <button type="button" onclick="setCalcModel('deepseek')" id="calc-model-deepseek" class="calc-btn p-4 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-left transition-all flex flex-col">
+                                <span class="font-bold text-slate-800 text-sm sm:text-base">DeepSeek-MoE-16B</span>
+                                <span class="text-xs text-slate-600 mt-1">16.4B Total | 2.8B Active (Fine-grained)</span>
+                                <span class="text-xs text-slate-500 font-semibold mt-2 font-mono">28 Layers, 64 Experts + 2 Shared</span>
                             </button>
                         </div>
                     </div>
 
                     <!-- Step 2: Structural Trimming -->
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">2. Structural Trimming Method</label>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">2. Structural Trimming Method</label>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                            <button type="button" onclick="setCalcTrim('none')" id="calc-trim-none" class="calc-btn-trim active py-2.5 px-3 rounded-lg border border-blue-500/40 bg-blue-950/30 text-xs font-medium text-center text-slate-200">
+                            <button type="button" onclick="setCalcTrim('none')" id="calc-trim-none" class="calc-btn-trim active py-2.5 px-3 rounded-lg border-2 border-blue-600 bg-blue-600 text-xs sm:text-sm font-semibold text-center text-slate-900 shadow-sm">
                                 None (Full)
                             </button>
-                            <button type="button" onclick="setCalcTrim('exp_drop_6')" id="calc-trim-exp_drop_6" class="calc-btn-trim py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400">
+                            <button type="button" onclick="setCalcTrim('exp_drop_6')" id="calc-trim-exp_drop_6" class="calc-btn-trim py-2.5 px-3 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-xs sm:text-sm font-medium text-center text-slate-700">
                                 Expert Drop (6/8)
                             </button>
-                            <button type="button" onclick="setCalcTrim('exp_drop_4')" id="calc-trim-exp_drop_4" class="calc-btn-trim py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400">
+                            <button type="button" onclick="setCalcTrim('exp_drop_4')" id="calc-trim-exp_drop_4" class="calc-btn-trim py-2.5 px-3 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-xs sm:text-sm font-medium text-center text-slate-700">
                                 Expert Drop (4/8)
                             </button>
-                            <button type="button" onclick="setCalcTrim('layer_drop_4')" id="calc-trim-layer_drop_4" class="calc-btn-trim py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400">
+                            <button type="button" onclick="setCalcTrim('layer_drop_4')" id="calc-trim-layer_drop_4" class="calc-btn-trim py-2.5 px-3 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-xs sm:text-sm font-medium text-center text-slate-700">
                                 Layer Drop (-4 L)
                             </button>
                         </div>
@@ -815,18 +823,18 @@
 
                     <!-- Step 3: Intra-Expert Slimming (Quant / Pruning) -->
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">3. Intra-Expert Slimming (Precision & Sparsity)</label>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">3. Intra-Expert Slimming (Precision & Sparsity)</label>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                            <button type="button" onclick="setCalcSlim('fp16')" id="calc-slim-fp16" class="calc-btn-slim active py-2.5 px-3 rounded-lg border border-blue-500/40 bg-blue-950/30 text-xs font-medium text-center text-slate-200">
+                            <button type="button" onclick="setCalcSlim('fp16')" id="calc-slim-fp16" class="calc-btn-slim active py-2.5 px-3 rounded-lg border-2 border-blue-600 bg-blue-600 text-xs sm:text-sm font-semibold text-center text-slate-900 shadow-sm">
                                 FP16 (Baseline)
                             </button>
-                            <button type="button" onclick="setCalcSlim('int8')" id="calc-slim-int8" class="calc-btn-slim py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400">
+                            <button type="button" onclick="setCalcSlim('int8')" id="calc-slim-int8" class="calc-btn-slim py-2.5 px-3 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-xs sm:text-sm font-medium text-center text-slate-700">
                                 INT8 (SmoothQuant)
                             </button>
-                            <button type="button" onclick="setCalcSlim('w4a16_awq')" id="calc-slim-w4a16_awq" class="calc-btn-slim py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400">
+                            <button type="button" onclick="setCalcSlim('w4a16_awq')" id="calc-slim-w4a16_awq" class="calc-btn-slim py-2.5 px-3 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-xs sm:text-sm font-medium text-center text-slate-700">
                                 W4A16 (AWQ)
                             </button>
-                            <button type="button" onclick="setCalcSlim('w4a16_gptq')" id="calc-slim-w4a16_gptq" class="calc-btn-slim py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400">
+                            <button type="button" onclick="setCalcSlim('w4a16_gptq')" id="calc-slim-w4a16_gptq" class="calc-btn-slim py-2.5 px-3 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-xs sm:text-sm font-medium text-center text-slate-700">
                                 W4A16 (GPTQ)
                             </button>
                         </div>
@@ -834,15 +842,15 @@
 
                     <!-- Step 4: Post-Compression Recovery -->
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">4. Post-Training Recovery</label>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">4. Post-Training Recovery</label>
                         <div class="grid grid-cols-3 gap-2">
-                            <button type="button" onclick="setCalcFT('none')" id="calc-ft-none" class="calc-btn-ft active py-2.5 px-3 rounded-lg border border-blue-500/40 bg-blue-950/30 text-xs font-medium text-center text-slate-200">
+                            <button type="button" onclick="setCalcFT('none')" id="calc-ft-none" class="calc-btn-ft active py-2.5 px-3 rounded-lg border-2 border-blue-600 bg-blue-600 text-xs sm:text-sm font-semibold text-center text-slate-900 shadow-sm">
                                 Zero-Shot (No FT)
                             </button>
-                            <button type="button" onclick="setCalcFT('lora')" id="calc-ft-lora" class="calc-btn-ft py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400">
+                            <button type="button" onclick="setCalcFT('lora')" id="calc-ft-lora" class="calc-btn-ft py-2.5 px-3 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-xs sm:text-sm font-medium text-center text-slate-700">
                                 LoRA (250 steps)
                             </button>
-                            <button type="button" onclick="setCalcFT('full')" id="calc-ft-full" class="calc-btn-ft py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400">
+                            <button type="button" onclick="setCalcFT('full')" id="calc-ft-full" class="calc-btn-ft py-2.5 px-3 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-xs sm:text-sm font-medium text-center text-slate-700">
                                 Full MoE FT (1k steps)
                             </button>
                         </div>
@@ -852,61 +860,61 @@
                 <!-- Results & CLI Generator Column (5 cols) -->
                 <div class="lg:col-span-5 space-y-6">
                     <!-- Metrics Card -->
-                    <div class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-6 bg-gradient-to-b from-slate-900/90 to-slate-950/90">
-                        <h3 class="text-lg font-bold text-white flex items-center justify-between border-b border-slate-800 pb-3">
-                            <span class="flex items-center gap-2"><i class="fa-solid fa-gauge-high text-cyan-400"></i> Estimated System Impact</span>
-                            <span id="badge-recipe-rating" class="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold">Pareto Optimal</span>
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center justify-between border-b border-slate-200 pb-3">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-gauge-high text-blue-600"></i> Estimated System Impact</span>
+                            <span id="badge-recipe-rating" class="text-xs px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold">Pareto Optimal</span>
                         </h3>
 
                         <!-- KPI Grid -->
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800/80">
-                                <div class="text-xs text-slate-400 font-medium">Model VRAM (Weights)</div>
-                                <div class="text-2xl sm:text-3xl font-extrabold text-white mt-1 flex items-baseline gap-1">
-                                    <span id="res-vram">93.4</span> <span class="text-sm font-normal text-slate-400">GB</span>
+                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80">
+                                <div class="text-xs text-slate-600 font-bold uppercase tracking-wider">Model VRAM (Weights)</div>
+                                <div class="text-2xl sm:text-3xl font-black text-slate-900 mt-1 flex items-baseline gap-1">
+                                    <span id="res-vram">93.4</span> <span class="text-sm font-semibold text-slate-500">GB</span>
                                 </div>
-                                <div id="res-vram-diff" class="text-xs text-emerald-400 font-medium mt-1">Baseline FP16</div>
+                                <div id="res-vram-diff" class="text-xs text-emerald-700 font-bold mt-1">Baseline FP16</div>
                             </div>
-                            <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800/80">
-                                <div class="text-xs text-slate-400 font-medium">Active Params / Token</div>
-                                <div class="text-2xl sm:text-3xl font-extrabold text-white mt-1 flex items-baseline gap-1">
-                                    <span id="res-active">12.9</span> <span class="text-sm font-normal text-slate-400">B</span>
+                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80">
+                                <div class="text-xs text-slate-600 font-bold uppercase tracking-wider">Active Params / Token</div>
+                                <div class="text-2xl sm:text-3xl font-black text-slate-900 mt-1 flex items-baseline gap-1">
+                                    <span id="res-active">12.9</span> <span class="text-sm font-semibold text-slate-500">B</span>
                                 </div>
-                                <div id="res-active-diff" class="text-xs text-slate-400 font-medium mt-1">2 / 8 Routed</div>
+                                <div id="res-active-diff" class="text-xs text-slate-600 font-medium mt-1">2 / 8 Routed</div>
                             </div>
-                            <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800/80">
-                                <div class="text-xs text-slate-400 font-medium">Throughput Speedup</div>
-                                <div class="text-2xl sm:text-3xl font-extrabold text-cyan-400 mt-1 flex items-baseline gap-1">
-                                    <span id="res-speedup">1.00</span><span class="text-sm font-normal text-slate-400">x</span>
+                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80">
+                                <div class="text-xs text-slate-600 font-bold uppercase tracking-wider">Throughput Speedup</div>
+                                <div class="text-2xl sm:text-3xl font-black text-blue-600 mt-1 flex items-baseline gap-1">
+                                    <span id="res-speedup">1.00</span><span class="text-sm font-semibold text-slate-500">x</span>
                                 </div>
-                                <div id="res-speedup-detail" class="text-xs text-slate-400 font-medium mt-1">Single Node</div>
+                                <div id="res-speedup-detail" class="text-xs text-slate-600 font-medium mt-1">Single Node</div>
                             </div>
-                            <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800/80">
-                                <div class="text-xs text-slate-400 font-medium">Est. MMLU Retention</div>
-                                <div class="text-2xl sm:text-3xl font-extrabold text-indigo-400 mt-1 flex items-baseline gap-1">
-                                    <span id="res-retention">100.0</span><span class="text-sm font-normal text-slate-400">%</span>
+                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80">
+                                <div class="text-xs text-slate-600 font-bold uppercase tracking-wider">Est. MMLU Retention</div>
+                                <div class="text-2xl sm:text-3xl font-black text-indigo-700 mt-1 flex items-baseline gap-1">
+                                    <span id="res-retention">100.0</span><span class="text-sm font-semibold text-slate-500">%</span>
                                 </div>
-                                <div id="res-mmlu-score" class="text-xs text-slate-400 font-medium mt-1">70.60 Base MMLU</div>
+                                <div id="res-mmlu-score" class="text-xs text-slate-600 font-medium mt-1">70.60 Base MMLU</div>
                             </div>
                         </div>
 
                         <!-- Hardware Fit Recommendation -->
-                        <div class="p-3.5 rounded-xl bg-blue-950/30 border border-blue-500/20 text-xs text-slate-300 flex items-center gap-3">
+                        <div class="p-4 rounded-xl bg-blue-50 border border-blue-200 text-xs sm:text-sm text-slate-800 flex items-center gap-3 font-medium">
                             <i class="fa-solid fa-microchip text-blue-400 text-base"></i>
                             <div>
-                                <span class="font-semibold text-white">Recommended Hardware: </span>
-                                <span id="res-hardware" class="text-slate-300">2x A100 (80GB) or 4x RTX 4090 (24GB)</span>
+                                <span class="font-bold text-slate-900">Recommended Hardware: </span>
+                                <span id="res-hardware" class="text-slate-700 font-semibold">2x A100 (80GB) or 4x RTX 4090 (24GB)</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Generated CLI Command Box -->
-                    <div class="glass-card rounded-3xl p-6 border border-slate-800 space-y-3">
+                    <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-3">
                         <div class="flex items-center justify-between">
-                            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                                <i class="fa-solid fa-terminal text-emerald-400"></i> Generated Execution Command
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
+                                <i class="fa-solid fa-terminal text-emerald-700 font-bold"></i> Generated Execution Command
                             </span>
-                            <button onclick="copyGeneratedCommand()" class="text-xs px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all flex items-center gap-1.5 border border-slate-700">
+                            <button onclick="copyGeneratedCommand()" class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition-all flex items-center gap-1.5 border border-slate-300">
                                 <i class="fa-regular fa-copy" id="copy-calc-icon"></i> <span id="copy-calc-text">Copy</span>
                             </button>
                         </div>
@@ -921,16 +929,23 @@
 
 
     <!-- Benchmark Results Matrix Table -->
-    <section id="results" class="py-20 relative">
+    <section id="results" class="py-16 md:py-24 bg-white border-b border-slate-200 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-14">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-4">
-                    <i class="fa-solid fa-table-list"></i> Comprehensive Evaluation
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-xs font-bold uppercase tracking-wider mb-4">
+                    <i class="fa-solid fa-table-list text-blue-600"></i> Comprehensive Evaluation
                 </div>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
                     Benchmark Results Matrix
                 </h2>
-                <p class="mt-4 text-slate-400 text-base sm:text-lg">
+                <p class="mt-4 text-slate-600 text-base sm:text-lg leading-relaxed">
+                    Systematic evaluation across MMLU, GSM8K, ARC-c, WinoGrande, HellaSwag, downstream retention, and memory footprint.
+                </p>
+            </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    Benchmark Results Matrix
+                </h2>
+                <p class="mt-4 text-slate-600 text-base sm:text-lg">
                     Systematic evaluation across MMLU, GSM8K, ARC-c, WinoGrande, HellaSwag, downstream retention, and memory footprint.
                 </p>
             </div>
@@ -938,35 +953,39 @@
             <!-- Table Filters -->
             <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="filterTable('all')" id="tbl-btn-all" class="tbl-filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white border border-blue-500/40">
+                    <button onclick="filterTable('all')" id="tbl-btn-all" class="tbl-filter-btn active px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-blue-600 text-slate-900 border border-blue-700 shadow-sm">
                         All Configurations
                     </button>
-                    <button onclick="filterTable('mixtral')" id="tbl-btn-mixtral" class="tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800">
+                    <button onclick="filterTable('mixtral')" id="tbl-btn-mixtral" class="tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-white text-slate-700 hover:bg-slate-100 border border-slate-300">
                         Mixtral-8x7B
                     </button>
-                    <button onclick="filterTable('deepseek')" id="tbl-btn-deepseek" class="tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800">
+                    <button onclick="filterTable('deepseek')" id="tbl-btn-deepseek" class="tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-white text-slate-700 hover:bg-slate-100 border border-slate-300">
                         DeepSeek-MoE-16B
                     </button>
-                    <button onclick="filterTable('slimming')" id="tbl-btn-slimming" class="tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800">
+                    <button onclick="filterTable('slimming')" id="tbl-btn-slimming" class="tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-white text-slate-700 hover:bg-slate-100 border border-slate-300">
                         Slimming (Quant)
                     </button>
-                    <button onclick="filterTable('trimming')" id="tbl-btn-trimming" class="tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800">
+                    <button onclick="filterTable('trimming')" id="tbl-btn-trimming" class="tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-white text-slate-700 hover:bg-slate-100 border border-slate-300">
                         Trimming (Drop)
                     </button>
-                    <button onclick="filterTable('synergy')" id="tbl-btn-synergy" class="tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800">
+                    <button onclick="filterTable('synergy')" id="tbl-btn-synergy" class="tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-white text-slate-700 hover:bg-slate-100 border border-slate-300">
                         Unified Recipes
                     </button>
                 </div>
+                <div class="text-xs sm:text-sm text-slate-600 font-mono">
+                    Showing <span id="tbl-row-count" class="text-slate-900 font-bold">12</span> verified evaluations
+                </div>
+            </div>
                 <div class="text-xs text-slate-500 font-mono">
-                    Showing <span id="tbl-row-count" class="text-slate-300 font-bold">12</span> verified evaluations
+                    Showing <span id="tbl-row-count" class="text-slate-700 font-bold">12</span> verified evaluations
                 </div>
             </div>
 
             <!-- Table Card -->
-            <div class="glass-card rounded-3xl border border-slate-800 overflow-hidden shadow-2xl">
+            <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs sm:text-sm text-slate-300 border-collapse">
-                        <thead class="bg-slate-950/90 text-slate-400 uppercase text-[11px] font-bold tracking-wider border-b border-slate-800">
+                    <table class="w-full text-left text-xs sm:text-sm text-slate-700 border-collapse">
+                        <thead class="bg-slate-100 text-slate-700 uppercase text-xs font-bold tracking-wider border-b border-slate-200">
                             <tr>
                                 <th class="py-4 px-4 sm:px-6">Model & Recipe</th>
                                 <th class="py-4 px-3 text-center">Type</th>
@@ -979,160 +998,160 @@
                                 <th class="py-4 px-4 text-center">Avg Ret. (%)</th>
                             </tr>
                         </thead>
-                        <tbody id="benchmarkTableBody" class="divide-y divide-slate-800/60 font-mono text-xs">
+                        <tbody id="benchmarkTableBody" class="divide-y divide-slate-200 font-mono text-xs sm:text-sm text-slate-800">
                             <!-- Mixtral Baseline -->
-                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="mixtral" data-category="baseline">
-                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                            <tr class="hover:bg-blue-50/50 transition-colors" data-model="mixtral" data-category="baseline">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-slate-900 flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-blue-400"></span> Mixtral-8x7B (FP16 Baseline)
                                 </td>
-                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[10px]">Uncompressed</span></td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">FP16</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">93.4</td>
-                                <td class="py-3.5 px-3 text-center text-slate-400">1.00x</td>
-                                <td class="py-3.5 px-3 text-center font-bold text-white">70.60</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">58.40</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">66.80</td>
-                                <td class="py-3.5 px-4 text-center font-bold text-emerald-400">100.0%</td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-800 text-xs font-semibold border border-slate-200">Uncompressed</span></td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">FP16</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">93.4</td>
+                                <td class="py-3.5 px-3 text-center text-slate-600">1.00x</td>
+                                <td class="py-3.5 px-3 text-center font-bold text-slate-900">70.60</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">58.40</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">66.80</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-emerald-700 font-bold">100.0%</td>
                             </tr>
                             <!-- Mixtral AWQ 4-bit -->
-                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="mixtral" data-category="slimming">
-                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                            <tr class="hover:bg-blue-50/50 transition-colors" data-model="mixtral" data-category="slimming">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-slate-900 flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Mixtral-8x7B + AWQ-4bit
                                 </td>
-                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-500/30 text-[10px]">Slimming</span></td>
-                                <td class="py-3.5 px-3 text-center text-emerald-400">W4A16</td>
-                                <td class="py-3.5 px-3 text-center text-emerald-400 font-bold">26.8</td>
-                                <td class="py-3.5 px-3 text-center text-emerald-400">2.10x</td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-300">Slimming</span></td>
+                                <td class="py-3.5 px-3 text-center text-emerald-700 font-bold">W4A16</td>
+                                <td class="py-3.5 px-3 text-center text-emerald-700 font-bold font-bold">26.8</td>
+                                <td class="py-3.5 px-3 text-center text-emerald-700 font-bold">2.10x</td>
                                 <td class="py-3.5 px-3 text-center text-slate-200">69.80</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">56.20</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">65.40</td>
-                                <td class="py-3.5 px-4 text-center font-bold text-emerald-400">98.8%</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">56.20</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">65.40</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-emerald-700 font-bold">98.8%</td>
                             </tr>
                             <!-- Mixtral GPTQ 4-bit -->
-                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="mixtral" data-category="slimming">
-                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                            <tr class="hover:bg-blue-50/50 transition-colors" data-model="mixtral" data-category="slimming">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-slate-900 flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Mixtral-8x7B + GPTQ-4bit
                                 </td>
-                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-500/30 text-[10px]">Slimming</span></td>
-                                <td class="py-3.5 px-3 text-center text-emerald-400">W4A16</td>
-                                <td class="py-3.5 px-3 text-center text-emerald-400 font-bold">26.8</td>
-                                <td class="py-3.5 px-3 text-center text-emerald-400">2.05x</td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-300">Slimming</span></td>
+                                <td class="py-3.5 px-3 text-center text-emerald-700 font-bold">W4A16</td>
+                                <td class="py-3.5 px-3 text-center text-emerald-700 font-bold font-bold">26.8</td>
+                                <td class="py-3.5 px-3 text-center text-emerald-700 font-bold">2.05x</td>
                                 <td class="py-3.5 px-3 text-center text-slate-200">69.30</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">55.80</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">65.10</td>
-                                <td class="py-3.5 px-4 text-center font-bold text-emerald-400">98.1%</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">55.80</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">65.10</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-emerald-700 font-bold">98.1%</td>
                             </tr>
                             <!-- Mixtral SmoothQuant INT8 -->
-                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="mixtral" data-category="slimming">
-                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                            <tr class="hover:bg-blue-50/50 transition-colors" data-model="mixtral" data-category="slimming">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-slate-900 flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Mixtral-8x7B + SmoothQuant-INT8
                                 </td>
-                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-500/30 text-[10px]">Slimming</span></td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-300">Slimming</span></td>
                                 <td class="py-3.5 px-3 text-center text-cyan-400">W8A8</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300 font-bold">48.2</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700 font-bold">48.2</td>
                                 <td class="py-3.5 px-3 text-center text-cyan-400">1.65x</td>
                                 <td class="py-3.5 px-3 text-center text-slate-200">70.20</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">57.90</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">66.30</td>
-                                <td class="py-3.5 px-4 text-center font-bold text-emerald-400">99.4%</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">57.90</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">66.30</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-emerald-700 font-bold">99.4%</td>
                             </tr>
                             <!-- Mixtral Expert Drop 6/8 -->
-                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="mixtral" data-category="trimming">
-                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                            <tr class="hover:bg-blue-50/50 transition-colors" data-model="mixtral" data-category="trimming">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-slate-900 flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-indigo-400"></span> Mixtral-8x7B + Expert Drop (6/8 Exp)
                                 </td>
-                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-indigo-950/60 text-indigo-300 border border-indigo-500/30 text-[10px]">Trimming</span></td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">FP16</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">72.1</td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-800 text-xs font-semibold border border-indigo-300">Trimming</span></td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">FP16</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">72.1</td>
                                 <td class="py-3.5 px-3 text-center text-indigo-400">1.28x</td>
                                 <td class="py-3.5 px-3 text-center text-slate-200">68.90</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">54.30</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">64.20</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">54.30</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">64.20</td>
                                 <td class="py-3.5 px-4 text-center font-bold text-indigo-400">97.5%</td>
                             </tr>
                             <!-- Mixtral Expert Drop 4/8 -->
-                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="mixtral" data-category="trimming">
-                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                            <tr class="hover:bg-blue-50/50 transition-colors" data-model="mixtral" data-category="trimming">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-slate-900 flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-indigo-400"></span> Mixtral-8x7B + Expert Drop (4/8 Exp)
                                 </td>
-                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-indigo-950/60 text-indigo-300 border border-indigo-500/30 text-[10px]">Trimming</span></td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">FP16</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">50.8</td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-800 text-xs font-semibold border border-indigo-300">Trimming</span></td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">FP16</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">50.8</td>
                                 <td class="py-3.5 px-3 text-center text-indigo-400">1.62x</td>
                                 <td class="py-3.5 px-3 text-center text-slate-200">64.50</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">48.10</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">60.10</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">48.10</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">60.10</td>
                                 <td class="py-3.5 px-4 text-center font-bold text-amber-400">91.3%</td>
                             </tr>
                             <!-- Mixtral Unified Synergy (AWQ-4b + ExpDrop 6/8 + LoRA) -->
-                            <tr class="hover:bg-slate-800/30 transition-colors bg-gradient-to-r from-blue-950/20 to-purple-950/20" data-model="mixtral" data-category="synergy">
+                            <tr class="hover:bg-blue-50/50 transition-colors bg-gradient-to-r from-blue-950/20 to-purple-950/20" data-model="mixtral" data-category="synergy">
                                 <td class="py-3.5 px-4 sm:px-6 font-sans font-bold text-cyan-300 flex items-center gap-2">
                                     <i class="fa-solid fa-star text-amber-400 text-xs"></i> Mixtral + AWQ-4b + ExpDrop(6/8) + LoRA
                                 </td>
-                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-500/30 text-[10px] font-bold">Unified Pareto</span></td>
-                                <td class="py-3.5 px-3 text-center text-emerald-400">W4A16</td>
-                                <td class="py-3.5 px-3 text-center text-emerald-400 font-bold">20.7</td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-500/30 text-xs font-bold">Unified Pareto</span></td>
+                                <td class="py-3.5 px-3 text-center text-emerald-700 font-bold">W4A16</td>
+                                <td class="py-3.5 px-3 text-center text-emerald-700 font-bold font-bold">20.7</td>
                                 <td class="py-3.5 px-3 text-center text-cyan-400 font-bold">2.45x</td>
-                                <td class="py-3.5 px-3 text-center text-white font-bold">69.40</td>
+                                <td class="py-3.5 px-3 text-center text-slate-900 font-bold">69.40</td>
                                 <td class="py-3.5 px-3 text-center text-slate-200">55.70</td>
                                 <td class="py-3.5 px-3 text-center text-slate-200">65.20</td>
-                                <td class="py-3.5 px-4 text-center font-bold text-emerald-400">98.3%</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-emerald-700 font-bold">98.3%</td>
                             </tr>
                             <!-- DeepSeek Baseline -->
-                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="deepseek" data-category="baseline">
-                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                            <tr class="hover:bg-blue-50/50 transition-colors" data-model="deepseek" data-category="baseline">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-slate-900 flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-cyan-400"></span> DeepSeek-MoE-16B (FP16 Baseline)
                                 </td>
-                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[10px]">Uncompressed</span></td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">FP16</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">32.8</td>
-                                <td class="py-3.5 px-3 text-center text-slate-400">1.00x</td>
-                                <td class="py-3.5 px-3 text-center font-bold text-white">49.30</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">18.80</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">51.20</td>
-                                <td class="py-3.5 px-4 text-center font-bold text-emerald-400">100.0%</td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-800 text-xs font-semibold border border-slate-200">Uncompressed</span></td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">FP16</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">32.8</td>
+                                <td class="py-3.5 px-3 text-center text-slate-600">1.00x</td>
+                                <td class="py-3.5 px-3 text-center font-bold text-slate-900">49.30</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">18.80</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">51.20</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-emerald-700 font-bold">100.0%</td>
                             </tr>
                             <!-- DeepSeek AWQ 4-bit -->
-                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="deepseek" data-category="slimming">
-                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                            <tr class="hover:bg-blue-50/50 transition-colors" data-model="deepseek" data-category="slimming">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-slate-900 flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-emerald-400"></span> DeepSeek-MoE-16B + AWQ-4bit
                                 </td>
-                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-500/30 text-[10px]">Slimming</span></td>
-                                <td class="py-3.5 px-3 text-center text-emerald-400">W4A16</td>
-                                <td class="py-3.5 px-3 text-center text-emerald-400 font-bold">9.4</td>
-                                <td class="py-3.5 px-3 text-center text-emerald-400">2.25x</td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-300">Slimming</span></td>
+                                <td class="py-3.5 px-3 text-center text-emerald-700 font-bold">W4A16</td>
+                                <td class="py-3.5 px-3 text-center text-emerald-700 font-bold font-bold">9.4</td>
+                                <td class="py-3.5 px-3 text-center text-emerald-700 font-bold">2.25x</td>
                                 <td class="py-3.5 px-3 text-center text-slate-200">48.60</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">17.90</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">50.30</td>
-                                <td class="py-3.5 px-4 text-center font-bold text-emerald-400">98.5%</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">17.90</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">50.30</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-emerald-700 font-bold">98.5%</td>
                             </tr>
                             <!-- DeepSeek Expert Drop 48/64 -->
-                            <tr class="hover:bg-slate-800/30 transition-colors" data-model="deepseek" data-category="trimming">
-                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-white flex items-center gap-2">
+                            <tr class="hover:bg-blue-50/50 transition-colors" data-model="deepseek" data-category="trimming">
+                                <td class="py-3.5 px-4 sm:px-6 font-sans font-semibold text-slate-900 flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-indigo-400"></span> DeepSeek-MoE + Exp Drop (48/64)
                                 </td>
-                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-indigo-950/60 text-indigo-300 border border-indigo-500/30 text-[10px]">Trimming</span></td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">FP16</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">25.1</td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-800 text-xs font-semibold border border-indigo-300">Trimming</span></td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">FP16</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">25.1</td>
                                 <td class="py-3.5 px-3 text-center text-indigo-400">1.34x</td>
                                 <td class="py-3.5 px-3 text-center text-slate-200">47.80</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">17.10</td>
-                                <td class="py-3.5 px-3 text-center text-slate-300">49.40</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">17.10</td>
+                                <td class="py-3.5 px-3 text-center text-slate-700">49.40</td>
                                 <td class="py-3.5 px-4 text-center font-bold text-indigo-400">96.9%</td>
                             </tr>
                             <!-- DeepSeek Unified Synergy (AWQ-4b + ExpDrop 48/64 + LoRA) -->
-                            <tr class="hover:bg-slate-800/30 transition-colors bg-gradient-to-r from-blue-950/20 to-purple-950/20" data-model="deepseek" data-category="synergy">
+                            <tr class="hover:bg-blue-50/50 transition-colors bg-gradient-to-r from-blue-950/20 to-purple-950/20" data-model="deepseek" data-category="synergy">
                                 <td class="py-3.5 px-4 sm:px-6 font-sans font-bold text-cyan-300 flex items-center gap-2">
                                     <i class="fa-solid fa-star text-amber-400 text-xs"></i> DeepSeek + AWQ-4b + ExpDrop(48/64) + LoRA
                                 </td>
-                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-500/30 text-[10px] font-bold">Unified Pareto</span></td>
-                                <td class="py-3.5 px-3 text-center text-emerald-400">W4A16</td>
-                                <td class="py-3.5 px-3 text-center text-emerald-400 font-bold">7.2</td>
+                                <td class="py-3.5 px-3 text-center font-sans"><span class="px-2 py-0.5 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-500/30 text-xs font-bold">Unified Pareto</span></td>
+                                <td class="py-3.5 px-3 text-center text-emerald-700 font-bold">W4A16</td>
+                                <td class="py-3.5 px-3 text-center text-emerald-700 font-bold font-bold">7.2</td>
                                 <td class="py-3.5 px-3 text-center text-cyan-400 font-bold">2.68x</td>
-                                <td class="py-3.5 px-3 text-center text-white font-bold">48.40</td>
+                                <td class="py-3.5 px-3 text-center text-slate-900 font-bold">48.40</td>
                                 <td class="py-3.5 px-3 text-center text-slate-200">17.80</td>
                                 <td class="py-3.5 px-3 text-center text-slate-200">50.10</td>
-                                <td class="py-3.5 px-4 text-center font-bold text-emerald-400">98.1%</td>
+                                <td class="py-3.5 px-4 text-center font-bold text-emerald-700 font-bold">98.1%</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1142,46 +1161,46 @@
     </section>
 
     <!-- Quickstart Code Tabs Section -->
-    <section id="quickstart" class="py-20 relative bg-slate-900/30 border-t border-slate-800/60">
+    <section id="quickstart" class="py-16 md:py-24 bg-slate-50 border-b border-slate-200 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-14">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 font-bold text-xs font-semibold uppercase tracking-wider mb-4">
                     <i class="fa-solid fa-terminal"></i> Reproducible Codebase
                 </div>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
                     Quickstart & CLI Workflows
                 </h2>
-                <p class="mt-4 text-slate-400 text-base sm:text-lg">
+                <p class="mt-4 text-slate-600 text-base sm:text-lg">
                     End-to-end execution pipelines for structural trimming, intra-expert slimming, lightweight recovery finetuning, and LM-Evaluation-Harness benchmarking.
                 </p>
             </div>
 
             <!-- Tab Buttons -->
             <div class="flex flex-wrap justify-center gap-2 mb-6">
-                <button onclick="switchCodeTab('env')" id="btn-code-env" class="code-tab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-blue-600 text-white border border-blue-500/30 flex items-center gap-2">
+                <button onclick="switchCodeTab('env')" id="btn-code-env" class="code-tab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-blue-600 text-slate-900 border border-blue-500/30 flex items-center gap-2">
                     <i class="fa-solid fa-cube"></i> 1. Environment Setup
                 </button>
-                <button onclick="switchCodeTab('trim')" id="btn-code-trim" class="code-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800 flex items-center gap-2">
+                <button onclick="switchCodeTab('trim')" id="btn-code-trim" class="code-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-600 hover:text-slate-200 border border-slate-800 flex items-center gap-2">
                     <i class="fa-solid fa-scissors"></i> 2. Expert Trimming
                 </button>
-                <button onclick="switchCodeTab('slim')" id="btn-code-slim" class="code-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800 flex items-center gap-2">
+                <button onclick="switchCodeTab('slim')" id="btn-code-slim" class="code-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-600 hover:text-slate-200 border border-slate-800 flex items-center gap-2">
                     <i class="fa-solid fa-compress"></i> 3. Intra-Expert Slimming
                 </button>
-                <button onclick="switchCodeTab('ft')" id="btn-code-ft" class="code-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800 flex items-center gap-2">
+                <button onclick="switchCodeTab('ft')" id="btn-code-ft" class="code-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-600 hover:text-slate-200 border border-slate-800 flex items-center gap-2">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> 4. Post-Finetuning
                 </button>
-                <button onclick="switchCodeTab('eval')" id="btn-code-eval" class="code-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800 flex items-center gap-2">
+                <button onclick="switchCodeTab('eval')" id="btn-code-eval" class="code-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-600 hover:text-slate-200 border border-slate-800 flex items-center gap-2">
                     <i class="fa-solid fa-square-poll-vertical"></i> 5. Evaluation Harness
                 </button>
             </div>
 
             <!-- Code Blocks Container -->
-            <div class="glass-card rounded-3xl border border-slate-800 p-6 sm:p-8 relative">
+            <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 relative shadow-sm">
                 <!-- Environment Setup Block -->
                 <div id="code-content-env" class="space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-mono text-slate-400">Install dependencies with PyTorch 2.1+ and Flash-Attention 2</span>
-                        <button onclick="copyCode('snippet-env', this)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all flex items-center gap-1.5 border border-slate-700">
+                        <span class="text-xs font-mono text-slate-600">Install dependencies with PyTorch 2.1+ and Flash-Attention 2</span>
+                        <button onclick="copyCode('snippet-env', this)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-700 transition-all flex items-center gap-1.5 border border-slate-700">
                             <i class="fa-regular fa-copy"></i> <span>Copy Code</span>
                         </button>
                     </div>
@@ -1203,8 +1222,8 @@ pip install flash-attn --no-build-isolation</code></pre>
                 <!-- Expert Trimming Block -->
                 <div id="code-content-trim" class="hidden space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-mono text-slate-400">Structural Expert Dropping and Layer Dropping scripts</span>
-                        <button onclick="copyCode('snippet-trim', this)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all flex items-center gap-1.5 border border-slate-700">
+                        <span class="text-xs font-mono text-slate-600">Structural Expert Dropping and Layer Dropping scripts</span>
+                        <button onclick="copyCode('snippet-trim', this)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-700 transition-all flex items-center gap-1.5 border border-slate-700">
                             <i class="fa-regular fa-copy"></i> <span>Copy Code</span>
                         </button>
                     </div>
@@ -1218,8 +1237,8 @@ bash scripts/compression/layer_drop/mixtral_layer_drop.sh     --model_path mistr
                 <!-- Intra-Expert Slimming Block -->
                 <div id="code-content-slim" class="hidden space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-mono text-slate-400">AWQ / GPTQ Quantization and Wanda / SparseGPT Pruning</span>
-                        <button onclick="copyCode('snippet-slim', this)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all flex items-center gap-1.5 border border-slate-700">
+                        <span class="text-xs font-mono text-slate-600">AWQ / GPTQ Quantization and Wanda / SparseGPT Pruning</span>
+                        <button onclick="copyCode('snippet-slim', this)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-700 transition-all flex items-center gap-1.5 border border-slate-700">
                             <i class="fa-regular fa-copy"></i> <span>Copy Code</span>
                         </button>
                     </div>
@@ -1233,8 +1252,8 @@ python -m src.compression.prune_wanda     --model_path mistralai/Mixtral-8x7B-v0
                 <!-- Post-Finetuning Block -->
                 <div id="code-content-ft" class="hidden space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-mono text-slate-400">Parameter-Efficient LoRA Recovery Finetuning (DeepSpeed-MoE ZeRO-3)</span>
-                        <button onclick="copyCode('snippet-ft', this)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all flex items-center gap-1.5 border border-slate-700">
+                        <span class="text-xs font-mono text-slate-600">Parameter-Efficient LoRA Recovery Finetuning (DeepSpeed-MoE ZeRO-3)</span>
+                        <button onclick="copyCode('snippet-ft', this)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-700 transition-all flex items-center gap-1.5 border border-slate-700">
                             <i class="fa-regular fa-copy"></i> <span>Copy Code</span>
                         </button>
                     </div>
@@ -1245,8 +1264,8 @@ deepspeed --num_gpus=8 scripts/finetuning/run_moe_finetune.py     --model_path .
                 <!-- Evaluation Harness Block -->
                 <div id="code-content-eval" class="hidden space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-mono text-slate-400">Automated LM-Evaluation-Harness across standard academic benchmarks</span>
-                        <button onclick="copyCode('snippet-eval', this)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all flex items-center gap-1.5 border border-slate-700">
+                        <span class="text-xs font-mono text-slate-600">Automated LM-Evaluation-Harness across standard academic benchmarks</span>
+                        <button onclick="copyCode('snippet-eval', this)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-700 transition-all flex items-center gap-1.5 border border-slate-700">
                             <i class="fa-regular fa-copy"></i> <span>Copy Code</span>
                         </button>
                     </div>
@@ -1258,24 +1277,24 @@ lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_
     </section>
 
     <!-- BibTeX Citation Section -->
-    <section id="citation" class="py-20 relative">
+    <section id="citation" class="py-16 md:py-24 bg-white relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-3xl mx-auto">
                 <div class="text-center mb-8">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-3">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-800 text-xs font-bold uppercase tracking-wider mb-3">
                         <i class="fa-solid fa-quote-left"></i> Scholarly Reference
                     </div>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Cite Our Work</h2>
-                    <p class="mt-2 text-slate-400 text-sm">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Cite Our Work</h2>
+                    <p class="mt-2 text-slate-600 text-sm">
                         If you use this unified MoE compression benchmark, code, or findings in your research, please cite our TMLR paper:
                     </p>
                 </div>
 
-                <div class="glass-card rounded-2xl border border-slate-800 p-6 relative">
+                <div class="bg-slate-50 rounded-2xl border border-slate-200 p-6 relative shadow-sm">
                     <button onclick="copyBibtex()" class="absolute top-4 right-4 text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition-all flex items-center gap-1.5 border border-slate-700">
                         <i class="fa-regular fa-copy" id="bibtex-copy-icon"></i> <span id="bibtex-copy-text">Copy BibTeX</span>
                     </button>
-                    <pre class="text-xs sm:text-sm font-mono text-slate-300 overflow-x-auto pr-24 leading-relaxed" id="bibtex-code"><code>@article{he2025towards,
+                    <pre class="text-xs sm:text-sm font-mono text-slate-700 overflow-x-auto pr-24 leading-relaxed" id="bibtex-code"><code>@article{he2025towards,
   title   = {Towards Efficient Mixture of Experts: A Holistic Study of Compression Techniques},
   author  = {Shwai He and Daize Dong and Liang Ding and Ang Li},
   journal = {Transactions on Machine Learning Research (TMLR)},
@@ -1289,20 +1308,20 @@ lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-800 bg-slate-950/80 py-12">
+    <footer class="border-t border-slate-200 bg-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white font-black text-sm shadow-md">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-slate-900 font-black text-sm shadow-md">
                         UMC
                     </div>
                     <div>
-                        <div class="font-bold text-white text-sm">Unified MoE Compression</div>
+                        <div class="font-bold text-slate-900 text-sm">Unified MoE Compression</div>
                         <div class="text-xs text-slate-500">CASE Lab @ University of Maryland, College Park</div>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-6 text-sm text-slate-400">
+                <div class="flex items-center gap-6 text-sm text-slate-600">
                     <a href="https://arxiv.org/abs/2406.02500" target="_blank" class="hover:text-blue-400 transition-colors">arXiv</a>
                     <a href="https://openreview.net/forum?id=HTpMOl6xSI" target="_blank" class="hover:text-blue-400 transition-colors">OpenReview</a>
                     <a href="https://github.com/case-lab-umd/Unified-MoE-Compression" target="_blank" class="hover:text-blue-400 transition-colors">GitHub</a>
@@ -1318,22 +1337,22 @@ lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_
 
     <!-- Lightbox Modal for Static SVGs -->
     <div id="lightboxModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4">
-        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-slate-400 hover:text-white text-2xl transition-colors p-2 rounded-full bg-slate-900/80 border border-slate-700">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-slate-600 hover:text-slate-900 text-2xl transition-colors p-2 rounded-full bg-slate-900/80 border border-slate-700">
             <i class="fa-solid fa-xmark"></i>
         </button>
         <div class="max-w-6xl w-full max-h-[90vh] flex flex-col items-center">
             <div class="bg-slate-900/90 rounded-2xl p-4 border border-slate-800 w-full overflow-auto max-h-[80vh] flex items-center justify-center">
                 <img id="lightboxImg" src="" alt="Zoomed Diagram" class="max-w-full max-h-full object-contain rounded-lg">
             </div>
-            <div class="mt-4 text-center text-xs text-slate-400 font-mono" id="lightboxCaption">
+            <div class="mt-4 text-center text-xs text-slate-600 font-mono" id="lightboxCaption">
                 High-Resolution Architectural View
             </div>
         </div>
     </div>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-xl border border-blue-500/40 shadow-xl shadow-blue-500/10 flex items-center gap-3 text-xs sm:text-sm">
-        <i class="fa-solid fa-circle-check text-emerald-400 text-base" id="toast-icon"></i>
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-slate-900 px-4 py-3 rounded-xl border border-blue-500/40 shadow-xl shadow-blue-500/10 flex items-center gap-3 text-xs sm:text-sm">
+        <i class="fa-solid fa-circle-check text-emerald-700 font-bold text-base" id="toast-icon"></i>
         <span id="toast-message">Copied to clipboard!</span>
     </div>
 
@@ -1398,7 +1417,7 @@ lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_
         // ----------------------------------------------------
         // Toast Notification System
         // ----------------------------------------------------
-        function showToast(message, iconClass = 'fa-solid fa-circle-check text-emerald-400') {
+        function showToast(message, iconClass = 'fa-solid fa-circle-check text-emerald-700 font-bold') {
             const toast = document.getElementById('toast');
             const toastMsg = document.getElementById('toast-message');
             const toastIcon = document.getElementById('toast-icon');
@@ -1437,16 +1456,16 @@ lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_
         // Tab Switchers (Taxonomy, Code, Charts)
         // ----------------------------------------------------
         function switchTaxTab(tabId) {
-            ['slimming', 'trimming', 'pareto', 'matrix'].forEach(t => {
+            ['slimming', 'trimming', 'hybrid', 'table'].forEach(t => {
                 const btn = document.getElementById('tab-btn-' + t);
-                const content = document.getElementById('tax-content-' + t);
-                if (btn && content) {
+                const panel = document.getElementById('tax-panel-' + t);
+                if (btn && panel) {
                     if (t === tabId) {
-                        btn.className = 'tab-btn active px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 border border-blue-500/30 flex items-center gap-2';
-                        content.classList.remove('hidden');
+                        btn.className = 'tax-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 bg-blue-600 text-white shadow-md';
+                        panel.classList.remove('hidden');
                     } else {
-                        btn.className = 'tab-btn px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all bg-slate-900/60 hover:bg-slate-800/80 text-slate-300 border border-slate-700/50 flex items-center gap-2';
-                        content.classList.add('hidden');
+                        btn.className = 'tax-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 bg-white text-slate-700 hover:bg-slate-100 border border-slate-200';
+                        panel.classList.add('hidden');
                     }
                 }
             });
@@ -1458,10 +1477,10 @@ lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_
                 const content = document.getElementById('code-content-' + t);
                 if (btn && content) {
                     if (t === tabId) {
-                        btn.className = 'code-tab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-blue-600 text-white border border-blue-500/30 flex items-center gap-2';
+                        btn.className = 'code-tab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-blue-600 text-white border border-blue-700 shadow-sm flex items-center gap-2';
                         content.classList.remove('hidden');
                     } else {
-                        btn.className = 'code-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800 flex items-center gap-2';
+                        btn.className = 'code-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white text-slate-700 hover:bg-slate-100 border border-slate-300 flex items-center gap-2';
                         content.classList.add('hidden');
                     }
                 }
@@ -1474,10 +1493,10 @@ lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_
                 const view = document.getElementById('view-chart-' + t);
                 if (btn && view) {
                     if (t === tabId) {
-                        btn.className = 'px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 border border-blue-500/30 flex items-center gap-2';
+                        btn.className = 'px-5 py-2.5 rounded-xl font-semibold text-sm transition-all bg-blue-600 text-white shadow-sm border border-blue-700 flex items-center gap-2';
                         view.classList.remove('hidden');
                     } else {
-                        btn.className = 'px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-slate-900/60 hover:bg-slate-800/80 text-slate-300 border border-slate-700/50 flex items-center gap-2';
+                        btn.className = 'px-5 py-2.5 rounded-xl font-semibold text-sm transition-all bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 flex items-center gap-2';
                         view.classList.add('hidden');
                     }
                 }
@@ -1511,11 +1530,11 @@ lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_
             document.getElementById('tbl-row-count').innerText = visibleCount;
 
             document.querySelectorAll('.tbl-filter-btn').forEach(btn => {
-                btn.className = 'tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800';
+                btn.className = 'tbl-filter-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-white text-slate-700 hover:bg-slate-100 border border-slate-300';
             });
             const activeBtn = document.getElementById('tbl-btn-' + cat);
             if (activeBtn) {
-                activeBtn.className = 'tbl-filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white border border-blue-500/40';
+                activeBtn.className = 'tbl-filter-btn active px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-blue-600 text-white border border-blue-700 shadow-sm';
             }
         }
 
@@ -1525,11 +1544,23 @@ lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_
         function setCalcModel(m) {
             calcState.model = m;
             document.querySelectorAll('.calc-btn').forEach(b => {
-                b.className = 'calc-btn p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-left transition-all flex flex-col';
+                b.className = 'calc-btn p-4 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-left transition-all flex flex-col';
+                const spans = b.querySelectorAll('span');
+                if (spans.length >= 3) {
+                    spans[0].className = 'font-bold text-slate-800 text-sm sm:text-base';
+                    spans[1].className = 'text-xs text-slate-600 mt-1';
+                    spans[2].className = 'text-xs text-slate-500 font-semibold mt-2 font-mono';
+                }
             });
             const active = document.getElementById('calc-model-' + m);
             if (active) {
-                active.className = 'calc-btn active p-4 rounded-xl border border-blue-500/50 bg-blue-950/40 text-left transition-all flex flex-col';
+                active.className = 'calc-btn active p-4 rounded-xl border-2 border-blue-600 bg-blue-50/70 text-left transition-all flex flex-col shadow-sm';
+                const spans = active.querySelectorAll('span');
+                if (spans.length >= 3) {
+                    spans[0].className = 'font-bold text-blue-950 text-sm sm:text-base';
+                    spans[1].className = 'text-xs text-slate-700 font-medium mt-1';
+                    spans[2].className = 'text-xs text-blue-700 font-bold mt-2 font-mono';
+                }
             }
             recalculateRecipe();
         }
@@ -1537,11 +1568,11 @@ lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_
         function setCalcTrim(t) {
             calcState.trim = t;
             document.querySelectorAll('.calc-btn-trim').forEach(b => {
-                b.className = 'calc-btn-trim py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400';
+                b.className = 'calc-btn-trim py-2.5 px-3 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-xs sm:text-sm font-medium text-center text-slate-700';
             });
             const active = document.getElementById('calc-trim-' + t);
             if (active) {
-                active.className = 'calc-btn-trim active py-2.5 px-3 rounded-lg border border-blue-500/40 bg-blue-950/30 text-xs font-medium text-center text-slate-200';
+                active.className = 'calc-btn-trim active py-2.5 px-3 rounded-lg border-2 border-blue-600 bg-blue-600 text-xs sm:text-sm font-semibold text-center text-white shadow-sm';
             }
             recalculateRecipe();
         }
@@ -1549,11 +1580,11 @@ lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_
         function setCalcSlim(s) {
             calcState.slim = s;
             document.querySelectorAll('.calc-btn-slim').forEach(b => {
-                b.className = 'calc-btn-slim py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400';
+                b.className = 'calc-btn-slim py-2.5 px-3 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-xs sm:text-sm font-medium text-center text-slate-700';
             });
             const active = document.getElementById('calc-slim-' + s);
             if (active) {
-                active.className = 'calc-btn-slim active py-2.5 px-3 rounded-lg border border-blue-500/40 bg-blue-950/30 text-xs font-medium text-center text-slate-200';
+                active.className = 'calc-btn-slim active py-2.5 px-3 rounded-lg border-2 border-blue-600 bg-blue-600 text-xs sm:text-sm font-semibold text-center text-white shadow-sm';
             }
             recalculateRecipe();
         }
@@ -1561,11 +1592,11 @@ lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_
         function setCalcFT(f) {
             calcState.ft = f;
             document.querySelectorAll('.calc-btn-ft').forEach(b => {
-                b.className = 'calc-btn-ft py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-900/50 hover:bg-slate-800/60 text-xs font-medium text-center text-slate-400';
+                b.className = 'calc-btn-ft py-2.5 px-3 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-xs sm:text-sm font-medium text-center text-slate-700';
             });
             const active = document.getElementById('calc-ft-' + f);
             if (active) {
-                active.className = 'calc-btn-ft active py-2.5 px-3 rounded-lg border border-blue-500/40 bg-blue-950/30 text-xs font-medium text-center text-slate-200';
+                active.className = 'calc-btn-ft active py-2.5 px-3 rounded-lg border-2 border-blue-600 bg-blue-600 text-xs sm:text-sm font-semibold text-center text-white shadow-sm';
             }
             recalculateRecipe();
         }
@@ -1612,16 +1643,15 @@ lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_
 
             // Recovery FT impact
             if (calcState.ft === 'lora') {
-                retention += (100.0 - retention) * 0.70; // recovers 70% of lost accuracy
+                retention += (100.0 - retention) * 0.70;
             } else if (calcState.ft === 'full') {
-                retention += (100.0 - retention) * 0.90; // recovers 90% of lost accuracy
+                retention += (100.0 - retention) * 0.90;
             }
 
             vram = (meta.baseVRAM * precMult * trimMult).toFixed(1);
             if (retention > 100.0) retention = 100.0;
             const estMMLU = ((meta.baseMMLU * retention) / 100.0).toFixed(2);
 
-            // Hardware recommendation
             let hwText = '';
             if (vram <= 12) {
                 hwText = 'Single RTX 3090 / 4090 (24GB VRAM) or A10G';
@@ -1642,13 +1672,13 @@ lm_eval --model hf     --model_args pretrained=./compressed_models/mixtral_exp6_
                 if (calcState.slim.startsWith('w4a16')) {
                     cmd += `
 
-# Followed by AWQ Quantization:
+# Step 2: AWQ Quantization
 python -m src.compression.quantize_awq --model_path ./compressed_models/${calcState.model}_trimmed --w_bit 4 --save_path ./compressed_models/${calcState.model}_unified`;
                 }
                 if (calcState.ft === 'lora') {
                     cmd += `
 
-# Followed by LoRA Recovery FT:
+# Step 3: LoRA Recovery Finetuning
 deepspeed scripts/finetuning/run_moe_finetune.py --model_path ./compressed_models/${calcState.model}_unified --lora_r 64 --max_steps 250`;
                 }
                 command = cmd;
@@ -1656,7 +1686,6 @@ deepspeed scripts/finetuning/run_moe_finetune.py --model_path ./compressed_model
                 command = `python -m src.compression.quantize_awq --model_path ${meta.hfPath} --w_bit 4 --save_path ./compressed_models/${calcState.model}_awq4b`;
             }
 
-            // DOM Updates
             document.getElementById('res-vram').innerText = vram;
             document.getElementById('res-speedup').innerText = speedup.toFixed(2);
             document.getElementById('res-retention').innerText = retention.toFixed(1);
@@ -1666,13 +1695,13 @@ deepspeed scripts/finetuning/run_moe_finetune.py --model_path ./compressed_model
             
             const badge = document.getElementById('badge-recipe-rating');
             if (retention >= 97.0 && speedup >= 2.0) {
-                badge.className = 'text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold';
+                badge.className = 'text-xs px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold';
                 badge.innerText = 'Pareto Optimal';
             } else if (retention >= 95.0) {
-                badge.className = 'text-xs px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 font-semibold';
+                badge.className = 'text-xs px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-800 border border-blue-300 font-bold';
                 badge.innerText = 'High Retention';
             } else {
-                badge.className = 'text-xs px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 font-semibold';
+                badge.className = 'text-xs px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-300 font-bold';
                 badge.innerText = 'Aggressive Compression';
             }
         }
@@ -1692,38 +1721,38 @@ deepspeed scripts/finetuning/run_moe_finetune.py --model_path ./compressed_model
                         {
                             label: 'Baseline (FP16)',
                             data: [{ x: 93.4, y: 70.6, r: 12 }],
-                            backgroundColor: 'rgba(59, 130, 246, 0.7)',
-                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                            borderColor: '#2563eb',
                             borderWidth: 2
                         },
                         {
                             label: 'Intra-Expert Slimming (AWQ / GPTQ)',
                             data: [
-                                { x: 26.8, y: 69.8, r: 22 }, // AWQ 4-bit
-                                { x: 26.8, y: 69.3, r: 20 }, // GPTQ 4-bit
-                                { x: 48.2, y: 70.2, r: 16 }  // INT8
+                                { x: 26.8, y: 69.8, r: 22 },
+                                { x: 26.8, y: 69.3, r: 20 },
+                                { x: 48.2, y: 70.2, r: 16 }
                             ],
-                            backgroundColor: 'rgba(16, 185, 129, 0.7)',
-                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(13, 148, 136, 0.8)',
+                            borderColor: '#0d9488',
                             borderWidth: 2
                         },
                         {
                             label: 'Structural Trimming (Expert Drop)',
                             data: [
-                                { x: 72.1, y: 68.9, r: 15 }, // 6/8
-                                { x: 50.8, y: 64.5, r: 18 }  // 4/8
+                                { x: 72.1, y: 68.9, r: 15 },
+                                { x: 50.8, y: 64.5, r: 18 }
                             ],
-                            backgroundColor: 'rgba(99, 102, 241, 0.7)',
+                            backgroundColor: 'rgba(99, 102, 241, 0.8)',
                             borderColor: '#6366f1',
                             borderWidth: 2
                         },
                         {
                             label: 'Unified Synergy (Trimming + Slimming + FT)',
                             data: [
-                                { x: 20.7, y: 69.4, r: 26 }  // Pareto Star
+                                { x: 20.7, y: 69.4, r: 26 }
                             ],
                             backgroundColor: 'rgba(236, 72, 153, 0.85)',
-                            borderColor: '#ec4899',
+                            borderColor: '#db2777',
                             borderWidth: 3
                         }
                     ]
@@ -1733,23 +1762,26 @@ deepspeed scripts/finetuning/run_moe_finetune.py --model_path ./compressed_model
                     maintainAspectRatio: false,
                     scales: {
                         x: {
-                            title: { display: true, text: 'Model VRAM Footprint (GB) — Lower is better', color: '#94a3b8' },
-                            grid: { color: 'rgba(51, 65, 85, 0.4)' },
-                            ticks: { color: '#94a3b8' }
+                            title: { display: true, text: 'Model VRAM Footprint (GB) — Lower is better', color: '#334155', font: { weight: 'bold', size: 12 } },
+                            grid: { color: 'rgba(226, 232, 240, 0.9)' },
+                            ticks: { color: '#475569', font: { weight: '600' } }
                         },
                         y: {
-                            title: { display: true, text: 'Average Downstream Accuracy (%) — Higher is better', color: '#94a3b8' },
-                            grid: { color: 'rgba(51, 65, 85, 0.4)' },
-                            ticks: { color: '#94a3b8' },
+                            title: { display: true, text: 'Average Downstream Accuracy (%) — Higher is better', color: '#334155', font: { weight: 'bold', size: 12 } },
+                            grid: { color: 'rgba(226, 232, 240, 0.9)' },
+                            ticks: { color: '#475569', font: { weight: '600' } },
                             min: 60,
                             max: 73
                         }
                     },
                     plugins: {
                         legend: {
-                            labels: { color: '#cbd5e1', boxWidth: 14 }
+                            labels: { color: '#1e293b', font: { weight: '600', size: 12 }, boxWidth: 14 }
                         },
                         tooltip: {
+                            backgroundColor: '#0f172a',
+                            titleColor: '#f8fafc',
+                            bodyColor: '#f8fafc',
                             callbacks: {
                                 label: function(context) {
                                     return `${context.dataset.label}: VRAM ${context.raw.x} GB, Acc ${context.raw.y}%`;
@@ -1770,16 +1802,16 @@ deepspeed scripts/finetuning/run_moe_finetune.py --model_path ./compressed_model
                         {
                             label: 'All-to-All Token Dispatch Volume (GB/s)',
                             data: [14.8, 12.9, 10.8, 8.2, 7.9],
-                            backgroundColor: 'rgba(6, 182, 212, 0.75)',
-                            borderColor: '#06b6d4',
+                            backgroundColor: 'rgba(14, 165, 233, 0.85)',
+                            borderColor: '#0284c7',
                             borderWidth: 1,
                             borderRadius: 6
                         },
                         {
                             label: 'Inter-Node Network Latency (ms/token)',
                             data: [42.5, 38.1, 31.4, 24.2, 23.5],
-                            backgroundColor: 'rgba(168, 85, 247, 0.75)',
-                            borderColor: '#a855f7',
+                            backgroundColor: 'rgba(168, 85, 247, 0.85)',
+                            borderColor: '#9333ea',
                             borderWidth: 1,
                             borderRadius: 6
                         }
@@ -1790,17 +1822,17 @@ deepspeed scripts/finetuning/run_moe_finetune.py --model_path ./compressed_model
                     maintainAspectRatio: false,
                     scales: {
                         x: {
-                            grid: { color: 'rgba(51, 65, 85, 0.3)' },
-                            ticks: { color: '#94a3b8' }
+                            grid: { color: 'rgba(226, 232, 240, 0.8)' },
+                            ticks: { color: '#475569', font: { weight: '600' } }
                         },
                         y: {
-                            grid: { color: 'rgba(51, 65, 85, 0.3)' },
-                            ticks: { color: '#94a3b8' }
+                            grid: { color: 'rgba(226, 232, 240, 0.8)' },
+                            ticks: { color: '#475569', font: { weight: '600' } }
                         }
                     },
                     plugins: {
                         legend: {
-                            labels: { color: '#cbd5e1', boxWidth: 14 }
+                            labels: { color: '#1e293b', font: { weight: '600', size: 12 }, boxWidth: 14 }
                         }
                     }
                 }
@@ -1816,13 +1848,13 @@ deepspeed scripts/finetuning/run_moe_finetune.py --model_path ./compressed_model
                         {
                             label: 'FP16 Baseline',
                             data: [70.6, 58.4, 66.8, 81.2, 84.5],
-                            backgroundColor: 'rgba(59, 130, 246, 0.65)',
+                            backgroundColor: 'rgba(59, 130, 246, 0.8)',
                             borderRadius: 6
                         },
                         {
                             label: 'W4A16 AWQ',
                             data: [69.8, 56.2, 65.4, 80.6, 83.9],
-                            backgroundColor: 'rgba(16, 185, 129, 0.75)',
+                            backgroundColor: 'rgba(13, 148, 136, 0.85)',
                             borderRadius: 6
                         },
                         {
@@ -1838,19 +1870,19 @@ deepspeed scripts/finetuning/run_moe_finetune.py --model_path ./compressed_model
                     maintainAspectRatio: false,
                     scales: {
                         x: {
-                            grid: { color: 'rgba(51, 65, 85, 0.3)' },
-                            ticks: { color: '#94a3b8' }
+                            grid: { color: 'rgba(226, 232, 240, 0.8)' },
+                            ticks: { color: '#475569', font: { weight: '600' } }
                         },
                         y: {
                             min: 40,
                             max: 90,
-                            grid: { color: 'rgba(51, 65, 85, 0.3)' },
-                            ticks: { color: '#94a3b8' }
+                            grid: { color: 'rgba(226, 232, 240, 0.8)' },
+                            ticks: { color: '#475569', font: { weight: '600' } }
                         }
                     },
                     plugins: {
                         legend: {
-                            labels: { color: '#cbd5e1', boxWidth: 14 }
+                            labels: { color: '#1e293b', font: { weight: '600', size: 12 }, boxWidth: 14 }
                         }
                     }
                 }
@@ -1915,7 +1947,7 @@ deepspeed scripts/finetuning/run_moe_finetune.py --model_path ./compressed_model
             }
             tasksChart.update();
         }
-
+        
         // ----------------------------------------------------
         // Initialize on DOM Ready
         // ----------------------------------------------------
