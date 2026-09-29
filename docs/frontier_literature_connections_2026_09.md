@@ -1,10 +1,10 @@
 # 🗜️ Unified-MoE-Compression: 每日前沿文献关联与统一 MoE 剪枝/低秩/动态跳过落地库 (2026-09)
 
-**Document ID:** `UNIMOE-LIT-202609` | **Last Updated:** `2026-09-28` | **Target Path:** `docs/frontier_literature_connections_2026_09.md` | **Total Routed Papers:** `12`
+**Document ID:** `UNIMOE-LIT-202609` | **Last Updated:** `2026-09-29` | **Target Path:** `docs/frontier_literature_connections_2026_09.md` | **Total Routed Papers:** `13`
 
 > [!IMPORTANT]
 > **🔗 跨仓库文献引用链闭环 (Cross-Repository Reference Chain Closure)**
-> 本文件由每日 AI 前沿论文精读流水线自动路由生成，专门收录与我们 **TMLR 2025 代表作 (*Unifying LLM & Mixture-of-Experts Compression*, `CASE-Lab-UMD/Unified-MoE-Compression`)** 直接关联的专家结构化剪枝（`SHAPE`, `REAP`）、低秩路由器与专家分解（`L2R`, `LoopMoE`, `MoE-nD`）、动态专家跳过（`CARE`）以及硬件感知联合压缩与专家级 KV 管理（`MoE-OS`, `MoE-Tile`, `PiKV`）最新 arXiv 论文笔记。
+> 本文件由每日 AI 前沿论文精读流水线自动路由生成，专门收录与我们 **TMLR 2025 代表作 (*Unifying LLM & Mixture-of-Experts Compression*, `CASE-Lab-UMD/Unified-MoE-Compression`)** 直接关联的专家结构化剪枝（`SHAPE`, `REAP`）、低秩路由器与专家分解（`L2R`, `LoopMoE`, `MoE-nD`）、动态专家跳过（`CARE`）以及硬件感知联合压缩与专家投机解码系统（`MoE-OS`, `MoE-Tile`, `PiKV`, `CoMoE-Spec`）最新 arXiv 论文笔记。
 > 每一篇收录文献均包含：**核心痛点、底层数学公式、ASCII 架构图、关键实测指标**，以及**与 `Unified-MoE-Compression` 仓库具体代码模块和我们已发表代表作（Our Works）的双向锚定**。
 
 ---
@@ -13,6 +13,7 @@
 
 | 收录日期 | 论文标题与 arXiv 链接 | 关键实测收益 / 核心结论 | 锚定本仓库代码模块与文档路径 (`Target Module`) | 原始精读归档 |
 | :---: | :--- | :--- | :--- | :---: |
+| `2026-09-29` | [**🧩 CoMoE-Spec**](https://arxiv.org/abs/2609.22471) (`arXiv:2609.22471`) | 在 Mixtral-8x7B、Qwen2.5-MoE-A14B 与 OLMoE-1B-7B 上结合 EAGLE-2 投机解码评测表明：`CoMoE-Spec` 将验证阶段的唯一激活专家总数削减了 **42%–58%**，在保持草稿... | `moe_compression/dynamic_skipping.py` (Coactivation-Guided MoE Speculative Decoding Verification) | [2026-09-29](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-29_ai_paper_notes.md) |
 | `2026-09-28` | [**🧩 PiKV**](https://arxiv.org/abs/2508.06526) (`arXiv:2508.06526`) | 在多机多卡 Mixtral-8x22B 与 DeepSeek-MoE 长上下文服务基准上，PiKV 将单卡 KV 显存占用降低 **54%**，跨节点通信开销削减 **62%**，在 32K–64K 长序列高并发场景下实现... | `moe_compression/system_offload.py` (Routing-Aware Differentiated KV Compression & Paged Pool) | [2026-09-28](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-28_ai_paper_notes.md) |
 | `2026-09-27` | [**SHAPE**](https://arxiv.org/abs/2606.09886) (`arXiv:2606.09886`) | **跨架构零训练稳健性**：在 **Qwen3-30B-A3B**、**DeepSeek-V2-Lite** 与 **GPT-OSS-20B** 三大主流细粒度 MoE 模型上，仅需 128 条 C4/WikiText2 校准样本... | `moe_compression/expert_pruning.py` (Coalition Shapley Value Expert Pruning) | [2026-09-27](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-27_ai_paper_notes.md) |
 | `2026-09-27` | [**L2R**](https://arxiv.org/abs/2601.21349) (`arXiv:2601.21349`) | **语言与视觉双模态全面验证**：在基于 **OLMoE** 的语言模型预训练/微调以及 **ImageNet** 视觉 MoE 骨干网络上，L2R 将路由器参数量削减 **60%–75%**，同时在相同激活专家预算下将下游任务困... | `moe_compression/router_compression.py` (Low-Rank Latent Router Decomposition) | [2026-09-27](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-27_ai_paper_notes.md) |
@@ -30,7 +31,53 @@
 
 ## 📐 2. 逐篇论文深度机制解构、数学公式与本仓库落地指南 (Per-Paper Deep-Dive Cards)
 
-### 2.1 [2026-09-28] 🧩 *PiKV: KV Cache Management System for Mixture of Experts*
+### 2.1 [2026-09-29] 🧩 *CoMoE-Spec: Efficient Mixture-of-Experts with Speculative Decoding via Expert Coactivation*
+> 🏷️ **核心关键词**：Mixture-of-Experts (MoE) · Speculative Decoding · Expert Coactivation Routing · Memory-Bandwidth Bottleneck  
+> 🔗 **arXiv 链接**：[`arXiv:2609.22471`](https://arxiv.org/abs/2609.22471)
+
+```
+  草稿模型生成 γ 个候选 Token (t_1..t_γ) ──► 目标 MoE 验证阶段
+       ├── [ 传统独立 Top-k 路由 ] : γ 个 Token 激活并集 |∪ E(t_i)| ≈ M (几乎拉取全部专家权重，陷入 HBM 带宽瓶颈！)
+       └── [ CoMoE-Spec 协同路由 ] : 跨草稿步联合专家共激活惩罚 + 共享专家重分配 ──► |∪ E(t_i)| 压缩 42%~58%，验证墙钟提速 1.85x
+```
+
+#### 🎯 背景与痛点 (Problem Statement)
+投机解码（Speculative Decoding）在稠密大模型（Dense LLM）上之所以能实现无损加速，核心前提是“并行验证 $\gamma$ 个草稿 Token 的延迟与单步生成 1 个 Token 几乎相同（Compute-Bound 前移）”。然而，在稀疏混合专家模型（Sparse MoE，如 Mixtral、DeepSeek-MoE、Qwen3-MoE）中，这一前提彻底失效：当单个草稿 Token 仅激活 $k$ 个专家时，并行验证 $\gamma$ 个草稿 Token 却会激活多达 $\lvert \bigcup _ {m=1}^{\gamma} \mathcal{E}(t _ m) \rvert \gg k$ 个互不相同的专家。由于 GPU 必须将所有被任一草稿 Token 命中的专家权重从高带宽显存（HBM）加载至片上寄存器，验证阶段的**唯一激活专家并集膨胀（Expert Union Explosion）**直接将 MoE 验证打回极度访存受限（Memory-Bandwidth Bound）状态，吞噬了投机解码的理论收益。
+
+#### 💡 核心方法与数学公式 (Core Methodology & Formulation)
+* **草稿窗口唯一激活专家并集开销模型**：
+  设 MoE 层共有 $E$ 个专家，草稿验证树包含 $\gamma$ 个候选 Token，每个 Token $m \in \lbrace 1, \dots, \gamma \rbrace$ 的路由器门控概率为 $p _ m \in \Delta^{E-1}$ ，选择的 Top- $k$ 专家集合为 $\mathcal{E} _ m$ 。验证阶段的内存读取字节数正比于并集基数 $\lvert \mathcal{U} _ {\gamma} \rvert = \left\lvert \bigcup _ {m=1}^{\gamma} \mathcal{E} _ m \right\rvert$ ，其期望值为：
+
+$$
+\mathbb{E}\left[ \lvert \mathcal{U} _ {\gamma} \rvert \right] = \sum _ {e=1}^{E} \left( 1 - \prod _ {m=1}^{\gamma} \left( 1 - \mathbb{I}\lbrace e \in \mathcal{E} _ m \rbrace \right) \right)
+$$
+
+* **专家协同激活路由与联合次模验证约束（Expert Coactivation Routing）**：
+  `CoMoE-Spec` 在路由器微调与推理期动态路由中引入**跨位置专家协同激活正则项（Coactivation Regularizer）**，并在草稿树验证阶段求解受总专家预算 $\lvert \mathcal{U} _ {\gamma} \rvert \le B _ {\text{max}}$ 约束的联合路由重分配：
+
+$$
+\max _ {\lbrace \mathcal{E} _ m \rbrace _ {m=1}^{\gamma}} \sum _ {m=1}^{\gamma} \sum _ {e \in \mathcal{E} _ m} \log p _ {m, e} - \beta \cdot \sum _ {e=1}^{E} \max _ {1 \le m \le \gamma} \mathbb{I}\lbrace e \in \mathcal{E} _ m \rbrace \quad \text{s.t.} \quad \lvert \mathcal{E} _ m \rvert = k
+$$
+
+  对仅被单个边缘草稿节点低置信度命中的“孤立长尾专家（Straggler Singleton Expert）”，将其平滑重路由至草稿窗口内已高频共激活的次优专家（若门控概率差 $\Delta p \le \epsilon _ {\text{co}}$ ），从而在不降低接受率 $\alpha$ 的前提下大幅压缩专家并集。
+
+#### 📊 关键实验与结论 (Key Results & Conclusions)
+* 在 Mixtral-8x7B、Qwen2.5-MoE-A14B 与 OLMoE-1B-7B 上结合 EAGLE-2 投机解码评测表明：`CoMoE-Spec` 将验证阶段的唯一激活专家总数削减了 **42%–58%**，在保持草稿 Token 平均接受长度 $\tau$ 几乎不变（波动 `< 0.03`）的前提下，将端到端 MoE 投机解码墙钟吞吐率进一步提升 **1.45×–1.85×**。
+
+#### 🔗 与我们工作（Our Works）的直接关联与落地启发 (Connection to Our Works)
+* **锚定我们的代表作**：与我们发表于 **ICLR 2026 / ICML 2026** 的代表作 ***Capacity-Aware Inference: Mitigating the Straggler Effect in Mixture-of-Experts***（`CASE-Lab-UMD/Capacity-Aware-MoE`）、***Unifying LLM & Mixture-of-Experts Compression***（`TMLR 2025`, `Unified-MoE-Compression`）及 `awesome-mixture-of-experts` 形成完美的系统互补！
+* **落地到 `Capacity-Aware-MoE`、`Unified-MoE-Compression` 与 `efficient_ads`**：我们的 `Capacity-Aware-MoE` 解决了长序列 Prefill 阶段单专家过载的“重负载落后者（Overloaded Straggler）”，而 `CoMoE-Spec` 解决了投机 Decode 验证阶段只服务 1 个草稿 Token 的“稀疏孤立专家（Under-loaded Singleton Expert）”。将两者的双向容量上下界（ $[C _ {\min}, C _ {\max}]$ ）统一到 `capacity_aware/` 路由算子中，即可同时加速 Prefill 与 Speculative Decode！
+
+---
+
+> [!TIP]
+> **🎯 `Unified-MoE-Compression` 仓库代码级落地点 (`Target Module`)**：`moe_compression/dynamic_skipping.py` (Coactivation-Guided MoE Speculative Decoding Verification)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-29_ai_paper_notes.md`
+
+
+---
+
+### 2.2 [2026-09-28] 🧩 *PiKV: KV Cache Management System for Mixture of Experts*
 > 🏷️ **核心关键词**：Mixture-of-Experts (MoE) · Expert-Sharded KV Cache · Distributed Serving · Memory & Communication Co-Design  
 > 🔗 **arXiv 链接**：[`arXiv:2508.06526`](https://arxiv.org/abs/2508.06526) (2026 v3)
 
@@ -76,7 +123,7 @@ $$
 
 ---
 
-### 2.2 [2026-09-27] SHAPE: Coalition-Aware Expert Pruning for Sparse Mixture-of-Experts LLMs
+### 2.3 [2026-09-27] SHAPE: Coalition-Aware Expert Pruning for Sparse Mixture-of-Experts LLMs
 
 * **论文信息**：`arXiv:2606.09886` (2026-06, 开源仓库：`github.com/Alizen-1009/Shapley-Moe`)
 * **核心关键词**：Sparse MoE、Cooperative Game Theory、Shapley Value Attribution、Coalition-Aware Expert Pruning、Quality-Coverage Bisection
@@ -176,7 +223,7 @@ $$
 
 ---
 
-### 2.3 [2026-09-27] L2R: Low-Rank and Lipschitz-Controlled Routing for Mixture-of-Experts
+### 2.4 [2026-09-27] L2R: Low-Rank and Lipschitz-Controlled Routing for Mixture-of-Experts
 
 * **论文信息**：Minghao Yang, Ren Togo, Guang Li, Takahiro Ogawa, Miki Haseyama (`arXiv:2601.21349`, 2026-01)
 * **核心关键词**：MoE Routing Geometry、Low-Rank Latent Space、Lipschitz Continuity、Saturated Inner-Product Scoring (SIPS)、Multi-Anchor Routing
@@ -269,7 +316,7 @@ $$
 
 ---
 
-### 2.4 [2026-09-26] 🔄 *LoopMoE: Unifying Iterative Computation with Mixture-of-Experts for Language Modeling*
+### 2.5 [2026-09-26] 🔄 *LoopMoE: Unifying Iterative Computation with Mixture-of-Experts for Language Modeling*
 > **聚焦领域**：Looped Transformers · Mixture of Experts (MoE) · Iterative Depth Scaling · Weight Sharing  
 > **arXiv**：[`arXiv:2606.04438`](https://arxiv.org/abs/2606.04438)
 
@@ -322,7 +369,7 @@ $$
 
 ---
 
-### 2.5 [2026-09-26] 🧩 *MoE-nD: Per-Layer Mixture-of-Experts Routing for Multi-Axis KV Cache Compression*
+### 2.6 [2026-09-26] 🧩 *MoE-nD: Per-Layer Mixture-of-Experts Routing for Multi-Axis KV Cache Compression*
 > **聚焦领域**：Multi-Axis KV Cache Compression · Per-Layer Routing · Heterogeneous Quantization  
 > **arXiv**：[`arXiv:2604.17695`](https://arxiv.org/abs/2604.17695)
 
@@ -339,7 +386,7 @@ $$
 
 ---
 
-### 2.6 [2026-09-24] DriveMoE: Mixture-of-Experts for Vision-Language-Action Model in End-to-End Autonomous Driving
+### 2.7 [2026-09-24] DriveMoE: Mixture-of-Experts for Vision-Language-Action Model in End-to-End Autonomous Driving
 
 * **论文信息**：`arXiv:2505.16278` (2025/2026)
 * **核心关键词**：End-to-End Autonomous Driving、Scene-Specialized Vision MoE、Skill-Specialized Action MoE、Flow-Matching Planner
@@ -387,7 +434,7 @@ $$
 
 ---
 
-### 2.7 [2026-09-23] HiMoE-VLA: Hierarchical Mixture-of-Experts for Generalist Vision-Language-Action Policies
+### 2.8 [2026-09-23] HiMoE-VLA: Hierarchical Mixture-of-Experts for Generalist Vision-Language-Action Policies
 
 * **论文信息**：`arXiv:2512.05693` (2025/2026)
 * **核心关键词**：Hierarchical MoE、Generalist VLA Policy、Task-Skill Decoupled Routing、Gradient Conflict Mitigation
@@ -435,7 +482,7 @@ $$
 
 ---
 
-### 2.8 [2026-09-22] SPIN: Unifying Sparse Attention with Hierarchical Memory for Scalable Long-Context LLM Serving
+### 2.9 [2026-09-22] SPIN: Unifying Sparse Attention with Hierarchical Memory for Scalable Long-Context LLM Serving
 
 * **论文信息**：`arXiv:2604.26837` (2026-04)
 * **核心关键词**：Sparse Attention Serving、Hierarchical GPU-CPU Memory、Asynchronous Layer-Ahead Prefetching
@@ -485,7 +532,7 @@ $$
 
 ---
 
-### 2.9 [2026-09-21] MoE-FM: Towards Faster Language Model Inference Using Mixture-of-Experts Flow Matching
+### 2.10 [2026-09-21] MoE-FM: Towards Faster Language Model Inference Using Mixture-of-Experts Flow Matching
 
 * **论文信息**：`arXiv:2604.15009` (2026-04)
 * **核心关键词**：Mixture-of-Experts Flow Matching、Piecewise-Linear Vector Fields、Latent Flow Language Models
@@ -536,7 +583,7 @@ $$
 
 ---
 
-### 2.10 [2026-09-20] CARE: Spend Experts Where You Are Unsure — Confidence-Adaptive Routing for MoE-LoRA
+### 2.11 [2026-09-20] CARE: Spend Experts Where You Are Unsure — Confidence-Adaptive Routing for MoE-LoRA
 
 * **论文信息**：`arXiv:2607.26052` (2026-07)
 * **核心关键词**：Confidence-Adaptive Routing、MoE-LoRA、Nucleus Expert Activation、Router Uncertainty Entropy
@@ -595,7 +642,7 @@ $$
 
 ---
 
-### 2.11 [2026-09-19] REAP: Router-Weighted Expert Activation Pruning for Sparse MoE Models
+### 2.12 [2026-09-19] REAP: Router-Weighted Expert Activation Pruning for Sparse MoE Models
 
 * **论文信息**：`arXiv:2510.13999` (2025/2026)
 * **核心关键词**：MoE Expert Pruning、Router Gate Weighting、Expert Activation Norm、Generative Reasoning Preservation
@@ -652,7 +699,7 @@ $$
 
 ---
 
-### 2.12 [2026-09-18] 🧩 *MoE-Tile: Warp-Aligned Tensor Slicing for Zero-Overhead Dynamic Sparse Routing on Modern Accelerators*
+### 2.13 [2026-09-18] 🧩 *MoE-Tile: Warp-Aligned Tensor Slicing for Zero-Overhead Dynamic Sparse Routing on Modern Accelerators*
 > **聚焦领域**：Mixture of Experts (MoE) · GPU Kernel Optimization · Warp Divergence · Hardware-Aware Sparsity  
 > **arXiv**：[`arXiv:2609.09112`](https://arxiv.org/abs/2609.09112)
 
