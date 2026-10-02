@@ -1,10 +1,10 @@
 # 🗜️ Unified-MoE-Compression: 每日前沿文献关联与统一 MoE 剪枝/低秩/动态跳过落地库 (2026-09 — 2026-10)
 
-**Document ID:** `UNIMOE-LIT-202609` | **Last Updated:** `2026-10-01` | **Target Path:** `docs/frontier_literature_connections_2026_09.md` | **Total Routed Papers:** `20`
+**Document ID:** `UNIMOE-LIT-202609` | **Last Updated:** `2026-10-02` | **Target Path:** `docs/frontier_literature_connections_2026_09.md` | **Total Routed Papers:** `20`
 
 > [!IMPORTANT]
 > **🔗 跨仓库文献引用链闭环 (Cross-Repository Reference Chain Closure)**
-> 本文件由每日 AI 前沿论文精读流水线自动路由生成，专门收录与我们 **TMLR 2025 代表作 (*Unifying LLM & Mixture-of-Experts Compression*, `CASE-Lab-UMD/Unified-MoE-Compression`)** 直接关联的专家结构化剪枝（`SHAPE`, `REAP`, `SlimWise`, `AIMER`, `EvoESAP`, `IAprune`）、低秩路由器与专家分解（`L2R`, `LoopMoE`, `MoE-nD`）、动态专家跳过（`CARE`）以及硬件感知联合压缩与异步流水系统（`MoE-OS`, `MoE-Tile`, `PiKV`, `CoMoE-Spec`, `CascadeEP`）最新 arXiv 论文笔记。
+> 本文件由每日 AI 前沿论文精读流水线自动路由生成，专门收录与我们 **TMLR 2025 代表作 (*Unifying LLM & Mixture-of-Experts Compression*, `CASE-Lab-UMD/Unified-MoE-Compression`)** 直接关联的专家结构化剪枝（`SHAPE`, `REAP`, `SlimWise`, `AIMER`, `EvoESAP`, `IAprune`, `SlimQwen`, `MAESTRO`）、低秩路由器与专家分解（`L2R`, `LoopMoE`, `MoE-nD`）、动态专家跳过（`CARE`）以及硬件感知联合压缩与异步流水系统（`MoE-OS`, `MoE-Tile`, `PiKV`, `CoMoE-Spec`, `CascadeEP`）最新 arXiv 论文笔记。
 > 每一篇收录文献均包含：**核心痛点、底层数学公式、ASCII 架构图、关键实测指标**，以及**与 `Unified-MoE-Compression` 仓库具体代码模块和我们已发表代表作（Our Works）的双向锚定**。
 
 ---
@@ -13,7 +13,7 @@
 
 | 收录日期 | 论文标题与 arXiv 链接 | 关键实测收益 / 核心结论 | 锚定本仓库代码模块与文档路径 (`Target Module`) | 原始精读归档 |
 | :---: | :--- | :--- | :--- | :---: |
-| `2026-10-02` | [**🧩 SlimQwen & MAESTRO**](https://arxiv.org/abs/2605.08738) (`arXiv:2605.08738`) | **预训练规模下后剪枝显著优于从头训练**：`SlimQwen` 证实，在完全相同的千亿级 Token 预训练算力预算下，对预训练完成的 `Qwen3-Next-80A3B` 实施渐进专家剪枝所得的 `23A2B` 模型，在 MM... | `moe_compression/expert_pruning.py` (Coalition Shapley Value Expert Pruning) | [2026-10-02](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-02_ai_paper_notes.md) |
+| `2026-10-02` | [**🧩 SlimQwen & MAESTRO**](https://arxiv.org/abs/2605.08738) (`arXiv:2605.08738`) | **预训练规模下后剪枝显著优于从头训练**：`SlimQwen` 证实，在完全相同的千亿级 Token 预训练算力预算下，对预训练完成的 `Qwen3-Next-80A3B` 实施渐进专家剪枝所得的 `23A2B` 模型，在 MM... | `moe_compression/expert_pruning.py` (Pretraining-Scale Partial-Preservation Expert Merging & MTP Distillation) | [2026-10-02](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-02_ai_paper_notes.md) |
 | `2026-10-02` | [**🗄️ LookaheadKV & RAP**](https://arxiv.org/abs/2603.10899) (`arXiv:2603.10899`) | **驱逐开销与首字延迟（TTFT）大幅降低**：在各大长文本理解基准（LongBench、L-Eval）上，`LookaheadKV` 相比依赖草稿生成的代表性基线，将 KV 驱逐耗时降低高达 **`14.5×`**，同时在复杂长... | `moe_compression/expert_pruning.py` (Coalition Shapley Value Expert Pruning) | [2026-10-02](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-02_ai_paper_notes.md) |
 | `2026-10-02` | [**🌊 Transition Flow Matching & Recursive Flow Matching**](https://arxiv.org/abs/2603.15689) (`arXiv:2603.15689`) | **科学仿真 20x 速度飞跃**：在复杂的跨尺度时空流体仿真（Navier-Stokes 与气候动力学预测）基准测试中，`RecFM` 在 1–4 步生成下，相比目前领先的扩散基线实现了高达... | `moe_compression/expert_pruning.py` (Coalition Shapley Value Expert Pruning) | [2026-10-02](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-02_ai_paper_notes.md) |
 | `2026-10-01` | [**IAprune & Rényi Entropy (`Col-Ln`)**](https://arxiv.org/abs/2603.22991) (`arXiv:2603.22991`) | **`IAprune` 在仿真与真机闭环控制中的实测加速**：跨越 4 种具身操作策略、3 个仿真基准与真实机器人平台... | `moe_compression/expert_pruning.py` (Intra-Expert SwiGLU Intermediate Channel Taylor Information Attribution Pruning) | [2026-10-01](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-01_ai_paper_notes.md) |
@@ -235,7 +235,7 @@ def compute_maestro_stationary_scores(expert_activations_seq, num_experts):
 ---
 
 > [!TIP]
-> **🎯 `Unified-MoE-Compression` 仓库代码级落地点 (`Target Module`)**：`moe_compression/expert_pruning.py` (Coalition Shapley Value Expert Pruning)  
+> **🎯 `Unified-MoE-Compression` 仓库代码级落地点 (`Target Module`)**：`moe_compression/expert_pruning.py` (Pretraining-Scale Partial-Preservation Expert Merging & MTP Distillation)  
 > **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-10-02_ai_paper_notes.md`
 
 
